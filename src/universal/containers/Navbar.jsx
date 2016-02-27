@@ -4,11 +4,6 @@ import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux';
 import NavbarComponent from '../components/Navbar';
 
-// interface INavbarProps {
-//   push?: (String) => any;
-//   routing?: any;
-// }
-
 const links = [
   {
     title: 'Home',
@@ -17,9 +12,12 @@ const links = [
 ]
 
 class NavbarContainer extends React.Component {
+  static propTypes = {
+    push: React.PropTypes.func,
+    routing: React.PropTypes.object
+  }
 
   render() {
-
     return (
       <NavbarComponent
         clickNavLink={(route) => this.props.push(route)}

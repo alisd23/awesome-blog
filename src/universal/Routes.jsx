@@ -6,9 +6,7 @@ import { endLoading } from './redux/reducers/global';
 import App from './containers/App';
 import ReducerRegistry from './redux/registry';
 
-// Require ensure shim
-if(typeof require.ensure !== "function") require.ensure = function(d, c) { c(require) };
-if(typeof require.include !== "function") require.include = function() {};
+const ENV = typeof global !== 'undefined' ? global.ENV : 'client';
 
 export default class routes {
   static store = null;
@@ -26,22 +24,37 @@ export default class routes {
   }
 
   configure() {
-
     return (
       <Route path="/" component={App}>
-        <IndexRoute getComponent={(location, cb) => {
-          require.ensure([], require => {
-            const component = require('./containers/Home').default;
-            // If route has changed since link clicked - do not load page
-            if (!this.store) {
-              cb(null, component);
-            } else if (this.store.getState().routing.location.pathname === location.pathname) {
-              cb(null, component);
-              this.store.dispatch(endLoading);
-            }
-          });
-        }} />
+        <IndexRoute getComponent={::this.getHomePage} />
       </Route>
     );
+  }
+
+  /**
+   * ROUTE HANDLERS
+   */
+  getHomePage(location, cb) {
+    if (ENV === 'client') {
+      System.import('./containers/Home')
+        .then(container => this.changeScreen(location, cb, container))
+        .catch(err => console.log('Epic fail: Home Page -- ', err));
+    } else {
+      const container = require('./containers/Home');
+      this.changeScreen(location, cb, container);
+    }
+  }
+
+  changeScreen(location, cb, component, reducer) {
+    if (reducer) {
+      this.reducerRegistry.register(reducer);
+    }
+
+    if (!this.store) {
+      cb(null, component);
+    } else if (this.store.getState().routing.location.pathname === location.pathname) {
+      cb(null, component);
+      this.store.dispatch(endLoading);
+    }
   }
 }

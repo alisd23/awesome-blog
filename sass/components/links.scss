@@ -1,0 +1,13 @@
+
+@mixin link-variant($color, $hover-color) {
+  color: $color;
+  transition: color 0.3s ease-out;
+
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+.link-light {
+  @include link-variant($gray-light, lighten($gray-light, 20%))
+}

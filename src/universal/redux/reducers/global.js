@@ -2,8 +2,8 @@ import { UPDATE_LOCATION } from 'react-router-redux';
 
 const START_LOADING = UPDATE_LOCATION;
 const END_LOADING = 'END_LOADING';
-const OPEN_MODAL = 'OPEN_MODAL';
-const CLOSE_MODAL = 'CLOSE_MODAL';
+// const OPEN_MODAL = 'OPEN_MODAL';
+// const CLOSE_MODAL = 'CLOSE_MODAL';
 
 const initialState = {
   loading: false

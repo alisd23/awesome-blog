@@ -1,0 +1,25 @@
+
+// MODAL transitions
+.modal-enter, .modal-leave.modal-leave-active {
+  opacity: 0;
+
+  .modal-content {
+    transform: scale(0.7);
+  }
+}
+
+.modal-leave, .modal-enter.modal-enter-active {
+  opacity: 1;
+
+  .modal-content {
+    transform: scale(1);
+  }
+}
+
+.modal-enter.modal-enter-active, .modal-leave.modal-leave-active {
+  transition: opacity 0.5s ease;
+
+  .modal-content {
+    transition: opacity 0.5s ease, transform 0.4s ease-out;
+  }
+}

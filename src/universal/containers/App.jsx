@@ -6,16 +6,22 @@ import PageLoader from '../components/PageLoader';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
-//
-// interface IAppProps {
-//   children: React.ReactElement<any>;
-//   location?: HistoryModule.Location; // React router gives this to us
-//   loading?: boolean;
-// }
 
 class App extends React.Component {
+  static propTypes = {
+    clickNavLink: React.PropTypes.element,
+    location: React.PropTypes.object, // React router gives this to us
+    loading: React.PropTypes.bool,
+  }
+  static defaultProps = {
+    location: '/'
+  }
 
   render() {
+
+    // Import all styles
+    require('../../../sass/app.scss');
+
     return (
       <div>
         <Helmet {...config.app.head}/>
@@ -26,7 +32,7 @@ class App extends React.Component {
   }
 }
 
-function mapStateToProps(state: IAppState) {
+function mapStateToProps(state: AppState) {
   return {
     loading: state.global.loading
   }

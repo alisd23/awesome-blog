@@ -1,0 +1,38 @@
+
+@keyframes Spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  @extend .row-xs-center;
+
+  &:before {
+    content: 'Loading…';
+    width: 45px;
+    height: 45px;
+    display: block;
+  }
+  &.spinner-sm:before {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.spinner:not(:required) {
+  &:before {
+    content: '';
+    border-radius: 50%;
+    border: 5px solid rgba(#aaa, 0.4);
+    border-top-color: rgba(#fff, 0.8);
+    animation: Spinner 0.75s linear infinite;
+    -webkit-animation: Spinner 0.75s linear infinite;
+  }
+  &.spinner-sm:before {
+    border-width: 3px;
+  }
+  &.spinner-light:before {
+    border-color: rgba(#eee, 0.4);
+    border-top-color: rgba(#fff, 0.8);
+  }
+}

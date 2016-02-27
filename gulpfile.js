@@ -9,6 +9,8 @@ const cached = require('gulp-cached');
 const remember = require('gulp-remember');
 const changed = require('gulp-changed');
 const clean = require('gulp-clean');
+const jsonfile = require('jsonfile');
+const babelConfig = jsonfile.readFileSync('./.babelrc');
 
 const webpackDevConfig = require('./webpack/dev.config');
 const webpackProdConfig = require('./webpack/prod.config');
@@ -58,7 +60,7 @@ gulp.task('server', ['compile-server'], function() {
   });
 
   const srcWatcher = gulp.watch(
-    [...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG],
+    [...paths.SERVER, paths.CONFIG],
     { cwd: 'src' },
     ['compile-server']
   );
@@ -80,20 +82,15 @@ gulp.task('compile-server', [], function() {
   return gulp.src([...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG], { cwd: 'src', base: 'src' })
     .pipe(cached('babel'))
   	.pipe(sourcemaps.init())
-    .pipe(babel({
-			presets: ['react', 'stage-2', 'es2015'],
-      plugins: ['transform-class-properties']
-		}))
+    .pipe(babel(babelConfig))
   	.pipe(sourcemaps.write())
   	.pipe(gulp.dest('compiled'));
 });
 
 gulp.task('webpack:prod', [], function() {
   // Remove source maps
-  const tsconfigProd = Object.create(tsconfig);
-  tsconfigProd.compilerOptions['inline-source-map'] = false;
 
-  const tsResult = gulp.src(paths.SRC) // gulp looks for all source files under specified path
+  return gulp.src(paths.SRC) // gulp looks for all source files under specified path
     .pipe(stream(webpackProdConfig)) // blend in the webpack config into the source files
     .pipe(gulp.dest(paths.BUILD));
 });
@@ -103,6 +100,7 @@ gulp.task('webpack-dev-server', function(callback) {
   // Start a webpack-dev-server
   new WebpackDevServer(webpack(webpackDevConfig), {
     // Tell wepback to pass (proxy) all requests to our server
+    hot: true,
     proxy: {
       '/' : `http://localhost:${serverPort}`
     }

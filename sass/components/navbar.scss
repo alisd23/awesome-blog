@@ -1,0 +1,29 @@
+
+@import '../variables';
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 2rem 1rem;
+  justify-content: space-between;
+
+  .logo {
+    img {
+      height: 50px;
+    }
+  }
+
+  .nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .links {
+    display: flex;
+    padding: 0 $spacer-md;
+
+    .nav-item {
+      padding: 0 $spacer-md;
+    }
+  }
+}

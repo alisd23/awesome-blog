@@ -5,12 +5,15 @@ import PageLoader from '../components/PageLoader';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
-// interface IHomeProps {
-//   location?: HistoryModule.Location; // React router gives this to us
-//   loading?: boolean;
-// }
 
 class Home extends React.Component {
+  static propTypes = {
+    location: React.PropTypes.object, // React router gives this to us
+    loading: React.PropTypes.bool,
+  }
+  static defaultProps = {
+    location: '/'
+  }
 
   render() {
     return (

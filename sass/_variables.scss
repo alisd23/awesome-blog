@@ -1,0 +1,173 @@
+@import '../node_modules/bootstrap/scss/variables';
+
+//=================================//
+//====== BOOTSTRAP VARIABLES ======//
+//=================================//
+
+$teal:                  #3CB5B5;
+$teal-dark:             #35A1A1;
+$teal-darker:           #058989;
+
+$blue:                  #4E71C2;
+$blue-dark:             #19387E;
+$blue-darker:           #153D99;
+
+$red:                   #E53B51;
+$red-dark:              #CC3448;
+
+$yellow:                #FCD920;
+$yellow-dark:           #E1C21C;
+
+$orange:                #EC6C20;
+$orange-dark:           #D3601C;
+
+$green:                 #5CB85C;
+$green-light:           #BCF350;
+
+$facebook:              #3B5998;
+$twitter:               #55acee;
+
+$gray-darker:           #222222;
+$gray-dark:             #373a3c;
+$gray:                  #55595c;
+$gray-light:            #818a91;
+$gray-lighter:          #eceeef;
+$gray-lightest:         #f7f7f9;
+
+$brand-primary:         $teal;
+$brand-success:         $green;
+$brand-info:            $blue;
+$brand-warning:         $orange;
+$brand-danger:          $red;
+
+$trans-white:           rgba(255, 255, 255, 0.8);
+$trans-gray-light:      rgba(238, 238, 238, 0.75);
+$trans-gray-dark:       rgba(86, 86, 96, 0.4);
+
+$border-light-gray:     solid 1px $gray-lightest;
+
+$enable-flex:               true;
+$enable-rounded:            true;
+$enable-shadows:            true;
+$enable-transitions:        true;
+$enable-hover-media-query:  false;
+
+
+// Grid breakpoints
+//
+// Define the minimum and maximum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: 480px,
+  // Medium screen / tablet
+  md: 768px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1200px
+);
+
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+
+$spacer-sm:                  $spacer * 0.5;
+$spacer-md:                  $spacer * 1.5;
+$spacer-lg:                  $spacer * 3;
+$spacer-xl:                  $spacer * 6;
+
+$spacers: (
+  0: (
+    x:   0,
+    y:   0
+  ),
+  sm: (
+    x:   $spacer-sm,
+    y:   $spacer-sm
+  ),
+  d: (
+    x:   $spacer-x,
+    y:   $spacer-y
+  ),
+  md: (
+    x:   $spacer-md,
+    y:   $spacer-md
+  ),
+  lg: (
+    x:   $spacer-lg,
+    y:   $spacer-lg
+  ),
+  xl: (
+    x:   $spacer-xl,
+    y:   $spacer-xl
+  )
+);
+
+$grid-columns:              24;
+
+$font-family-headings:      'Roboto', Helvetica, Arial, sans-serif;
+$font-family-sans-serif:    'Open Sans', Helvetica, Arial, sans-serif;
+$font-family-base:          $font-family-sans-serif;
+
+$font-size-root:            14px;
+
+$font-size-xl:              1.5rem;
+$font-size-message:         1.1rem;
+$font-size-input:           1.1rem;
+
+$line-height-xl:            (4 / 3);
+$line-height-message:       1.25;
+
+$border-radius:             .15rem;
+$border-radius-xl:          .3rem;
+$border-radius-lg:          .2rem;
+$border-radius-sm:          .1rem;
+
+$link-hover-decoration:     none;
+$link-color:                $brand-primary;
+$link-hover-color:                darken($link-color, 15%);
+
+//== Buttons
+//
+//##
+
+$btn-padding-x-sm:              0.9rem;
+$btn-padding-y-sm:              0.6rem;
+$btn-padding-x:                 1.1rem;
+$btn-padding-y:                 0.7rem;
+$btn-padding-x-lg:              1.5rem;
+$btn-padding-y-lg:              1.0rem;
+$btn-padding-x-xl:              2rem;
+$btn-padding-y-xl:              1.4rem;
+$btn-border-radius-xl:          $border-radius-xl;
+
+$btn-primary-bg:        $brand-primary;
+$btn-success-bg:        $brand-success;
+$btn-info-bg:           $brand-info;
+$btn-warning-bg:        $brand-warning;
+$btn-danger-bg:         $brand-danger;
+
+//== Inputs
+//
+//##
+
+$input-box-shadow-focus:          rgba($teal, .6);
+$input-border-focus:              $teal;
+$input-padding-x-xl:              1.5rem;
+$input-padding-y-xl:              0.8rem;
+$input-border-radius-xl:          $border-radius-xl;
+
+$input-group-addon-bg:            $gray-lightest;
+
+//== Animations
+//
+//##
+$bounce-transition:           cubic-bezier(0.68, -0.55, 0.265, 1.55);
+$bounce-in-transition:        cubic-bezier(0.66, 0.33, 0.35, 1.32);
+$bounce-out-transition:       cubic-bezier(0.66, -0.33, 0.35, 0.66);

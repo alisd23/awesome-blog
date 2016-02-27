@@ -2,7 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
-const combineLoaders = require('./combine-loaders');
+const jsonfile = require('jsonfile');
+const babelConfig = jsonfile.readFileSync('./.babelrc');
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
@@ -18,7 +19,7 @@ module.exports = clientConfig = {
 	debug: true,
   devtool: 'source-map',
 	resolve: {
-		extensions: ['', '.js', '.jsx']
+		extensions: ['', '.js', '.jsx', '.scss']
 	},
 	entry: [
     'webpack-dev-server/client?http://localhost:9000', // WebpackDevServer host and port
@@ -33,6 +34,7 @@ module.exports = clientConfig = {
 	},
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoErrorsPlugin(),
     new webpack.IgnorePlugin(/webpack-stats\.json$/),
     new webpack.DefinePlugin({
       __CLIENT__: true,
@@ -52,21 +54,19 @@ module.exports = clientConfig = {
       {
 				test: /\.jsx?$/,
 				exclude: /(node_modules)/,
-				loaders: combineLoaders([
+				loaders: [
 					{ loader: 'react-hot' },
 					{
 						loader: 'babel',
 						cacheDirectory: true,
-						query: {
-							presets: ['react', 'es2015', 'stage-2'],
-							plugins: ['transform-class-properties']
-						}
+						query: babelConfig
 					},
-				])
+				]
 			},
       {
 				test: /\.scss$/,
-				loaders:  combineLoaders([
+				include: path.join(projectRootPath, 'sass'),
+				loaders: [
 					{ loader: 'style' },
 					{
 						loader: 'css',
@@ -82,13 +82,14 @@ module.exports = clientConfig = {
 							outputStyle: 'expanded'
 						}
 					},
-				])
+				]
 			},
 			{ test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
+      { test: /\.png$/, loader: "url?limit=25000" },
 		]
 	},
 };
