@@ -1,19 +1,19 @@
-import User from './User';
+import Author from './Author';
 
 /**
- * Class representing a Blog
+ * Class representing a Blogpost
  */
-class Blog {
+class Blogpost {
   id      : string;
   title   : string;
   content : string;
-  author  : User;
+  author  : Author;
   image   : string;
   created : Date;
   meta    : any;
 
   /**
-   * Creates a new blog object
+   * Creates a new Blogpost object
    * @param  {string} id
    * @param  {string} title
    * @param  {string} content
@@ -32,8 +32,8 @@ class Blog {
   }
 
   /**
-   * Gets the path to the blog image or a placeholder
-   * @return {String} Absolute path to the blogs image
+   * Gets the path to the blogpost image or a placeholder
+   * @return {String} Absolute path to the blogpost image
    */
   get imageURL() {
     return this.avatar

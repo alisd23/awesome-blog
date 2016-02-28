@@ -29,9 +29,17 @@ export default class {
    * Gets the path to the avatar image or a placeholder
    * @return {String} Absolute path to the avatar image
    */
-  avatarURL() {
+  get avatarURL() {
     return this.avatar
       ? `/assets/images/avatars/${this.avatar}.jpg`
       : `/assets/images/avatars/placeholder.jpg`;
+  }
+
+  /**
+   * Gets the users fullname, first and last concatenated
+   * @return {string}
+   */
+  get fullname() {
+    return `${this.firstname} ${this.lastname}`;
   }
 }

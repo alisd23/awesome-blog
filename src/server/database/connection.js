@@ -11,12 +11,12 @@ export default () => {
   mongoose.Promise = Promise;
   mongoose.connect(DB_URL);
 
-  const db = mongoose.connection;
+  const connection = mongoose.connection;
 
-  db.on('error', (err) => console.error('MongoDB connection error :(  --  ', err));
-  db.once('open', function() {
+  connection.on('error', (err) => console.error('MongoDB connection error :(  --  ', err));
+  connection.once('open', function() {
     console.log("MongoDB connected at url - ", DB_URL);
   });
 
-  return db;
+  return connection;
 }

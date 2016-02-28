@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  _id       : Schema.Types.ObjectId,
+const authorSchema = new Schema({
   firstname : String,
   lastname  : String,
+  avatar    : String,
   created   : { type: Date, default: Date.now }
 });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('Author', authorSchema);
