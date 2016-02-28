@@ -12,7 +12,7 @@ const clean = require('gulp-clean');
 const jsonfile = require('jsonfile');
 const babelConfig = jsonfile.readFileSync('./.babelrc');
 
-const webpackDevConfig = require('./webpack/dev.config');
+// const webpackDevConfig = require('./webpack/dev.config');
 const webpackProdConfig = require('./webpack/prod.config');
 
 const webpack = require('webpack');
@@ -25,7 +25,8 @@ const webpackPort = 9000;
 const serverPort = 8000;
 
 const paths = {
-  'SRC': 'src/*',
+  'SRC': 'src',
+  'ENTRY': 'src/client/app.jsx',
    UNIVERSAL: ['universal/**/*.js', 'universal/**/*.jsx'],
    CLIENT: ['client/**/*.js', 'client/**/*.jsx'],
    SERVER: ['server/**/*.js', 'server/**/*.jsx'],
@@ -36,13 +37,42 @@ const paths = {
  /*
   * MAIN TASKS
   */
-gulp.task('default', ['server', 'webpack-dev-server']);
+gulp.task('default', ['dev']);
+gulp.task('dev', ['compile-server:dev', 'webpack-dev-server', 'server:dev']);
+gulp.task('prod', ['compile-server:prod', 'webpack:prod', 'server:prod']);
 gulp.task('compile', ['webpack:dev']);
-gulp.task('prod', ['webpack:prod', 'compile-server']);
 
-gulp.task('server', ['compile-server'], function() {
+gulp.task('clean', function () {
+  return gulp.src('compiled')
+    .pipe(clean());
+});
+
+
+/*
+ * SERVER TASKS
+ */
+
+function startServer() {
   const server = liveServer.new('compiled/server/boot.js');
   server.start();
+  return server;
+}
+function compileServer() {
+  return gulp.src([...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG], { cwd: 'src', base: 'src' })
+    .pipe(cached('babel'))
+    .pipe(sourcemaps.init())
+    .pipe(babel(babelConfig))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('compiled'));
+}
+
+gulp.task('compile-server:prod', [], compileServer);
+gulp.task('compile-server:dev', [], compileServer);
+
+gulp.task('server:prod', ['webpack:prod'], startServer);
+gulp.task('server:dev', function() {
+  const server = startServer();
+
   const compiledWatcher = gulp.watch(
     [...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG],
     { cwd: 'compiled' },
@@ -70,33 +100,18 @@ gulp.task('server', ['compile-server'], function() {
   });
 });
 
-gulp.task('clean', function () {
-  return gulp.src('compiled/*')
-    .pipe(clean());
-});
 
 /*
- * WEBPACK STUFF
+ * WEBPACK TASKS
  */
-gulp.task('compile-server', [], function() {
-  return gulp.src([...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG], { cwd: 'src', base: 'src' })
-    .pipe(cached('babel'))
-  	.pipe(sourcemaps.init())
-    .pipe(babel(babelConfig))
-  	.pipe(sourcemaps.write())
-  	.pipe(gulp.dest('compiled'));
-});
 
-gulp.task('webpack:prod', [], function() {
-  // Remove source maps
-
-  return gulp.src(paths.SRC) // gulp looks for all source files under specified path
-    .pipe(stream(webpackProdConfig)) // blend in the webpack config into the source files
+gulp.task('webpack:prod', function() {
+  return gulp.src(paths.ENTRY) // gulp looks for all source files under specified path
+    .pipe(stream(webpackProdConfig, webpack)) // blend in the webpack config into the source files
     .pipe(gulp.dest(paths.BUILD));
 });
 
 gulp.task('webpack-dev-server', function(callback) {
-
   // Start a webpack-dev-server
   new WebpackDevServer(webpack(webpackDevConfig), {
     // Tell wepback to pass (proxy) all requests to our server
