@@ -35,7 +35,7 @@ export default class NavbarComponent extends React.Component {
                 );
                 return (
                   <li className={classes} key={link.title}>
-                    <a className="nav-link link-light small-caps" onClick={() => this.props.clickNavLink(link.path)}>
+                    <a className="nav-link link-accent small-caps" onClick={() => this.props.clickNavLink(link.path)}>
                       {link.title}
                     </a>
                   </li>

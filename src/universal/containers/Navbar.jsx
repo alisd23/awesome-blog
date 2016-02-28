@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux';
+import { routeActions, push } from 'react-router-redux';
 import NavbarComponent from '../components/Navbar';
 
 const links = [
@@ -20,7 +20,7 @@ class NavbarContainer extends React.Component {
   render() {
     return (
       <NavbarComponent
-        clickNavLink={(route) => this.props.push(route)}
+        clickNavLink={(route) => this.props.dispatch(push(route))}
         routing={this.props.routing}
         links={links}
       />
@@ -36,5 +36,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  routeActions
+  null
 )(NavbarContainer)

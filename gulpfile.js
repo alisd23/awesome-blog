@@ -9,10 +9,11 @@ const cached = require('gulp-cached');
 const remember = require('gulp-remember');
 const changed = require('gulp-changed');
 const clean = require('gulp-clean');
+const prompt = require('gulp-prompt');
 const jsonfile = require('jsonfile');
 const babelConfig = jsonfile.readFileSync('./.babelrc');
 
-// const webpackDevConfig = require('./webpack/dev.config');
+const webpackDevConfig = require('./webpack/dev.config');
 const webpackProdConfig = require('./webpack/prod.config');
 
 const webpack = require('webpack');
@@ -38,7 +39,7 @@ const paths = {
   * MAIN TASKS
   */
 gulp.task('default', ['dev']);
-gulp.task('dev', ['compile-server:dev', 'webpack-dev-server', 'server:dev']);
+gulp.task('dev', ['compile-server:dev', 'server:dev', 'webpack-dev-server']);
 gulp.task('prod', ['compile-server:prod', 'webpack:prod', 'server:prod']);
 gulp.task('compile', ['webpack:dev']);
 
@@ -52,10 +53,8 @@ gulp.task('clean', function () {
  * SERVER TASKS
  */
 
-function startServer() {
-  const server = liveServer.new('compiled/server/boot.js');
-  server.start();
-  return server;
+function createServer() {
+  return liveServer.new('compiled/server/boot.js');
 }
 function compileServer() {
   return gulp.src([...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG], { cwd: 'src', base: 'src' })
@@ -69,15 +68,20 @@ function compileServer() {
 gulp.task('compile-server:prod', [], compileServer);
 gulp.task('compile-server:dev', [], compileServer);
 
-gulp.task('server:prod', ['webpack:prod'], startServer);
-gulp.task('server:dev', function() {
-  const server = startServer();
+gulp.task('server:prod', ['webpack:prod'], () => {
+  const server = createServer();
+  server.start();
+});
+gulp.task('server:dev', ['compile-server:dev'], () => {
+  const server = createServer();
+  server.start();
 
   const compiledWatcher = gulp.watch(
     [...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG],
     { cwd: 'compiled' },
     () => {
       server.start();
+
       gutil.log(
         ('\n -----------------------------\n' +
         '|      SERVER RESTARTED       |' +
@@ -98,7 +102,21 @@ gulp.task('server:dev', function() {
     // console.log('hello'.green); // outputs green text
     gutil.log('SOURCE: '.magenta + 'File ' + event.path.cyan + ' was ' + event.type.green);
   });
+
+  listenToInput(server)
 });
+
+function listenToInput(server) {
+  gulp.src('src').pipe(prompt.prompt({
+  		type: 'input',
+  		name: 'key',
+  		message: 'PRESS ENTER TO RESTART SERVER'
+  	}, function(res) {
+  		console.log("RESTARTING SERVER");
+  		server.start();
+      listenToInput(server);
+  	}));
+}
 
 
 /*
@@ -111,11 +129,16 @@ gulp.task('webpack:prod', function() {
     .pipe(gulp.dest(paths.BUILD));
 });
 
-gulp.task('webpack-dev-server', function(callback) {
+gulp.task('webpack-dev-server', ['server:dev'], function(callback) {
   // Start a webpack-dev-server
   new WebpackDevServer(webpack(webpackDevConfig), {
     // Tell wepback to pass (proxy) all requests to our server
     hot: true,
+    open: 'http://localhost:9000/webpack-dev-server/',
+    noInfo: true,
+    stats: {
+      colors: true
+    },
     proxy: {
       '/' : `http://localhost:${serverPort}`
     }

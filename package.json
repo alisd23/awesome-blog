@@ -8,6 +8,7 @@
     "start": "node server"
   },
   "dependencies": {
+    "babel-plugin-resolver": "0.0.6",
     "bootstrap": "^4.0.0-alpha.2",
     "classnames": "^2.2.3",
     "express": "^4.13.4",

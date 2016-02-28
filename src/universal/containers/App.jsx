@@ -6,6 +6,8 @@ import PageLoader from '../components/PageLoader';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
+// Can call just like this with babel resolver plugin
+import 'app.scss';
 
 class App extends React.Component {
   static propTypes = {
@@ -18,10 +20,6 @@ class App extends React.Component {
   }
 
   render() {
-
-    // Import all styles
-    require('../../../sass/app.scss');
-
     return (
       <div>
         <Helmet {...config.app.head}/>

@@ -44,7 +44,12 @@ module.exports = Object.assign({},
 	        NODE_ENV: JSON.stringify('production')
 	      }
 	    }),
-			new webpack.optimize.UglifyJsPlugin({sourceMap: true}),
+			new webpack.optimize.UglifyJsPlugin({
+				sourceMap: false,
+				compress: {
+	        warnings: false
+		    }
+			}),
 
 			new webpack.IgnorePlugin(/\.\/dev/, /\/config$/),
 

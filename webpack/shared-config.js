@@ -20,7 +20,11 @@ module.exports = function(webpackIsomorphicToolsPlugin) {
         chunkFilename: '[name]-[chunkhash].js'
     	},
       resolve: {
-        extensions: ['', '.js', '.jsx', '.scss']
+        extensions: ['', '.js', '.jsx', '.scss'],
+        alias: {
+          // 'app.scss': path.join(projectRootPath, 'sass', 'app.scss')
+          // 'sass': path.join(projectRootPath, 'sass')
+        }
       },
     	postcss: [
         autoprefixer({

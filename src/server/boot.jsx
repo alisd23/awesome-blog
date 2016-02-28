@@ -1,6 +1,5 @@
 
 import path from 'path';
-import server from './server';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';  //gross
 import isomorphicToolsConfig from '../../webpack/webpack-isomorphic-tools';
 import { install } from 'source-map-support';
@@ -20,5 +19,6 @@ const webpackIsomorphicTools = new WebpackIsomorphicTools(isomorphicToolsConfig)
   .development(__DEVELOPMENT__);
 
 webpackIsomorphicTools.server(path.resolve(__dirname, '../../'), () => {
+  const server = require('./server').default;
   server(webpackIsomorphicTools, __DEVELOPMENT__);
 });
