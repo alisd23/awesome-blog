@@ -25,7 +25,9 @@ module.exports = Object.assign({},
 	  devtool: false,
 		colors: true,
 		'display-error-details': true,
-		entry: ['./src/client/app.jsx'],
+		entry: [
+			'./src/client/app.jsx'
+		],
 	  plugins: shared.plugins.concat([
 			new CleanPlugin(
 				[assetsPath],

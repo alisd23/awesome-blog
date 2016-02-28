@@ -1,24 +1,27 @@
-import React from 'react';
+
 import path from 'path';
 import express from 'express';
-import { renderToString } from 'react-dom/server';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { match, RouterContext } from 'react-router';
+import { match } from 'react-router';
 
+import connect from './database/connection';
 import Routes from '../universal/Routes';
-import { createOnServer } from '../universal/Store';
 import coreReducers from '../universal/redux/core';
 import reducerRegistry from '../universal/redux/registry';
-import Html from './Html';
+import initialRender from './initialRender';
+import blogAPI from './api/BlogAPI';
 
+
+/**
+ * Main server start function
+ * @param  {any}  isoTools        - Webpack isomorphic tools (the hack)
+ * @param  {bool} __DEVELOPMENT__ - Is development mode enabled?
+ */
 export default (isoTools, __DEVELOPMENT__) => {
-
   const PORT          = 8000;
-  const DATABASE_NAME = 'my';
   const projectRoot   = path.join(__dirname, '../..');
 
   const app = express();
+  const DBConnection = connect();
 
   /**
    *  MIDDLEWARE
@@ -29,10 +32,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   /**
   *  ROUTES
   */
-  app.get('/data', (req, res) => {
-    console.log('Getting data');
-    res.status(200).send({ cool: 'datasss' });
-  });
+  app.get('/blogs', blogAPI.getBlogs);
 
   /**
   *  INITIAL RENDER
@@ -56,33 +56,14 @@ export default (isoTools, __DEVELOPMENT__) => {
           res.redirect(302, redirectLocation.pathname + redirectLocation.search);
         } else if (renderProps) {
 
-          const initialState = {
-            routing: {
-              location: renderProps.location
-            }
-          };
-          const store = createOnServer(reducerRegistry, initialState);
-
-          const component = (
-            <Provider store={store}>
-              <div>
-                <RouterContext {...renderProps} />
-              </div>
-            </Provider>
-          );
-
-          // Render the initial html
-          // - Store: Place initial state on the browser window object for the client to read on load
-          // - assets: Load the relevant assets into the markup using webpackIsomorphicTools
-          // - component: The main component to render in the html root
-          console.log("TEST 1");
-          const html = (
-            <Html assets={isoTools.assets()} component={component} store={store} />
-          );
-
-          res
-            .status(200)
-            .send('<!doctype html>\n' + renderToString(html));
+          initialRender(renderProps, reducerRegistry, isoTools)
+            .then((html) => {
+              res.status(200).send(html);
+            })
+            .catch((err) => {
+              console.log("Caught error -", err);
+              res.status(500).send(err);
+            });
 
         } else {
           res.status(404).send('Not found');

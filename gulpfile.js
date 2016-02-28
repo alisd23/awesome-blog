@@ -96,7 +96,7 @@ gulp.task('server:dev', ['compile-server:dev'], () => {
   const srcWatcher = gulp.watch(
     [...paths.SERVER, paths.CONFIG],
     { cwd: 'src' },
-    ['compile-server']
+    ['compile-server:dev']
   );
   srcWatcher.on('change', function(event) {
     // console.log('hello'.green); // outputs green text
