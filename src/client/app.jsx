@@ -1,18 +1,18 @@
-import React        from 'react';
-import { render }   from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
 
-import { Store }                          from 'redux';
-import { Provider }                       from 'react-redux';
-import { syncHistoryWithStore }           from 'react-router-redux';
-import { Router, browserHistory, match }  from 'react-router';
-import LogMonitor                         from 'redux-devtools-log-monitor';
-import DockMonitor                        from 'redux-devtools-dock-monitor';
-import { createDevTools }                 from 'redux-devtools';
+import { Store } from 'redux';
+import { Provider } from 'react-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { Router, browserHistory, match } from 'react-router';
+import LogMonitor from 'redux-devtools-log-monitor';
+import DockMonitor from 'redux-devtools-dock-monitor';
+import { createDevTools } from 'redux-devtools';
 
-import reducerRegistry      from '../universal/redux/registry';
-import Routes               from '../universal/Routes';
-import { createOnClient }   from '../universal/Store';
-import coreReducers         from '../universal/redux/core';
+import reducerRegistry from '../universal/redux/registry';
+import Routes from '../universal/Routes';
+import { createOnClient } from '../universal/Store';
+import coreReducers from '../universal/redux/core';
 
 const DevToolsComponent =
   <DockMonitor

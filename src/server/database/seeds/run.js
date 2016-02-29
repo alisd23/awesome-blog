@@ -1,7 +1,7 @@
 
 import connect from '../connection';
 
-import blogpostSeeder from './blogposts';
+import articleSeeder from './articles';
 import authorSeeder from './authors';
 
 // Connect to database
@@ -10,7 +10,7 @@ const connection = connect();
 // Run seeds sequentially (due to database references)
 const seeders = [
   authorSeeder,
-  blogpostSeeder
+  articleSeeder
 ];
 
 seeders

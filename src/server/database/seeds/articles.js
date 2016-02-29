@@ -1,16 +1,16 @@
 
-import Blogpost from '../models/Blogpost';
+import Article from '../models/Article';
 import Author from '../models/Author';
 import seeder from './seeder';
 import loremIpsum from '../../../universal/utils/loremIpsum';
 
 export default (connection) => {
-  return Blogpost.remove({})
+  return Article.remove({})
     .then(() => {
       return Author.find().exec();
     })
     .then((authors) => {
-      const blogposts: Blogpost[] = [
+      const articles: Article[] = [
         {
           title: 'Amazing First Blog post',
           content: loremIpsum,
@@ -25,6 +25,6 @@ export default (connection) => {
         }
       ];
 
-      return seeder('Blogpost', blogposts, Blogpost);
+      return seeder('Article', articles, Article);
     });
 }

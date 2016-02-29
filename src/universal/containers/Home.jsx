@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux'
-import PageLoader from '../components/PageLoader';
+import HomePageComponent from '../components/Home';
+import { getArticlesArray } from '../redux/ducks/articles';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
@@ -19,7 +19,7 @@ class Home extends React.Component {
     return (
       <div>
         <Helmet {...config.app.head}/>
-        <h1>Home Page</h1>
+        <HomePageComponent articles={this.props.articles} />
       </div>
     )
   }
@@ -27,7 +27,8 @@ class Home extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    loading: state.global.loading
+    loading: state.global.loading,
+    articles: getArticlesArray(state.articles)
   }
 }
 

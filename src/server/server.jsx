@@ -8,7 +8,7 @@ import Routes from '../universal/Routes';
 import coreReducers from '../universal/redux/core';
 import reducerRegistry from '../universal/redux/registry';
 import initialRender from './initialRender';
-import blogAPI from './api/BlogAPI';
+import articleApi from './api/ArticleAPI';
 
 
 /**
@@ -32,7 +32,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   /**
   *  ROUTES
   */
-  app.get('/blogs', blogAPI.getBlogs);
+  app.get('/articles', articleApi.getArticles);
 
   /**
   *  INITIAL RENDER
@@ -61,7 +61,7 @@ export default (isoTools, __DEVELOPMENT__) => {
               res.status(200).send(html);
             })
             .catch((err) => {
-              console.log("Caught error -", err);
+              console.log("Server.jsx -", err);
               res.status(500).send(err);
             });
 

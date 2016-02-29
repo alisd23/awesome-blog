@@ -4,6 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import { createOnServer } from '../universal/Store';
 import Html from './html';
+import { getAllArticles } from './controllers/ArticleController';
 
 /**
  * State handlers, one for each route that can be accessed
@@ -32,7 +33,13 @@ export default function getInitialHtml(renderProps, reducerRegistry, isoTools) {
     stateHandlers[renderProps.location.pathname]
       || stateHandlers.default;
 
-  return stateHandler(renderProps)
+  const sharedState = {
+    routing: {
+      location: renderProps.location
+    }
+  }
+
+  return stateHandler(sharedState, renderProps)
     .then((state) => {
       const store = createOnServer(reducerRegistry, state);
 
@@ -64,16 +71,15 @@ export default function getInitialHtml(renderProps, reducerRegistry, isoTools) {
 /**
  * State for the home page entry
  * - routing
- * - blogs
+ * - articles
  * @return {Promise} - Promise which resolves to the initial state
  */
-function getHomeState(renderProps) {
-  return new Promise((resolve, reject) => {
-    resolve({
-      routing: {
-        location: renderProps.location
-      }
-      // blogs: []
+function getHomeState(sharedState, renderProps) {
+  return getAllArticles()
+    .then((articles: Article) => {
+      return {
+        ...sharedState,
+        articles
+      };
     });
-  });
 }

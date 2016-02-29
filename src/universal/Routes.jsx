@@ -2,7 +2,7 @@ import React from 'react';
 import { IndexRoute, Route } from 'react-router';
 import { Store } from 'redux';
 
-import { endLoading } from './redux/reducers/global';
+import { endLoading } from './redux/ducks/global';
 import App from './containers/App';
 import ReducerRegistry from './redux/registry';
 
@@ -40,7 +40,7 @@ export default class routes {
         .then(container => this.changeScreen(location, cb, container))
         .catch(err => console.log('Epic fail: Home Page -- ', err));
     } else {
-      const container = require('./containers/Home');
+      const container = require('./containers/Home').default;
       this.changeScreen(location, cb, container);
     }
   }

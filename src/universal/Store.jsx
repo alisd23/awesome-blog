@@ -3,8 +3,16 @@ import {applyMiddleware, createStore, combineReducers} from 'redux';
 import { compose } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+import Article from '../universal/Objects/Article';
 import { browserHistory } from 'react-router';
 
+/**
+ * Configure the redux store for the CLIENT side, including dev tools
+ * @param  {Object} reducerRegistry
+ * @param  {Component} DevTools     - Redux dev tools
+ * @param  {Object} initialState    - Initial state from server
+ * @return {store}                  - Redux store
+ */
 export function createOnClient(reducerRegistry, DevTools, initialState) {
 
   const middleware = [thunk, logger()];
@@ -15,6 +23,8 @@ export function createOnClient(reducerRegistry, DevTools, initialState) {
     applyMiddleware(...middleware),
     DevTools.instrument()
   )(createStore);
+
+  initialState = transformInitialState(initialState);
 
   const store = finalCreateStore(reducer, initialState);
 
@@ -28,6 +38,12 @@ export function createOnClient(reducerRegistry, DevTools, initialState) {
   return store;
 }
 
+/**
+ * Configure the redux store for the SERVER side
+ * @param  {Object} reducerRegistry
+ * @param  {Object} initialState    - Initial state
+ * @return {store}                  - redux store
+ */
 export function createOnServer(reducerRegistry, initialState) {
   const middleware = [thunk];
 
@@ -36,6 +52,8 @@ export function createOnServer(reducerRegistry, initialState) {
   const finalCreateStore = compose(
     applyMiddleware(...middleware)
   )(createStore);
+
+  initialState = transformInitialState(initialState);
 
   const store = finalCreateStore(reducer, initialState);
 
@@ -47,4 +65,17 @@ export function createOnServer(reducerRegistry, initialState) {
   });
 
   return store;
+}
+
+/**
+ * Transform relevant state into its class instance form
+ * @param  {Object}   - state
+ * @return {Object}   - Transformed state
+ */
+function transformInitialState(state) {
+  // Convert initial state in to the correct Objects
+  if (state.articles)
+    state.articles = state.articles.map((a) => new Article(a));
+
+  return state;
 }

@@ -2,7 +2,7 @@
 /**
  * Class representing a User
  */
-export default class {
+export default class Author {
   id        : string;
   firstname : string;
   lastname  : string;
@@ -17,12 +17,12 @@ export default class {
    * @param  {string} avatar    - Unique Avatar image string
    * @param  {Date}   created   - [description]
    */
-  constructor(id, firstname, lastname, avatar, created) {
-    this.id = id;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.avatar = avatar;
-    this.created = created;
+  constructor(author) {
+    this.id = author.id || author._id;
+    this.firstname = author.firstname;
+    this.lastname = author.lastname;
+    this.avatar = author.avatar;
+    this.created = author.created;
   }
 
   /**

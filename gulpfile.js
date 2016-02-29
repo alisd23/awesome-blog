@@ -9,6 +9,7 @@ const cached = require('gulp-cached');
 const remember = require('gulp-remember');
 const changed = require('gulp-changed');
 const clean = require('gulp-clean');
+const exec = require('child_process').exec;
 const prompt = require('gulp-prompt');
 const jsonfile = require('jsonfile');
 const babelConfig = jsonfile.readFileSync('./.babelrc');
@@ -35,19 +36,42 @@ const paths = {
    CONFIG: 'config.js',
  };
 
+
+ /*
+  * TASK LIST
+  * ---------------------
+  * 1) [gulp] (default) - runs [gulp dev]
+  * 2) [gulp dev]       - Compiles with hot reloading, starts dev server, listens for changes
+  * 3) [gulp dev]       - Compiles production code, starts prod server
+  * 4) [gulp compile]   - Compiles production code only
+  * 5) [gulp clean]     - Cleans compiled and build folder
+  * 6) [gulp seed]      - Seeds MongoDB database with test data
+  */
+
+
  /*
   * MAIN TASKS
   */
 gulp.task('default', ['dev']);
-gulp.task('dev', ['compile-server:dev', 'server:dev', 'webpack-dev-server']);
+gulp.task('dev', ['clean', 'compile-server:dev', 'server:dev', 'webpack-dev-server']);
 gulp.task('prod', ['compile-server:prod', 'webpack:prod', 'server:prod']);
-gulp.task('compile', ['webpack:dev']);
+gulp.task('compile', ['webpack:prod']);
 
-gulp.task('clean', function () {
-  return gulp.src('compiled')
+gulp.task('clean', function() {
+  return gulp.src(['compiled', 'build'])
     .pipe(clean());
 });
 
+/*
+ * DATABASE SEEDING
+ */
+gulp.task('seed', ['compile-server:dev'], function(cb) {
+  exec('node compiled/server/database/seeds/run', (err, stdout, stderr) => {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});
 
 /*
  * SERVER TASKS
@@ -65,8 +89,8 @@ function compileServer() {
     .pipe(gulp.dest('compiled'));
 }
 
-gulp.task('compile-server:prod', [], compileServer);
-gulp.task('compile-server:dev', [], compileServer);
+gulp.task('compile-server:prod', ['clean'], compileServer);
+gulp.task('compile-server:dev', ['clean'], compileServer);
 
 gulp.task('server:prod', ['webpack:prod'], () => {
   const server = createServer();
@@ -77,7 +101,7 @@ gulp.task('server:dev', ['compile-server:dev'], () => {
   server.start();
 
   const compiledWatcher = gulp.watch(
-    [...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG],
+    [...paths.SERVER, paths.CONFIG],
     { cwd: 'compiled' },
     () => {
       server.start();
@@ -94,12 +118,14 @@ gulp.task('server:dev', ['compile-server:dev'], () => {
   });
 
   const srcWatcher = gulp.watch(
-    [...paths.SERVER, paths.CONFIG],
+    [...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG],
     { cwd: 'src' },
-    ['compile-server:dev']
+    () => {
+      compileServer();
+      console.log("RE-COMPILING SERVER - Restart to take effect");
+    }
   );
   srcWatcher.on('change', function(event) {
-    // console.log('hello'.green); // outputs green text
     gutil.log('SOURCE: '.magenta + 'File ' + event.path.cyan + ' was ' + event.type.green);
   });
 
