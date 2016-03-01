@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux'
+import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import PageLoader from '../components/PageLoader';
 import config from '../../config';

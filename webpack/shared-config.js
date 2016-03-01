@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const projectRootPath = path.resolve(__dirname, '../');
 const assetsPath = path.resolve(projectRootPath, './build');
@@ -56,6 +57,9 @@ module.exports = function(webpackIsomorphicToolsPlugin) {
 
     plugins: [
       new webpack.IgnorePlugin(/webpack-stats\.json$/),
+			new CopyPlugin([
+				{ from: 'assets', to: 'assets' }
+			])
     ]
   }
 }

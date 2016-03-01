@@ -4,14 +4,14 @@ import Article from '../../Objects/Article';
 const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 
 const initialState = {
-  articles: []
+  articles: {}
 }
 
 //----------------------------//
 //           Handler          //
 //----------------------------//
 
-export default function handle(state = initialState, action) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_ARTICLES: {
       const { articles } = action;
@@ -46,6 +46,23 @@ export function receiveArticles() {
 //           Helpers          //
 //----------------------------//
 
+/**
+ * Transforms an array of articles into the state equivalent (id => Article)
+ * @param  {Article[]} list  - list of articles
+ * @return {Object}          - A mapping of id to article (the state)
+ */
+export function articlesToState(list) {
+  const articles = {};
+  list.forEach((a) => articles[a.id] = a);
+  return articles;
+}
+
 export function getArticlesArray(articles) {
   return Object.keys(articles).map((k) => articles[k]);
+}
+export function getHeadlineArticle(articles) {
+  return getArticlesArray(articles)[0]
+}
+export function getNonHeadlineArticles(articles) {
+  return getArticlesArray(articles).filter((a, i) => i > 0);
 }

@@ -1,0 +1,114 @@
+
+#home-page {
+  padding-top: $spacer-lg;
+
+  .headline-banner {
+    display: flex;
+    min-height: 500px;
+    margin-bottom: $spacer-xl;
+    background-color: $gray-lightest;
+
+    @include media-breakpoint-down(xs) {
+      min-height: auto;
+    }
+  }
+
+  .headline-user {
+    background-color: $gray-lightest;
+  }
+
+  .headline-article {
+    flex-basis: 75%;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      .article-image {
+        transform: scale(1.25);
+      }
+    }
+
+    .article-image {
+      @extend .background-cover;
+      transition: all 0.6s $sharp-ease-in-out;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top:    0; left:  0;
+        bottom: 0; right: 0;
+        background-color: rgba(black, 0.65);
+      }
+    }
+    .article-content {
+      padding: $spacer-xl;
+      justify-content: center;
+
+      @include media-breakpoint-down(sm) {
+        padding: 4rem $spacer-lg;
+      }
+    }
+    .article-top, .article-details {
+      z-index: 1;
+    }
+    .article-title {
+      font-weight: 600;
+      font-size: 3.6rem;
+      line-height: normal;
+
+      @include media-breakpoint-down(sm) {
+        font-size: 2.8rem;
+      }
+      @include media-breakpoint-down(xs) {
+        font-size: 2rem;
+      }
+    }
+    .article-details {
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      margin-top: 1rem;
+    }
+    .article-action {
+      .btn {
+        height: 80px;
+      }
+      &.mobile {
+        .btn {
+          height: 60px;
+        }
+      }
+    }
+    .article-by, .article-date {
+      margin-bottom: 1rem;
+    }
+    .article-by {
+      color: lighten($gray-light, 15%);
+    }
+  }
+
+  .author {
+    padding: 2rem;
+    text-align: center;
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+    }
+
+    .author-content {
+      min-width: 300px;
+    }
+  }
+
+
+
+  @include media-breakpoint-down(lg) {
+    .headline-article {
+      flex-basis: 100%;
+    }
+    .author {
+      display: none;
+    }
+  }
+}

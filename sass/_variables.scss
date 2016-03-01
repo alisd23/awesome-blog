@@ -146,6 +146,7 @@ $btn-padding-y-lg:              1.0rem;
 $btn-padding-x-xl:              2rem;
 $btn-padding-y-xl:              1.4rem;
 $btn-border-radius-xl:          $border-radius-xl;
+$input-btn-border-width:        2px;
 
 $btn-primary-bg:        $brand-primary;
 $btn-success-bg:        $brand-success;
@@ -171,3 +172,4 @@ $input-group-addon-bg:            $gray-lightest;
 $bounce-transition:           cubic-bezier(0.68, -0.55, 0.265, 1.55);
 $bounce-in-transition:        cubic-bezier(0.66, 0.33, 0.35, 1.32);
 $bounce-out-transition:       cubic-bezier(0.66, -0.33, 0.35, 0.66);
+$sharp-ease-in-out:           cubic-bezier(0.59, 0, 0.38, 1);

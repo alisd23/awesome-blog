@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import Article from '../universal/Objects/Article';
+import Author from '../universal/Objects/Author';
 import { browserHistory } from 'react-router';
 
 /**
@@ -73,9 +74,17 @@ export function createOnServer(reducerRegistry, initialState) {
  * @return {Object}   - Transformed state
  */
 function transformInitialState(state) {
+  const stateToClass = {
+    articles: Article,
+    authors: Author
+  }
+
   // Convert initial state in to the correct Objects
-  if (state.articles)
-    state.articles = state.articles.map((a) => new Article(a));
+  for (let name in stateToClass) {
+    for (let id in state[name]) {
+      state[name][id] = new stateToClass[name](state[name][id]);
+    }
+  }
 
   return state;
 }

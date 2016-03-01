@@ -1,22 +1,30 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { routeActions } from 'react-router-redux'
+import HeadlineContainer from '../containers/articles/Headline';
 
-export default class Home extends React.Component {
+export default class HomeComponent extends React.Component {
   static propTypes = {
-    articles: React.PropTypes.array
+    otherArticles: React.PropTypes.array,
+    headlineArticle: React.PropTypes.object
   }
   static defaultProps = {
-    articles: []
+    otherArticles: [],
+    headlineArticle: null
   }
 
   render() {
+    const headline = this.props.headlineArticle;
+    const articles = this.props.otherArticles;
+
     return (
-      <div className="container">
-        <h1>Home Page</h1>
+      <div id="home-page">
         {
-          this.props.articles.map((article: Article) =>
+          headline &&
+            <HeadlineContainer article={headline} />
+        }
+        {
+          articles.map((article: Article) =>
             <div key={article.id}>
+              <img src={article.imageURL} />
               <h4>{article.title}</h4>
               <h4>{article.content}</h4>
             </div>

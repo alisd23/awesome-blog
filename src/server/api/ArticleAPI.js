@@ -18,5 +18,5 @@ export function getArticles(req, res) {
 }
 
 export default {
-  getArticles: getArticles
+  getArticles
 }

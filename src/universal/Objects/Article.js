@@ -1,4 +1,5 @@
 import Author from './Author';
+import moment from 'moment';
 
 /**
  * Class representing an Article
@@ -37,8 +38,8 @@ export default class Article {
    * @return {String} Absolute path to the article image
    */
   get imageURL() {
-    return this.avatar
-      ? `/assets/images/articles/${this.image}`
+    return this.image
+      ? `/assets/images/articles/${this.image}.jpg`
       : `/assets/images/articles/placeholder.jpg`;
   }
 
@@ -48,5 +49,13 @@ export default class Article {
    */
   get likes() {
     return this.meta.likes;
+  }
+
+  /**
+   * Get the created datetime formatted
+   * @return {string}  Formatted date e.g. 12th Feb 2016 3:30pm
+   */
+  get createdPretty() {
+    return moment(this.created).format('Mo MMM YYYY - h:mma');
   }
 }

@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import HomePageComponent from '../components/Home';
-import { getArticlesArray } from '../redux/ducks/articles';
+import { getHeadlineArticle, getNonHeadlineArticles } from '../redux/ducks/articles';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
-
-class Home extends React.Component {
+class HomeContainer extends React.Component {
   static propTypes = {
     location: React.PropTypes.object, // React router gives this to us
     loading: React.PropTypes.bool,
+    headlineArticle: React.PropTypes.object,
+    otherArticles: React.PropTypes.array
   }
   static defaultProps = {
     location: '/'
@@ -19,7 +20,9 @@ class Home extends React.Component {
     return (
       <div>
         <Helmet {...config.app.head}/>
-        <HomePageComponent articles={this.props.articles} />
+        <HomePageComponent
+          otherArticles={this.props.otherArticles}
+          headlineArticle={this.props.headlineArticle} />
       </div>
     )
   }
@@ -28,11 +31,12 @@ class Home extends React.Component {
 function mapStateToProps(state) {
   return {
     loading: state.global.loading,
-    articles: getArticlesArray(state.articles)
+    otherArticles: getNonHeadlineArticles(state.articles),
+    headlineArticle: getHeadlineArticle(state.articles)
   }
 }
 
 export default connect(
   mapStateToProps,
   null
-)(Home)
+)(HomeContainer)

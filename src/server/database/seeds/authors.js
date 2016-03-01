@@ -9,12 +9,12 @@ export default (connection) => {
         {
           firstname: 'Joe',
           lastname: 'Bloggs',
-          avatar: ''
+          avatar: '1'
         },
         {
           firstname: 'Ali',
           lastname: 'Sheehan-Dare',
-          avatar: ''
+          avatar: '2'
         }
       ];
 

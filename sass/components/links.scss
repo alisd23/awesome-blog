@@ -9,8 +9,11 @@
 }
 
 .link-light {
-  @include link-variant($gray-light, lighten($gray-light, 20%))
+  @include link-variant($gray-light, lighten($gray-light, 20%));
 }
 .link-accent {
-  @include link-variant($gray-light, $teal)
+  @include link-variant($gray-light, $teal);
+}
+.link-accent-light {
+  @include link-variant(lighten($gray-light, 25%), $teal);
 }

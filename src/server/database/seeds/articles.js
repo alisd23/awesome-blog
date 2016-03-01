@@ -12,16 +12,16 @@ export default (connection) => {
     .then((authors) => {
       const articles: Article[] = [
         {
-          title: 'Amazing First Blog post',
+          title: 'Amazing First Blog post with a long title',
           content: loremIpsum,
           author: authors[0]._id,
-          image: ''
+          image: '1'
         },
         {
           title: 'Amazing Second Blog post',
           content: loremIpsum,
           author: authors[1]._id,
-          image: ''
+          image: '2'
         }
       ];
 

@@ -1,9 +1,12 @@
 
 @import './variables';
 @import './bootstrap';
+@import './material-icons';
 
+@import './pages/home';
 @import './pages/loading';
 
+@import './components/article';
 @import './components/modal';
 @import './components/alerts';
 @import './components/navbar';

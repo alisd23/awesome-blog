@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class ProductContainer extends React.Component {
+export default class PageLoaderComponent extends React.Component {
 
   render() {
     return (

@@ -4,7 +4,11 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import { createOnServer } from '../universal/Store';
 import Html from './html';
+
 import { getAllArticles } from './controllers/ArticleController';
+import { getAllAuthors } from './controllers/AuthorController';
+import { articlesToState } from '../universal/redux/ducks/articles';
+import { authorsToState } from '../universal/redux/ducks/authors';
 
 /**
  * State handlers, one for each route that can be accessed
@@ -75,11 +79,15 @@ export default function getInitialHtml(renderProps, reducerRegistry, isoTools) {
  * @return {Promise} - Promise which resolves to the initial state
  */
 function getHomeState(sharedState, renderProps) {
-  return getAllArticles()
-    .then((articles: Article) => {
+  return Promise.all([
+    getAllArticles(),
+    getAllAuthors()
+  ])
+    .then(([articles, authors]) => {
       return {
         ...sharedState,
-        articles
+        articles: articlesToState(articles),
+        authors: authorsToState(authors)
       };
     });
 }
