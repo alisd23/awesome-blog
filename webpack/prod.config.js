@@ -28,14 +28,17 @@ module.exports = Object.assign({},
 		entry: [
 			'./src/client/app.jsx'
 		],
+		output: Object.assign({},
+			{
+				publicPath: '/'
+			},
+			shared.output
+		),
 	  plugins: shared.plugins.concat([
 			new CleanPlugin(
 				[assetsPath],
 				{ root: projectRootPath }
 			),
-			new CopyPlugin([
-				{ from: 'assets', to: 'assets' }
-			]),
 	    new webpack.DefinePlugin({
 	      __CLIENT__: true,
 	      __SERVER__: false,

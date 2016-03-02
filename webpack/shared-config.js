@@ -14,24 +14,20 @@ module.exports = function(webpackIsomorphicToolsPlugin) {
     main: {
       context: projectRootPath,
       progress: true,
-      output: {
-    		path: assetsPath,
-        publicPath: '/',
-        filename: '[name]-[hash].js',
-        chunkFilename: '[name]-[chunkhash].js'
-    	},
       resolve: {
-        extensions: ['', '.js', '.jsx', '.scss'],
-        alias: {
-          // 'app.scss': path.join(projectRootPath, 'sass', 'app.scss')
-          // 'sass': path.join(projectRootPath, 'sass')
-        }
+        extensions: ['', '.js', '.jsx', '.scss']
       },
     	postcss: [
         autoprefixer({
           browsers: ['last 2 versions']
         })
       ]
+    },
+
+    output: {
+      path: assetsPath,
+      filename: '[name]-[hash].js',
+      chunkFilename: '[name]-[chunkhash].js'
     },
 
     loaders: [

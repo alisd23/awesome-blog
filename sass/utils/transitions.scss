@@ -44,18 +44,14 @@
    transition: opacity 0.5s $sharp-ease-in-out, transform 0.4s $sharp-ease-in-out;
  }
 
+/****************************/
+/**  KEYFRAME TRANSITIONS  **/
+/****************************/
 
  /**
-  * SCALE IN TRANSITION
+  * Fade IN
   */
-
- .scale-in {
-   transition: opacity 1s ease-out, transform 0.7s $sharp-ease-in-out;
-   opacity: 0;
-   transform: scale(1.2);
-
-   &.in {
-     opacity: 1;
-     transform: scale(1);
-   }
+ @keyframes FadeIn {
+   from  { opacity: 0; }
+   to    { opacity: 1; }
  }

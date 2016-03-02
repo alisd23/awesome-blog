@@ -25,9 +25,11 @@
   background-color: $gray-lightest;
 }
 
+
 .headline-article {
   flex: 0 1 75%;
   color: white;
+  animation: FadeIn 1.2s ease-out;
 
   > div {
     position: relative;

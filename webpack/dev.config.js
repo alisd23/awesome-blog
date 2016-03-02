@@ -16,6 +16,12 @@ module.exports = Object.assign({},
 	{
 		cache: true,
 		// debug: true,
+		output: Object.assign({},
+			{
+				publicPath: 'http://localhost:9000/'
+			},
+			shared.output
+		),
 		pathInfo: true,
 	  devtool: 'cheap-module-inline-source-map',
 		entry: [
