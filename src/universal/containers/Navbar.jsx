@@ -11,7 +11,8 @@ const links = [
   }
 ]
 
-class NavbarContainer extends React.Component {
+@connect(mapStateToProps)
+export default class NavbarContainer extends React.Component {
   static propTypes = {
     push: React.PropTypes.func,
     routing: React.PropTypes.object
@@ -33,8 +34,3 @@ function mapStateToProps(state) {
     routing: state.routing
   }
 }
-
-export default connect(
-  mapStateToProps,
-  null
-)(NavbarContainer)

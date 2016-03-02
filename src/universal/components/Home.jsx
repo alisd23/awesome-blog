@@ -1,36 +1,31 @@
 import React from 'react';
 import HeadlineContainer from '../containers/articles/Headline';
 
-export default class HomeComponent extends React.Component {
-  static propTypes = {
-    otherArticles: React.PropTypes.array,
-    headlineArticle: React.PropTypes.object
-  }
-  static defaultProps = {
-    otherArticles: [],
-    headlineArticle: null
-  }
+const HomeComponent = ({ headlineArticle, otherArticles }) => (
 
-  render() {
-    const headline = this.props.headlineArticle;
-    const articles = this.props.otherArticles;
-
-    return (
-      <div id="home-page">
+  <div id="home-page">
+    {
+      headlineArticle &&
+        <HeadlineContainer article={headlineArticle} />
+    }
+    <section className="container">
+      <div className="articles-grid flex flex-wrap">
         {
-          headline &&
-            <HeadlineContainer article={headline} />
-        }
-        {
-          articles.map((article: Article) =>
-            <div key={article.id}>
-              <img src={article.imageURL} />
-              <h4>{article.title}</h4>
-              <h4>{article.content}</h4>
+          otherArticles.map((article: Article) =>
+            <div className="article-wrapper col-sm-12" key={article.id}>
+              <div className="article">
+                <div className="article-image"
+                     style={{backgroundImage: `url(${article.imageURL})`}}></div>
+                <h4>{article.title}</h4>
+                <p>{article.content}</p>
+              </div>
             </div>
           )
         }
       </div>
-    )
-  }
-}
+    </section>
+  </div>
+
+);
+
+export default HomeComponent;

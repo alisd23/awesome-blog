@@ -5,7 +5,8 @@ import { getHeadlineArticle, getNonHeadlineArticles } from '../redux/ducks/artic
 import config from '../../config';
 import Helmet from 'react-helmet';
 
-class HomeContainer extends React.Component {
+@connect(mapStateToProps)
+export default class HomeContainer extends React.Component {
   static propTypes = {
     location: React.PropTypes.object, // React router gives this to us
     loading: React.PropTypes.bool,
@@ -35,8 +36,3 @@ function mapStateToProps(state) {
     headlineArticle: getHeadlineArticle(state.articles)
   }
 }
-
-export default connect(
-  mapStateToProps,
-  null
-)(HomeContainer)

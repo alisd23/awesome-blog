@@ -3,9 +3,11 @@
 @import './bootstrap';
 @import './material-icons';
 
-@import './pages/home';
-@import './pages/loading';
+@import './main/global';
+@import './main/home';
+@import './main/loading';
 
+@import './components/headline';
 @import './components/article';
 @import './components/modal';
 @import './components/alerts';

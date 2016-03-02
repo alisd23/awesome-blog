@@ -22,6 +22,24 @@ export default (connection) => {
           content: loremIpsum,
           author: authors[1]._id,
           image: '2'
+        },
+        {
+          title: 'Third Blog post',
+          content: loremIpsum,
+          author: authors[0]._id,
+          image: '1'
+        },
+        {
+          title: 'Amazing 4th Blog post',
+          content: loremIpsum,
+          author: authors[1]._id,
+          image: '2'
+        },
+        {
+          title: 'Cool post',
+          content: loremIpsum,
+          author: authors[0]._id,
+          image: '1'
         }
       ];
 

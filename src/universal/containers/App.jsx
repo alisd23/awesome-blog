@@ -8,7 +8,8 @@ import Helmet from 'react-helmet';
 // Can call just like this with babel resolver plugin
 import 'app.scss';
 
-class App extends React.Component {
+@connect(mapStateToProps)
+export default class App extends React.Component {
   static propTypes = {
     clickNavLink: React.PropTypes.element,
     location: React.PropTypes.object, // React router gives this to us
@@ -34,8 +35,3 @@ function mapStateToProps(state: AppState) {
     loading: state.global.loading
   }
 }
-
-export default connect(
-  mapStateToProps,
-  null
-)(App)

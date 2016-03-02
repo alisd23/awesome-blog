@@ -1,0 +1,126 @@
+
+.headline-banner {
+  display: flex;
+  min-height: 500px;
+  margin-bottom: $spacer-xl;
+  background-color: $gray-lightest;
+
+  @include media-breakpoint-down(sm) {
+    min-height: auto;
+  }
+
+  .author {
+    padding: 2rem;
+    text-align: center;
+    flex: 1 0 300px;
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+    }
+  }
+}
+
+.headline-user {
+  background-color: $gray-lightest;
+}
+
+.headline-article {
+  flex: 0 1 75%;
+  color: white;
+
+  > div {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &:hover {
+    .article-image {
+      transform: scale(1.25);
+    }
+  }
+
+  .article-image {
+    @extend .background-cover;
+    transition: all 0.6s $sharp-ease-in-out;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top:    0; left:  0;
+      bottom: 0; right: 0;
+      background-color: rgba(black, 0.65);
+    }
+  }
+  .article-inner {
+    padding: $spacer-xl;
+    justify-content: center;
+
+    @include media-breakpoint-only(sm) {
+      padding: 4rem $spacer-lg;
+    }
+    @include media-breakpoint-down(xs) {
+      padding: 3rem $spacer-lg;
+    }
+  }
+  .article-content {
+    z-index: 1;
+  }
+  .article-title {
+    flex: 1 0 0;
+    font-weight: 600;
+    font-size: 3.6rem;
+    line-height: normal;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 2.8rem;
+    }
+    @include media-breakpoint-down(xs) {
+      font-size: 2rem;
+    }
+  }
+  .article-details {
+    flex: 0 0 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-top: 1rem;
+  }
+  .article-action {
+    flex: 0 0 auto;
+    margin-left: $spacer-lg;
+
+    .btn {
+      height: 80px;
+    }
+
+    // On small screens position below all content and center
+    @include media-breakpoint-down(sm) {
+      margin-left: 0;
+      margin-top: $spacer-lg;
+      flex-basis: 100%;
+      order: 3;
+
+      .btn {
+        height: 60px;
+      }
+    }
+  }
+  .article-by, .article-date {
+    margin-bottom: $spacer-md;
+  }
+  .article-by {
+    color: lighten($gray-light, 15%);
+  }
+}
+
+
+
+@include media-breakpoint-down(lg) {
+  .headline-article {
+    flex-basis: 100%;
+  }
+  .headline-banner .author {
+    display: none;
+  }
+}

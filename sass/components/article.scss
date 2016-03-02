@@ -1,4 +1,21 @@
 
-.article {
-  color: white;
+$grid-padding-y: $spacer-lg;
+$grid-padding-x: 4rem;
+
+.articles-grid {
+  margin-left: -$grid-padding-x;
+  margin-right: -$grid-padding-x;
+
+  .article-wrapper {
+    padding: $grid-padding-y $grid-padding-x;
+    height: 500px;
+
+    &:nth-child(2n) {
+      margin-top: 250px;
+    }
+  }
+
+  .article {
+
+  }
 }
