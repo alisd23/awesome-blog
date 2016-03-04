@@ -7,7 +7,7 @@ const HeadlineAuthorComponent = ({ author }) => (
       author
         ?
           <div className="author-content center-a column">
-            <div className="avatar background-cover img-circle"
+            <div className="avatar img-cover img-circle"
                  style={{backgroundImage: `url(${author.avatarURL})`}}></div>
             <h2 className="m-y-md">{author.fullname}</h2>
           </div>

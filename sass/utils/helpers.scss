@@ -9,7 +9,21 @@
   left: 0;  right: 0;
 }
 
-.background-cover {
+.img-cover {
   background: no-repeat center center;
   background-size: cover;
+
+  &:not(.cover) {
+    // If position is not already absolute then make relative
+    // so the tint covers the correct div
+    position: relative;
+  }
+
+  &.img-tint:before {
+    content: "";
+    position: absolute;
+    top:    0; left:  0;
+    bottom: 0; right: 0;
+    background-color: rgba(black, 0.6);
+  }
 }

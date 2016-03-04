@@ -6,7 +6,7 @@ import { getAllArticles } from '../controllers/ArticleController';
  * @return {void}
  */
 export function getArticles(req, res) {
-  getArticles
+  getAllArticles()
     .then((articles: Article[]) => {
       console.log('GetArticles - ', articles);
       res.status(200).send(articles);

@@ -13,6 +13,7 @@ import reducerRegistry from '../universal/redux/registry';
 import Routes from '../universal/Routes';
 import { createOnClient } from '../universal/Store';
 import coreReducers from '../universal/redux/core';
+import { authenticateFromSession } from './api/auth';
 
 const DevToolsComponent =
   <DockMonitor
@@ -40,7 +41,9 @@ match(matchParams, (error, redirectLocation, renderProps) => {
 
   const initialState  = window.__INITIAL_STATE__;
   const store         = createOnClient(reducerRegistry, DevTools, initialState);
-  const history       = syncHistoryWithStore(browserHistory, store)
+  const history       = syncHistoryWithStore(browserHistory, store);
+
+  authenticateFromSession();
 
   routes.injectStore(store);
 

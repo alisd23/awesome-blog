@@ -5,7 +5,7 @@ const HeadlineArticleComponent = ({ article, author }) => (
   <div className="headline-article article flex">
     <div className="article-inner column">
       {/* Image */}
-      <div className="article-image cover"
+      <div className="article-image cover img-cover img-tint"
            style={{backgroundImage: `url(${article.imageURL})`}}></div>
 
       {/* Article TITLE and action button*/}

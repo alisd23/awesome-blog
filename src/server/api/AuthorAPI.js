@@ -6,7 +6,7 @@ import { getAllAuthors } from '../controllers/ArticleController';
  * @return {void}
  */
 export function getAuthors(req, res) {
-  getAllAuthors
+  getAllAuthors()
     .then((authors: Author[]) => {
       console.log('GetAuthors - ', authors);
       res.status(200).send(authors);

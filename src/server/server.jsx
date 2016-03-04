@@ -1,14 +1,17 @@
 
 import path from 'path';
 import express from 'express';
+import minimatch from 'minimatch';
+import bodyParser from 'body-parser';
 import { match } from 'react-router';
 
-import connect from './database/connection';
+import { connectMongoDB, connectMySql } from './database/connection';
 import Routes from '../universal/Routes';
 import coreReducers from '../universal/redux/core';
 import reducerRegistry from '../universal/redux/registry';
 import initialRender from './initialRender';
 import articleApi from './api/ArticleAPI';
+import authApi from './api/AuthAPI';
 
 
 /**
@@ -21,23 +24,36 @@ export default (isoTools, __DEVELOPMENT__) => {
   const projectRoot   = path.join(__dirname, '../..');
 
   const app = express();
-  const DBConnection = connect();
+
+  // Connect to mySQL and mono databases when server launches. Connections
+  // can be retrieved by these same methods later
+  const mongoConn = connectMongoDB();
+  const sqlConn = connectMySql();
+
 
   /**
    *  MIDDLEWARE
    */
   app.use(express.static(path.join(projectRoot, 'build')));
-  app.use(handleInitialRender);
+
 
   /**
   *  ROUTES
   */
-  app.get('/articles', articleApi.getArticles);
+
+  app.use(bodyParser());
+
+  app.get('/api/articles', articleApi.getArticles);
+  app.post('/api/token-auth/:token', authApi.authenticateWithToken);
+
+  app.get('*', handleInitialRender);
+
 
   /**
   *  INITIAL RENDER
   */
   function handleInitialRender(req, res) {
+
     reducerRegistry.register(coreReducers);
     const routes = new Routes(reducerRegistry);
 

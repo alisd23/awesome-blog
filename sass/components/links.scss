@@ -17,3 +17,6 @@
 .link-accent-light {
   @include link-variant(lighten($gray-light, 25%), $teal);
 }
+.link-accent-white {
+  @include link-variant(white, $teal);
+}

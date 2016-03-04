@@ -1,5 +1,6 @@
 import Author from './Author';
 import moment from 'moment';
+import vagueTime from 'vague-time';
 
 /**
  * Class representing an Article
@@ -29,7 +30,7 @@ export default class Article {
     this.content = article.content;
     this.author = article.author;
     this.image = article.image;
-    this.created = article.created;
+    this.created = new Date(article.created);
     this.meta = article.meta;
   }
 
@@ -57,5 +58,16 @@ export default class Article {
    */
   get createdPretty() {
     return moment(this.created).format('Mo MMM YYYY - h:mma');
+  }
+  /**
+   * Get the date 'since' now (e.g. 2 hours ago)
+   * @return {string}  Fuzzy time since creation
+   */
+  get createdFuzzy() {
+    return vagueTime.get({
+      from: Date.now(),
+      to: this.created.getTime(),
+      units: 'ms'
+    });
   }
 }

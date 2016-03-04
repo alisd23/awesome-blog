@@ -1,6 +1,7 @@
 
-$grid-padding-y: $spacer-lg;
-$grid-padding-x: 4rem;
+$grid-padding-y: 0;
+$grid-padding-x: 3rem;
+$article-height: 500px;
 
 .articles-grid {
   margin-left: -$grid-padding-x;
@@ -8,14 +9,116 @@ $grid-padding-x: 4rem;
 
   .article-wrapper {
     padding: $grid-padding-y $grid-padding-x;
-    height: 500px;
+    height: $article-height;
 
     &:nth-child(2n) {
-      margin-top: 250px;
+      margin-top: calc((#{$article-height} / 4) + #{$grid-padding-x});
+    }
+    &:nth-child(n+3) {
+      .article-card {
+        margin-top: calc(#{$grid-padding-x} - (#{$article-height} / 4));
+      }
+    }
+  }
+}
+
+.article-card {
+  box-shadow: -6px 10px 40px 6px rgba(0, 0, 0, 0.15);
+  background-color: white;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+
+  $header-padding: $spacer-lg;
+
+  .article-header {
+    position: relative;
+    padding: $header-padding;
+    height: $article-height / 2;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+
+    .article-image,
+    .article-image::before {
+      transition: all 0.5s $sharp-ease-in-out;
+    }
+
+    &:hover {
+      .article-image {
+        transform: scale(1.1);
+        &:before {
+          background-color: rgba(black, 0.75);
+        }
+      }
+      .read-action {
+        opacity: 1;
+        bottom: 0;
+      }
+    }
+
+    .read-action {
+      height: $header-padding;
+      position: absolute;
+      bottom: -$header-padding;
+      left: 0;  right: 0;
+      opacity: 0;
+      transition: opacity 0.6s 0.15s ease-out, bottom 0.4s 0.15s $sharp-ease-in-out;
+      color: white;
+    }
+    .content {
+      z-index: 1;
     }
   }
 
-  .article {
+  // Article content //
+  .article-content {
+    padding: $spacer-md $spacer-lg $spacer-lg;
+  }
 
+  .article-author {
+    margin-bottom: $spacer-md;
+
+    a {
+      &:hover {
+        + .avatar {
+          border-color: $teal;
+        }
+      }
+    }
+
+    .avatar {
+      order: -1;  // Push to left of text
+      transition: all 0.3s ease-out;
+      border: 2px solid white;
+      width: 44px;
+      height: 44px;
+      margin-right: $spacer;
+    }
+  }
+  .article-title {
+    color: white;
+    line-height: normal;
+  }
+  .article-blurb {
+    position: relative;
+    overflow: hidden;
+
+    &:after {
+      content: "";
+      display: block;
+      height: $spacer-lg;
+      position: absolute;
+      bottom: 0;
+      left: 0;  right: 0;
+      background: linear-gradient(to top, rgba(white, 1), rgba(white, 0));
+    }
+  }
+  .article-footer {
+    flex-direction: row-reverse;
+    margin-top: $spacer;
   }
 }

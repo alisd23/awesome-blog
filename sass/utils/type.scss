@@ -13,3 +13,7 @@ body, html {
 .strong {
   font-weight: bold;
 }
+
+.text-light {
+  color: lighten($gray-light, 25%);
+}

@@ -1,4 +1,9 @@
 
 #home-page {
   padding-top: $spacer-lg;
+
+  .articles-section {
+    padding-top: $spacer-xl * 2;
+    background-color: $gray-lightest;
+  }
 }

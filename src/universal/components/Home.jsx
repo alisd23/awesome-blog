@@ -9,9 +9,9 @@ const HomeComponent = ({ headlineArticle, otherArticles }) => (
       headlineArticle &&
         <HeadlineContainer article={headlineArticle} />
     }
-    {
+    <section className="articles-section">
       <ArticleGridComponent articles={otherArticles} />
-    }
+    </section>
   </div>
 
 );

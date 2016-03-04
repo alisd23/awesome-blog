@@ -2,7 +2,6 @@
 .headline-banner {
   display: flex;
   min-height: 500px;
-  margin-bottom: $spacer-xl;
   background-color: $gray-lightest;
 
   @include media-breakpoint-down(sm) {
@@ -13,6 +12,8 @@
     padding: 2rem;
     text-align: center;
     flex: 1 0 300px;
+    border-bottom: #eee 2px solid;
+    border-top: #eee 2px solid;
 
     .avatar {
       width: 120px;
@@ -36,24 +37,17 @@
     overflow: hidden;
   }
 
+  .article-image {
+    @extend .background-cover;
+    transition: all 0.6s $sharp-ease-in-out;
+  }
+
   &:hover {
     .article-image {
       transform: scale(1.25);
     }
   }
 
-  .article-image {
-    @extend .background-cover;
-    transition: all 0.6s $sharp-ease-in-out;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top:    0; left:  0;
-      bottom: 0; right: 0;
-      background-color: rgba(black, 0.65);
-    }
-  }
   .article-inner {
     padding: $spacer-xl;
     justify-content: center;
