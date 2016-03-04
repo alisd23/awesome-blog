@@ -13,7 +13,7 @@ import reducerRegistry from '../universal/redux/registry';
 import Routes from '../universal/Routes';
 import { createOnClient } from '../universal/Store';
 import coreReducers from '../universal/redux/core';
-import { authenticateFromSession } from './api/auth';
+import { loginFromSession } from '../universal/redux/ducks/auth';
 
 const DevToolsComponent =
   <DockMonitor
@@ -43,7 +43,8 @@ match(matchParams, (error, redirectLocation, renderProps) => {
   const store         = createOnClient(reducerRegistry, DevTools, initialState);
   const history       = syncHistoryWithStore(browserHistory, store);
 
-  authenticateFromSession();
+  // Attempt athentication from FruksWeb session token
+  store.dispatch(loginFromSession());
 
   routes.injectStore(store);
 
@@ -62,7 +63,6 @@ match(matchParams, (error, redirectLocation, renderProps) => {
     <DevTools store={store} />,
     document.getElementById('dev-tools')
   )
-
 
   //--------------------------//
   //  HOT RELOADING REDUCERS  //

@@ -48,7 +48,7 @@ export function connectMySql() {
       database  : config.sql.database,
       port      : config.sql.port
     },
-    debug: process.NODE_ENV !== 'production'
+    // debug: process.NODE_ENV !== 'production'
   });
 
   return sqlConnection;

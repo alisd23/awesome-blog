@@ -12,18 +12,23 @@ export function authenticateWithToken(req, res) {
   const { token } = req.params;
 
   if (!token)
-      res.status('400').send('Token Authentication failed');
+    res.status('400').send('Token Authentication failed');
 
   // Verify and Decode JWT token
   jwt.verify(token, config.app_key, (err, decoded) => {
-      if (err || !decoded) {
-          console.error('JWT decoding failed', err);
-      } else {
-          console.log('JWT token -', decoded);
-          getUser(decoded.id)
-            .then(user => res.status(200).send(user))
-            .catch(err => res.status('500').send({ err: `Get user failed - ${err}`}));
-      }
+    if (err || !decoded) {
+      console.error('JWT decoding failed', err);
+    } else {
+      getUser(decoded.id)
+        .then(user => {
+          req.session.user = user;
+          res.status(200).send({
+            success: 1,
+            user: user
+          });
+        })
+        .catch(err => res.status('500').send({ err: `Get user failed - ${err}`}));
+    }
   });
 }
 

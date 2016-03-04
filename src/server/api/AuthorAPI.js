@@ -8,12 +8,17 @@ import { getAllAuthors } from '../controllers/ArticleController';
 export function getAuthors(req, res) {
   getAllAuthors()
     .then((authors: Author[]) => {
-      console.log('GetAuthors - ', authors);
-      res.status(200).send(authors);
+      res.status(200).send({
+        success: 1,
+        authors: authors
+      });
     })
     .catch((err) => {
       console.log("GetAuthors ERROR - ", err);
-      res.status(400).send(err);
+      res.status(400).send({
+        success: 0,
+        error: `Could not get authors - ${err}`
+      });
     });
 }
 

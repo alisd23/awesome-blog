@@ -6,17 +6,28 @@ import { getAllArticles } from '../controllers/ArticleController';
  * @return {void}
  */
 export function getArticles(req, res) {
+
   getAllArticles()
     .then((articles: Article[]) => {
-      console.log('GetArticles - ', articles);
-      res.status(200).send(articles);
+      res.status(200).send({
+        success: 1,
+        articles: articles
+      });
     })
     .catch((err) => {
       console.log("GetArticles ERROR - ", err);
-      res.status(400).send(err);
+      res.status(400).send({
+        success: 0,
+        error: `Could not get articles - ${err}`
+      });
     });
 }
 
+export function likeArticle(req, res) {
+  console.log('LIKE ARTICLE');
+}
+
 export default {
-  getArticles
+  getArticles,
+  likeArticle
 }
