@@ -22,6 +22,7 @@ export function getAuthors(req, res) {
     });
 }
 
+
 export default {
   getAuthors
 }

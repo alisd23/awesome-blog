@@ -5,6 +5,9 @@ import session from 'express-session';
 import minimatch from 'minimatch';
 import bodyParser from 'body-parser';
 import { match } from 'react-router';
+import expressSession from 'express-session';
+import connectMongo from 'connect-mongo';
+import mongoose from 'mongoose';
 
 import { connectMongoDB, connectMySql } from './database/connection';
 import Routes from '../universal/Routes';
@@ -33,6 +36,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   const mongoConn = connectMongoDB();
   const sqlConn = connectMySql();
 
+  const MongoStore = connectMongo(expressSession);
 
   /**
    *  MIDDLEWARE
@@ -44,7 +48,10 @@ export default (isoTools, __DEVELOPMENT__) => {
   app.use(bodyParser.json());
   app.use(express.static(path.join(projectRoot, 'build')));
 
-  app.use(session(config.session));
+  app.use(session({
+    ...config.session,
+  	store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  }));
 
 
   /**
@@ -71,7 +78,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   *  INITIAL RENDER
   */
   function handleInitialRender(req, res) {
-    
+
     reducerRegistry.register(coreReducers);
     const routes = new Routes(reducerRegistry);
 

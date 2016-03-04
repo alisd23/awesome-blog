@@ -6,7 +6,12 @@ import { endLoading } from './redux/ducks/global';
 import App from './containers/App';
 import ReducerRegistry from './redux/registry';
 
-const ENV = typeof global !== 'undefined' ? global.ENV : 'client';
+// Webpack Hacky environment isomorphic stuff
+const ENV = typeof window !== 'undefined' ? 'client' : global.ENV;
+// Require ensure shim
+if (typeof require.ensure !== "function") require.ensure = (d, c) => c(require);
+if (typeof require.include !== "function") require.include = () => {};
+
 
 export default class routes {
   static store = null;
@@ -25,8 +30,9 @@ export default class routes {
 
   configure() {
     return (
-      <Route path="/" component={App}>
+      <Route path='/' component={App}>
         <IndexRoute getComponent={::this.getHomePage} />
+        <Route path='/article/:id' getComponent={::this.getArticlePage} />
       </Route>
     );
   }
@@ -37,11 +43,25 @@ export default class routes {
   getHomePage(location, cb) {
     if (ENV === 'client') {
       System.import('./containers/Home')
-        .then(container => this.changeScreen(location, cb, container))
+        .then(container => this.changeScreen(location, cb, container.default))
         .catch(err => console.log('Epic fail: Home Page -- ', err));
     } else {
-      const container = require('./containers/Home').default;
-      this.changeScreen(location, cb, container);
+      require.ensure(['./containers/Home'], (require) => {
+        const container = require('./containers/Home').default;
+        this.changeScreen(location, cb, container);
+      });
+    }
+  }
+  getArticlePage(location, cb) {
+    if (ENV === 'client') {
+      System.import('./containers/Article')
+        .then(container => this.changeScreen(location, cb, container.default))
+        .catch(err => console.log('Epic fail: Article Page -- ', err));
+    } else {
+      require.ensure(['./containers/Article'], (require) => {
+        const container = require('./containers/Article').default;
+        this.changeScreen(location, cb, container);
+      });
     }
   }
 
@@ -52,7 +72,8 @@ export default class routes {
 
     if (!this.store) {
       cb(null, component);
-    } else if (this.store.getState().routing.location.pathname === location.pathname) {
+    // } else if (this.store.getState().routing.location.pathname === location.pathname) {
+    } else {
       cb(null, component);
       this.store.dispatch(endLoading);
     }

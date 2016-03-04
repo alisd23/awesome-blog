@@ -18,14 +18,14 @@ export function authenticateFromSession() {
       ...GET_CONFIG,
       mode: 'cors'
     })
-    .then(response => response.json())
-    .then(key => {
-      if (key) {
-        return authenticateWithToken(key);
+    .then(response => {
+      if (response.ok) {
+        return response.json();
       } else {
         throw new Error('Session authentication failed');
       }
     })
+    .then(key => authenticateWithToken(key));
 }
 
 /**

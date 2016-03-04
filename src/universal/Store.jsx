@@ -1,8 +1,10 @@
 import React from 'react';
 import {applyMiddleware, createStore, combineReducers} from 'redux';
+import { routerMiddleware } from 'react-router-redux'
 import { compose } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+
 import Article from '../universal/Objects/Article';
 import Author from '../universal/Objects/Author';
 import { browserHistory } from 'react-router';
@@ -16,7 +18,7 @@ import { browserHistory } from 'react-router';
  */
 export function createOnClient(reducerRegistry, DevTools, initialState) {
 
-  const middleware = [thunk, logger()];
+  const middleware = [thunk, logger(), routerMiddleware(browserHistory)];
 
   const reducer = combineReducers(reducerRegistry.getReducers());
 

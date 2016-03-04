@@ -1,4 +1,6 @@
 
+import config from '../../server/config';
+
 /**
  * Class representing a User
  */
@@ -17,12 +19,17 @@ export default class User {
    * @param  {string} avatar    - Unique Avatar image string
    * @param  {Date}   created   - [description]
    */
-  constructor(author) {
-    this.id = author.id || author._id;
-    this.firstname = author.firstname;
-    this.lastname = author.lastname;
-    this.avatar = author.avatar;
-    this.created = author.created;
+  constructor(user) {
+    this.id = user.id || user._id;
+    this.firstname = user.firstname;
+    this.lastname = user.lastname;
+    this.created = user.created;
+    // If the user is an author we can assume that they have a 'fruks-blog'
+    // account so can use the avatar from there
+    this.isAuthor = user.isAuthor || false;
+    // If user is an author, get image from fruksBlog server
+    // otherwise look in fruksWeb server
+    this.avatar = this.isAuthor ? user.avatar : user.image;
   }
 
   /**
@@ -30,9 +37,13 @@ export default class User {
    * @return {String} Absolute path to the avatar image
    */
   get avatarURL() {
-    return this.avatar
-      ? `/assets/images/avatars/${this.avatar}.jpg`
-      : `/assets/images/avatars/placeholder.jpg`;
+    if (this.avatar) {
+      return this.isAuthor
+        ? `/assets/images/avatars/${this.avatar}.jpg`
+        : `${config.fruks_web_hostname}/images/avatars/${this.avatar}.jpg`;
+    } else {
+      return `/assets/images/avatars/placeholder.jpg`;
+    }
   }
 
   /**

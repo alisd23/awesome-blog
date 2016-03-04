@@ -7,10 +7,21 @@ import Author from '../../universal/Objects/Author';
  * @return {Promise} Resolves to an array of articles
  */
 export function getAllAuthors() {
-  return AuthorModel.find().exec()
+  return AuthorModel
+    .find().exec()
     .then((rawAuthors: any[]) =>
       rawAuthors.map((a) => {
         return new Author(a);
       })
     );
+}
+
+/**
+ * Get ALL the articles from the database
+ * @return {Promise} Resolves to an array of articles
+ */
+export function findAuthor(id: number) {
+  return AuthorModel
+    .findOne({ fruksID: id }).exec()
+    .then((rawAuthor) => rawAuthor ? new Author(rawAuthor) : null);
 }

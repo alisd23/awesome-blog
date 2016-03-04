@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const NavbarComponent = ({ clickNavLink, routing, links }) => {
+const NavbarComponent = ({ clickNavLink, routing, links, user }) => {
 
   const LogoImg = require('../../../assets/images/teal_logo.png');
 
@@ -34,7 +34,23 @@ const NavbarComponent = ({ clickNavLink, routing, links }) => {
           </ul>
         </div>
         <div className="nav-right">
-          <div className="btn btn-primary-outline btn-caps strong">Join Fruks</div>
+          <ul className="links nav">
+            {
+              user
+                ?
+                  <div className="nav-user flex row-center">
+                    <a className="link-accent text-truncate flex-expand">{user.fullname}</a>
+                    <div className="avatar img-cover img-circle"
+                         style={{backgroundImage: `url(${user.avatarURL})`}}>
+                    </div>
+                  </div>
+                :
+                  <div className="nav-actions flex row-center">
+                    <a className="link-accent m-r-md">Login</a>
+                    <div className="btn btn-primary-outline btn-caps strong">Join Fruks</div>
+                  </div>
+            }
+          </ul>
         </div>
       </nav>
     </div>

@@ -5,5 +5,9 @@
   .articles-section {
     padding-top: $spacer-xl * 2;
     background-color: $gray-lightest;
+
+    @include media-breakpoint-down(md) {
+      padding-top: $spacer-xl;
+    }
   }
 }

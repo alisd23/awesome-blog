@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeadlineArticleComponent = ({ article, author }) => (
+const HeadlineArticleComponent = ({ article, author, onReadArticle }) => (
 
   <div className="headline-article article flex">
     <div className="article-inner column">
@@ -12,10 +12,10 @@ const HeadlineArticleComponent = ({ article, author }) => (
       <div className="article-content flex flex-wrap">
         <h1 className="article-title small-caps flex-expand">{article.title}</h1>
         <div className="article-action flex-static center-a">
-          <div className="btn btn-white-accent btn-transition">
+          <a className="btn btn-white-accent btn-transition" onClick={onReadArticle}>
             <span className="text small-caps">Read Article</span>
             <i className="icon material-icons">local_library</i>
-          </div>
+          </a>
         </div>
 
         {/* Article DETAILS*/}

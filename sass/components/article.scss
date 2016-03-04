@@ -10,14 +10,20 @@ $article-height: 500px;
   .article-wrapper {
     padding: $grid-padding-y $grid-padding-x;
     height: $article-height;
+    max-width: 100%;  // Prevent x-overflow for long words
 
-    &:nth-child(2n) {
-      margin-top: calc((#{$article-height} / 4) + #{$grid-padding-x});
-    }
-    &:nth-child(n+3) {
-      .article-card {
-        margin-top: calc(#{$grid-padding-x} - (#{$article-height} / 4));
+    @include media-breakpoint-up(lg) {
+      &:nth-child(2n) {
+        margin-top: calc((#{$article-height} / 4) + #{$grid-padding-x});
       }
+      &:nth-child(n+3) {
+        .article-card {
+          margin-top: calc(#{$grid-padding-x} - (#{$article-height} / 4));
+        }
+      }
+    }
+    @include media-breakpoint-down(md) {
+      margin-top: 4rem;
     }
   }
 }
@@ -47,7 +53,7 @@ $article-height: 500px;
       transition: all 0.5s $sharp-ease-in-out;
     }
 
-    &:hover {
+    @include hover-focus {
       .article-image {
         transform: scale(1.1);
         &:before {
@@ -77,6 +83,10 @@ $article-height: 500px;
   // Article content //
   .article-content {
     padding: $spacer-md $spacer-lg $spacer-lg;
+
+    @include media-breakpoint-down(md) {
+      padding: $spacer-md 2rem 2rem;
+    }
   }
 
   .article-author {
@@ -110,7 +120,7 @@ $article-height: 500px;
     &:after {
       content: "";
       display: block;
-      height: $spacer-lg;
+      height: $line-height * $font-size-base * 3;
       position: absolute;
       bottom: 0;
       left: 0;  right: 0;

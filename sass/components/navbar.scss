@@ -29,4 +29,11 @@
       font-size: $font-size-lg;
     }
   }
+  .nav-user {
+    .avatar {
+      width: 40px;
+      height: 40px;
+      margin-left: $spacer;
+    }
+  }
 }

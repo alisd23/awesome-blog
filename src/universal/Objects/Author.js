@@ -6,4 +6,13 @@ import User from './User';
  */
 export default class Author extends User {
 
+  /**
+   * Converts the author data into an author class instance
+   * @param  {Object} author - Can be a fruks user OR a FruksBlog user
+   */
+  constructor(author) {
+    author.isAuthor = true;
+    super(author);
+  }
+
 };

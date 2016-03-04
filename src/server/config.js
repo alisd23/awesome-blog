@@ -1,8 +1,11 @@
-import expressSession from 'express-session';
-import connectMongo from 'connect-mongo';
-import mongoose from 'mongoose';
 
-export const app_key = "Jd72nShdlKnannfJdnswzoJeDNSjkWas";
+
+//-------------------------------//
+// SET THESE TO BE YOUR SETTINGS //
+//-------------------------------//
+export const app_key = 'Jd72nShdlKnannfJdnswzoJeDNSjkWas';
+
+export const fruks_web_hostname = 'http://fruks.app';
 
 export const sql = {
 	user: 'homestead',
@@ -12,11 +15,12 @@ export const sql = {
 	port: '3306'
 };
 
-const MongoStore = connectMongo(expressSession);
-
+//-------------------------------//
+// SHOULDN'T NEED TO TOUCH THESE //
+//-------------------------------//
+//
 export const session = {
 	secret: app_key,
-	store: new MongoStore({ mongooseConnection: mongoose.connection }),
 	cookie: {
 		maxAge: 60 * 60 * 24 * 1000, /* 24 hours */
 		secure: process.NODE_ENV === 'production',
@@ -28,6 +32,7 @@ export const session = {
 
 export default {
 	app_key,
+	fruks_web_hostname,
 	sql,
 	session
 }

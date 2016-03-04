@@ -1,6 +1,7 @@
 import React from 'react';
 import HeadlineComponent from '../../components/articles/Headline';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 @connect(mapStateToProps)
 export default class HeadlineContainer extends React.Component {
@@ -14,10 +15,12 @@ export default class HeadlineContainer extends React.Component {
   }
 
   render() {
-    return (
+    const { author, article, dispatch } = this.props;
+    return article && (
       <HeadlineComponent
-        article={this.props.article}
-        author={this.props.author} />
+        article={article}
+        author={author}
+        onReadArticle={() => dispatch(push(`/article/${article.id}`))} />
     )
   }
 }

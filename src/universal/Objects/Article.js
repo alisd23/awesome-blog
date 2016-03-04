@@ -22,7 +22,7 @@ export default class Article {
    * @param  {User}   author
    * @param  {string} image   - Unique article image string
    * @param  {Date}   created
-   * @param  {number} meta.likes
+   * @param  {number[]} meta.likes  - An array of FruksWeb user ids which have liked
    */
   constructor(article) {
     this.id = article.id || article._id;

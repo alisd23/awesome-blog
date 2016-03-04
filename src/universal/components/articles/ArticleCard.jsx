@@ -15,11 +15,11 @@ const ArticleCardComponent = ({ article, author }) => (
       </div>
       <div className="article-content column flex-expand">
         <div className="article-author flex-static flex row-center">
-          <a className="link-accent-light flex-expand">{author.fullname}</a>
-          <div className="avatar text-overflow img-cover img-circle"
+          <a className="link-accent-light text-truncate flex-expand">{author.fullname}</a>
+          <div className="avatar img-cover img-circle"
                style={{backgroundImage: `url(${author.avatarURL})`}}>
           </div>
-          <span className="text-light small">{article.createdFuzzy}</span>
+          <span className="text-light small m-l-sm">{article.createdFuzzy}</span>
         </div>
         <div className="article-blurb">
           <p>{article.content}</p>

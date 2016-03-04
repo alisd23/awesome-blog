@@ -1,5 +1,6 @@
 
-import { authenticateFromSession } from '../../../client/api/auth';
+import { authenticateFromSession } from '../../api/auth';
+import User from '../../Objects/User';
 
 const LOGIN_FROM_SESSION = 'LOGIN_FROM_SESSION';
 const LOGIN_FROM_TOKEN = 'LOGIN_FROM_TOKEN';
@@ -34,7 +35,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         loggingIn: false,
-        user: action.user
+        user: new User(action.user)
       };
     default:
       return state;
@@ -46,13 +47,20 @@ export default function reducer(state = initialState, action) {
 //           Actions          //
 //----------------------------//
 
-function loginFailure(reason: string) {
+/**
+ * Login failure action creator
+ * @return {Object} Login failure action
+ */
+function loginFailure() {
   return {
-    type: LOGIN_FAILURE,
-    reason
+    type: LOGIN_FAILURE
   }
 }
 
+/**
+ * Login success action creator
+ * @return {Object} Login success action
+ */
 function loginSuccess(user: User) {
   return {
     type: LOGIN_SUCCESS,
@@ -60,6 +68,12 @@ function loginSuccess(user: User) {
   }
 }
 
+/**
+ * Login from session action creator
+ * dispatches initial action to show login attempt has started, then attempts to
+ * authenticate, dispatching success or failure actions
+ * @return {Object} Login success action
+ */
 export function loginFromSession() {
   return (dispatch) => {
     dispatch({
@@ -75,7 +89,9 @@ export function loginFromSession() {
         }
       })
       .catch((err) => {
-        dispatch(loginFailure(err));
+        dispatch(loginFailure());
+        // Create new alert if necessary
+        // dispatch(loginFailure());
       });
   }
 }
