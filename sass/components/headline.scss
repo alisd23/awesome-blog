@@ -1,13 +1,14 @@
 
+/**
+ * HEADLINE SPECIFIC (Only present on home page)
+ */
 .headline-banner {
-  display: flex;
-  min-height: 500px;
   background-color: $gray-lightest;
 
-  @include media-breakpoint-down(sm) {
-    min-height: auto;
+  .article-banner {
+    flex: 0 1 75%;
+    animation: FadeIn 1.2s ease-out;
   }
-
   .author {
     padding: 2rem;
     text-align: center;
@@ -22,15 +23,28 @@
   }
 }
 
+.headline-article {
+  color: white;
+  flex-basis: 100%;
+  justify-content: center;
+}
 .headline-user {
   background-color: $gray-lightest;
 }
 
+/**
+ * ARTICLE BANNER (present on home page and article page)
+ */
+.article-banner {
+  @include media-breakpoint-down(sm) {
+    min-height: auto;
+  }
 
-.headline-article {
-  flex: 0 1 75%;
-  color: white;
-  animation: FadeIn 1.2s ease-out;
+  display: flex;
+  min-height: 500px;
+}
+
+.article-banner {
 
   > div {
     position: relative;

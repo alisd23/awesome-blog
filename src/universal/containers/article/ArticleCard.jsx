@@ -1,10 +1,10 @@
 import React from 'react';
-import HeadlineComponent from '../../components/articles/Headline';
+import ArticleCardComponent from '../../components/article/ArticleCard';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 @connect(mapStateToProps)
-export default class HeadlineContainer extends React.Component {
+export default class ArticleCard extends React.Component {
   static propTypes = {
     article: React.PropTypes.object,
     author: React.PropTypes.object
@@ -15,12 +15,12 @@ export default class HeadlineContainer extends React.Component {
   }
 
   render() {
-    const { author, article, dispatch } = this.props;
-    return article && (
-      <HeadlineComponent
+    const { article, author, dispatch } = this.props;
+    return (
+      <ArticleCardComponent
         article={article}
         author={author}
-        onReadArticle={() => dispatch(push(`/article/${article.id}`))} />
+        onReadArticle={() => dispatch(push(`/article/${article.id}`))}/>
     )
   }
 }

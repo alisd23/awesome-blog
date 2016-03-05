@@ -11,12 +11,15 @@ const HeadlineArticleComponent = ({ article, author, onReadArticle }) => (
       {/* Article TITLE and action button*/}
       <div className="article-content flex flex-wrap">
         <h1 className="article-title small-caps flex-expand">{article.title}</h1>
-        <div className="article-action flex-static center-a">
-          <a className="btn btn-white-accent btn-transition" onClick={onReadArticle}>
-            <span className="text small-caps">Read Article</span>
-            <i className="icon material-icons">local_library</i>
-          </a>
-        </div>
+        {
+          onReadArticle &&
+            <div className="article-action flex-static center-a">
+              <a className="btn btn-white-accent btn-transition" onClick={onReadArticle}>
+                <span className="text small-caps">Read Article</span>
+                <i className="icon material-icons">local_library</i>
+              </a>
+            </div>
+        }
 
         {/* Article DETAILS*/}
         <div className="article-details flex">

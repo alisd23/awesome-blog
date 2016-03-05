@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-// import HomePageComponent from '../components/Home';
+import HeadlineArticleComponent from '../components/headline/HeadlineArticle';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
@@ -13,10 +13,14 @@ export default class ArticleContainer extends React.Component {
   }
 
   render() {
+    const { article, author } = this.props;
+
     return (
-      <div>
+      <div id="article">
         <Helmet {...config.app.head}/>
-        <h1>ARTICLE</h1>
+        <div className="article-banner">
+          <HeadlineArticleComponent author={author} article={article} />
+        </div>
       </div>
     )
   }

@@ -1,5 +1,4 @@
 import React from 'react';
-import MediaQuery from 'react-responsive';
 
 const HeadlineAuthorComponent = ({ author }) => (
   <div className="author center-a flex-static">

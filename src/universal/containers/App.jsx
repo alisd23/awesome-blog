@@ -24,7 +24,9 @@ export default class App extends React.Component {
       <div>
         <Helmet {...config.app.head}/>
         <Navbar />
-        { this.props.children }
+        <div id="app">
+          { this.props.children }
+        </div>
       </div>
     )
   }

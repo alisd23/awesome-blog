@@ -1,6 +1,6 @@
 import React from 'react';
-import HeadlineContainer from '../containers/articles/Headline';
-import ArticleGridComponent from './articles/ArticleGrid';
+import HeadlineContainer from '../containers/headline/Headline';
+import ArticleGridComponent from './article/ArticleGrid';
 
 const HomeComponent = ({ headlineArticle, otherArticles }) => (
 

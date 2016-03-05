@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ArticleCardComponent = ({ article, author }) => (
+const ArticleCardComponent = ({ article, author, onReadArticle }) => (
   <div className="article-wrapper col-lg-12 col-xs-24" key={article.id}>
     <div className="article-card column">
-      <div className="article-header flex-static flex center-a">
+      <div className="article-header flex-static flex center-a" onClick={onReadArticle}>
         <div className="article-image cover img-cover img-tint"
              style={{backgroundImage: `url(${article.imageURL})`}}></div>
         <div className="content">
