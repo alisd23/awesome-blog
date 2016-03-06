@@ -40,7 +40,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div id="app" className="cover" ref="app">
-        <GeminiScrollbar ref="scrollbar">
+        <GeminiScrollbar ref="scrollbar" autoshow={true}>
           <Helmet {...config.app.head}/>
           <Navbar location={this.props.location} />
           <div id="main">

@@ -7,6 +7,10 @@
   z-index: 999;
   transition: all 0.6s $sharp-ease-in-out;
 
+  &.fixed {
+    position: fixed !important;
+  }
+
   @include media-breakpoint-up(sm) {
     position: fixed;
 
@@ -61,6 +65,15 @@
   }
   .nav-right {
     max-width: 50%;
+
+    .hamburger  {
+      display: none;
+    }
+
+    @include media-breakpoint-down(xs) {
+      .hamburger  { display: block; }
+      .regular    { display: none; }
+    }
   }
 
   .links {

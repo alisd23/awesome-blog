@@ -30,6 +30,40 @@
 }
 
 /**
+ * MENU SLIDE TRANSITION
+ */
+
+.menu-slide-enter,
+.menu-slide-leave.menu-slide-leave-active {
+  .backdrop {
+    opacity: 0;
+  }
+  .menu {
+    left: 100%;
+  }
+}
+
+.menu-slide-leave,
+.menu-slide-enter.menu-slide-enter-active {
+  .backdrop {
+    opacity: 1;
+  }
+  .menu {
+    left: 25%;
+  }
+}
+
+.menu-slide-enter.menu-slide-enter-active,
+.menu-slide-leave.menu-slide-leave-active {
+  .backdrop {
+    transition: opacity 0.4s ease-out;
+  }
+  .menu {
+    transition: left 0.5s $sharp-ease-in-out;
+  }
+}
+
+/**
  * FADE TRANSITION
  */
 .logo-fade-enter {

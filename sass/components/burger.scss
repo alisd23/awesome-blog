@@ -1,0 +1,51 @@
+
+.hamburger {
+  width: 38px;
+  height: 32px;
+  position: relative;
+  transform: rotate(0deg);
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+
+  span {
+    transform-origin: left center;
+    display: block;
+    position: absolute;
+    height: 5px;
+    width: 100%;
+    border-radius: 5px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.25s ease-in-out;
+  }
+  span:nth-child(1) { top: 0px; }
+  span:nth-child(2) { top: 13px; }
+  span:nth-child(3) { top: 26px; }
+
+  &.open {
+    span {
+      background-color: $gray-light;
+    }
+
+    span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 0.5px;  left: 5px;
+    }
+    span:nth-child(2) {
+      width: 0%;
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 27px;  left: 6px;
+    }
+  }
+}
+
+.navbar-transparent .hamburger span {
+  background-color: white;
+}
+.navbar-solid .hamburger span {
+  background-color: $teal;
+}
