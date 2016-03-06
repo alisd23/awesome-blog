@@ -4,11 +4,31 @@
  */
 .headline-banner {
   background-color: $gray-lightest;
+  flex: 0 1 75%;
+  animation: FadeIn 1.2s ease-out;
 
-  .article-banner {
-    flex: 0 1 75%;
-    animation: FadeIn 1.2s ease-out;
+  &:hover {
+    .article-image {
+      transform: scale(1.25);
+    }
   }
+
+  .article-inner {
+    justify-content: center;
+
+    @include media-breakpoint-up(xl) {
+      padding: $spacer-xl;
+    }
+    @include media-breakpoint-down(lg) {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    @include media-breakpoint-down(sm) {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+  }
+
   .author {
     padding: 2rem;
     text-align: center;
@@ -22,7 +42,6 @@
     }
   }
 }
-
 .headline-article {
   color: white;
   flex-basis: 100%;
@@ -35,43 +54,33 @@
 /**
  * ARTICLE BANNER (present on home page and article page)
  */
+
 .article-banner {
+  display: flex;
+  min-height: 500px;
+
   @include media-breakpoint-down(sm) {
     min-height: auto;
   }
-
-  display: flex;
-  min-height: 500px;
-}
-
-.article-banner {
 
   > div {
     position: relative;
     overflow: hidden;
   }
 
+  .article-inner {
+    // 100% prevented by container but fill container max-width
+    width: 100%;
+    justify-content: center;
+
+    @include media-breakpoint-down(xs) {
+      padding-right: 2rem;
+      padding-left: 2rem;
+    }
+  }
   .article-image {
     @extend .background-cover;
     transition: all 0.6s $sharp-ease-in-out;
-  }
-
-  &:hover {
-    .article-image {
-      transform: scale(1.25);
-    }
-  }
-
-  .article-inner {
-    padding: $spacer-xl;
-    justify-content: center;
-
-    @include media-breakpoint-only(sm) {
-      padding: 4rem $spacer-lg;
-    }
-    @include media-breakpoint-down(xs) {
-      padding: 3rem $spacer-lg;
-    }
   }
   .article-content {
     z-index: 1;
@@ -121,6 +130,7 @@
   }
   .article-by {
     color: lighten($gray-light, 15%);
+    margin-right: 1rem;
   }
 }
 

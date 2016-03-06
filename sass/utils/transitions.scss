@@ -29,6 +29,31 @@
   }
 }
 
+/**
+ * FADE TRANSITION
+ */
+.logo-fade-enter {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+}
+
+.logo-fade-enter,
+.logo-fade-leave.logo-fade-leave-active {
+  opacity: 0;
+}
+
+.logo-fade-leave,
+.logo-fade-enter.logo-fade-enter-active {
+  opacity: 1;
+}
+
+.logo-fade-enter.logo-fade-enter-active,
+.logo-fade-leave.logo-fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+
 /****************************/
 /**  KEYFRAME TRANSITIONS  **/
 /****************************/

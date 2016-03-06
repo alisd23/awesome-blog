@@ -3,7 +3,7 @@ import React from 'react';
 const HeadlineArticleComponent = ({ article, author, onReadArticle }) => (
 
   <div className="headline-article article flex">
-    <div className="article-inner column">
+    <div className="article-inner column container">
       {/* Image */}
       <div className="article-image cover img-cover img-tint"
            style={{backgroundImage: `url(${article.imageURL})`}}></div>
@@ -25,7 +25,7 @@ const HeadlineArticleComponent = ({ article, author, onReadArticle }) => (
         <div className="article-details flex">
           <h3 className="article-by">
             <span>By </span>
-            <a className="link-accent-light"><strong>{author.fullname}</strong></a>
+            <span className="text-light"><strong>{author.fullname}</strong></span>
           </h3>
           <h5 className="article-date">{article.createdPretty}</h5>
         </div>

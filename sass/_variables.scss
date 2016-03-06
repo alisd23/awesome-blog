@@ -30,7 +30,8 @@ $twitter:               #55acee;
 $gray-darker:           #222222;
 $gray-dark:             #373a3c;
 $gray:                  #55595c;
-$gray-light:            #818a91;
+$gray-medium:           #818a91;
+$gray-light:            #c5c9cc;
 $gray-lighter:          #eceeef;
 $gray-lightest:         #f7f7f9;
 
@@ -131,7 +132,23 @@ $border-radius-sm:          .1rem;
 
 $link-hover-decoration:     none;
 $link-color:                $brand-primary;
-$link-hover-color:                darken($link-color, 15%);
+$link-hover-color:          darken($link-color, 15%);
+
+
+//== Navbar
+//
+//##
+
+$navbar-logo-height:        3rem;
+$navbar-logo-height-mobile: 2.4rem;
+$navbar-padding-y:          2rem;
+$navbar-padding-x:          0;
+$navbar-padding-y-mobile:   1rem;
+$navbar-padding-x-mobile:   0;
+
+$navbar-height:             $navbar-logo-height + ($navbar-padding-y * 2);
+$navbar-height-mobile:      $navbar-logo-height-mobile + ($navbar-padding-y-mobile * 2);
+
 
 //== Buttons
 //

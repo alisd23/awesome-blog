@@ -1,10 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { mixin } from 'core-decorators';
+import { NavbarTransparent } from '../mixins/navbar';
 import HeadlineArticleComponent from '../components/headline/HeadlineArticle';
+import ArticleBodyComponent from '../components/article/ArticleBody';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
 @connect(mapStateToProps)
+@mixin(NavbarTransparent)
 export default class ArticleContainer extends React.Component {
   static propTypes = {
     params: React.PropTypes.object, // React router gives this to us
@@ -21,6 +25,7 @@ export default class ArticleContainer extends React.Component {
         <div className="article-banner">
           <HeadlineArticleComponent author={author} article={article} />
         </div>
+        <ArticleBodyComponent author={author} article={article} />
       </div>
     )
   }

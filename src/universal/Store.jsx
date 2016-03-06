@@ -16,11 +16,9 @@ import { browserHistory } from 'react-router';
  * @param  {Object} initialState    - Initial state from server
  * @return {store}                  - Redux store
  */
-export function createOnClient(reducerRegistry, DevTools, initialState) {
+export function createOnClient(history, reducerRegistry, DevTools, initialState) {
 
-  const middleware = [thunk, logger(), routerMiddleware(browserHistory)];
-
-  const reducer = combineReducers(reducerRegistry.getReducers());
+  const middleware = [thunk, logger(), routerMiddleware(history)];
 
   const finalCreateStore = compose(
     applyMiddleware(...middleware),
@@ -29,6 +27,7 @@ export function createOnClient(reducerRegistry, DevTools, initialState) {
 
   initialState = transformInitialState(initialState);
 
+  const reducer = combineReducers(reducerRegistry.getReducers());
   const store = finalCreateStore(reducer, initialState);
 
   // Reconfigure the store's reducer when the reducer registry is changed - we

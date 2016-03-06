@@ -1,12 +1,18 @@
 
 #home-page {
 
+  padding-top: $spacer-lg + $navbar-height;
+
   .articles-section {
     padding-top: $spacer-xl * 2;
     background-color: $gray-lightest;
 
     @include media-breakpoint-down(md) {
-      padding-top: $spacer-xl;
+      padding-top: $spacer-lg;
     }
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-top: $spacer-md + $navbar-height-mobile;
   }
 }

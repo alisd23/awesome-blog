@@ -2,7 +2,6 @@ import React from 'react';
 import { IndexRoute, Route } from 'react-router';
 import { Store } from 'redux';
 
-import { endLoading } from './redux/ducks/global';
 import App from './containers/App';
 import ReducerRegistry from './redux/registry';
 
@@ -30,9 +29,9 @@ export default class routes {
 
   configure() {
     return (
-      <Route path='/' component={App}>
+      <Route onUpdate={(a) => console.log(a, this)} path='/' component={App}>
         <IndexRoute getComponent={::this.getHomePage} />
-        <Route path='/article/:id' getComponent={::this.getArticlePage} />
+        <Route path='/article/:id' getComponent={::this.getArticlePage}/>
       </Route>
     );
   }
@@ -43,8 +42,8 @@ export default class routes {
   getHomePage(location, cb) {
     if (ENV === 'client') {
       System.import('./containers/Home')
-        .then(container => this.changeScreen(location, cb, container.default))
-        .catch(err => console.log('Epic fail: Home Page -- ', err));
+        .then(container => this.changeScreen(location, cb, container.default));
+        // .catch(err => console.log('Epic fail: Home Page -- ', err));
     } else {
       require.ensure(['./containers/Home'], (require) => {
         const container = require('./containers/Home').default;
@@ -55,8 +54,8 @@ export default class routes {
   getArticlePage(location, cb) {
     if (ENV === 'client') {
       System.import('./containers/Article')
-        .then(container => this.changeScreen(location, cb, container.default))
-        .catch(err => console.log('Epic fail: Article Page -- ', err));
+        .then(container => this.changeScreen(location, cb, container.default));
+        // .catch(err => console.log('Epic fail: Article Page -- ', err));
     } else {
       require.ensure(['./containers/Article'], (require) => {
         const container = require('./containers/Article').default;
@@ -75,7 +74,7 @@ export default class routes {
     // } else if (this.store.getState().routing.location.pathname === location.pathname) {
     } else {
       cb(null, component);
-      this.store.dispatch(endLoading);
+      // this.store.dispatch(endLoading);
     }
   }
 }

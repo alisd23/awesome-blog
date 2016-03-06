@@ -25,6 +25,9 @@ $article-height: 500px;
     @include media-breakpoint-down(md) {
       margin-top: 4rem;
     }
+    @include media-breakpoint-down(sm) {
+      height: $article-height * 0.8;
+    }
   }
 }
 
@@ -47,6 +50,18 @@ $article-height: 500px;
     overflow: hidden;
     z-index: 1;
     cursor: pointer;
+
+    @include media-breakpoint-down(sm) {
+      padding: $header-padding * 0.75;
+      height: auto;
+      min-height: 45%;
+    }
+
+    .article-title {
+      @include media-breakpoint-down(sm) {
+        font-size: 1.8rem;
+      }
+    }
 
     .article-image,
     .article-image::before {

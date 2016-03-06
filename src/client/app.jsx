@@ -35,22 +35,22 @@ const matchParams = {
 }
 
 /**
- * This magic allows router to load correct reducer and components depending on which route we are in
+ * This magic allows router to load correct reducer and components depending on
+ * which route we are in
  */
 match(matchParams, (error, redirectLocation, renderProps) => {
 
   const initialState  = window.__INITIAL_STATE__;
-  const store         = createOnClient(reducerRegistry, DevTools, initialState);
+  const store         = createOnClient(browserHistory, reducerRegistry, DevTools, initialState);
   const history       = syncHistoryWithStore(browserHistory, store);
 
   // Attempt athentication from FruksWeb session token
   store.dispatch(loginFromSession());
-
   routes.injectStore(store);
 
   // RENDER APP
   render(
-    <Provider store={store}>
+    <Provider store={store} key="provider">
       <div>
         <Router {...renderProps} />
       </div>

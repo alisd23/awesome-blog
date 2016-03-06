@@ -1,32 +1,84 @@
 
 @import '../variables';
 
+.navbar-container {
+  top: 0;
+  left: 0; right: 0;
+  z-index: 999;
+  transition: all 0.6s $sharp-ease-in-out;
+
+  @include media-breakpoint-up(sm) {
+    position: fixed;
+
+    &.off-top {
+      box-shadow: 0 5px 16px rgba(black, 0.15);
+
+      .navbar {
+        padding: ($navbar-padding-y * 0.5) $navbar-padding-x;
+        .logo img {
+          height: $navbar-logo-height-mobile;
+        }
+      }
+    }
+  }
+  // On very small devices don't have a sticky navbar
+  @include media-breakpoint-down(xs) {
+    position: absolute;
+  }
+}
+
 .navbar {
   display: flex;
   align-items: center;
-  padding: 2rem 1rem;
+  padding: $navbar-padding-y $navbar-padding-x;
   justify-content: space-between;
+  transition: all 0.4s ease-out;
 
-  .logo {
-    img {
-      height: 50px;
+  .logo-wrapper {
+    position: relative;
+    height: $navbar-logo-height;
+  }
+  .logo img {
+    transition: all 0.4s ease-out;
+    height: $navbar-logo-height;
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding: $navbar-padding-y-mobile $navbar-padding-x-mobile;
+
+    .logo-wrapper {
+      height: $navbar-logo-height-mobile;
+    }
+    .logo img {
+      height: $navbar-logo-height-mobile;
     }
   }
 
   .nav-left, .nav-right {
     display: flex;
     align-items: center;
+    overflow: hidden;
+  }
+  .nav-right {
+    max-width: 50%;
   }
 
   .links {
     display: flex;
-    padding: 0 $spacer-md;
 
     .nav-item {
       padding: 0 $spacer-md;
+
+      &.active > a {
+        font-weight: bold;
+      }
     }
     .nav-link {
       font-size: $font-size-lg;
+    }
+
+    @include media-breakpoint-down(xs) {
+      display: none;
     }
   }
   .nav-user {
@@ -36,4 +88,11 @@
       margin-left: $spacer;
     }
   }
+}
+
+.navbar-solid {
+  background-color: rgba(white, 0.95);
+}
+.navbar-transparent {
+  background-color: rgba(white, 0.1);
 }

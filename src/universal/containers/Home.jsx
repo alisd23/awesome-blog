@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import HomePageComponent from '../components/Home';
+import { mixin } from 'core-decorators';
+import { NavbarSolid } from '../mixins/navbar';
 import { getHeadlineArticle, getNonHeadlineArticles } from '../redux/ducks/articles';
 import config from '../../config';
 import Helmet from 'react-helmet';
 
 @connect(mapStateToProps)
+@mixin(NavbarSolid)
 export default class HomeContainer extends React.Component {
   static propTypes = {
     location: React.PropTypes.object, // React router gives this to us

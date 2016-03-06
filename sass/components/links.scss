@@ -8,14 +8,18 @@
   }
 }
 
+.link-twitter {
+  @include link-variant($twitter, darken($twitter, 25%));
+}
+
 .link-light {
-  @include link-variant($gray-light, lighten($gray-light, 20%));
+  @include link-variant($gray-medium, $gray-light);
 }
 .link-accent {
-  @include link-variant($gray-light, $teal);
+  @include link-variant($gray-medium, $teal);
 }
 .link-accent-light {
-  @include link-variant(lighten($gray-light, 25%), $teal);
+  @include link-variant($gray-light, $teal);
 }
 .link-accent-white {
   @include link-variant(white, $teal);

@@ -1,8 +1,8 @@
 
 body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 #app {
-  padding-top: $spacer-lg;
+  overflow: auto;
 }

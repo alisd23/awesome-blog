@@ -1,7 +1,51 @@
 
 #article {
+  .article {
+    padding-top: $navbar-height;
+
+    @include media-breakpoint-down(sm) {
+      padding-top: $navbar-height-mobile;
+    }
+  }
+
+  .article-inner, .article-body {
+    padding-top: $spacer-xl;
+    padding-bottom: $spacer-xl;
+  }
+
   .article-inner {
-    // Lines up with navbar
-    max-width: 1200px;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    @include media-breakpoint-down(xs) {
+      padding-top: $spacer-lg;
+      padding-bottom: $spacer-lg;
+    }
+  }
+  .article-body {
+    @include media-breakpoint-down(xs) {
+      padding-top: $spacer-lg;
+    }
+  }
+
+  .user-info {
+    margin-bottom: $spacer-lg;
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .article-body {
+    max-width: 700px;
+
+    @include media-breakpoint-down(xs) {
+      padding-right: 2rem;
+      padding-left: 2rem;
+    }
+  }
+  .article-content {
+    white-space: pre-line;
   }
 }

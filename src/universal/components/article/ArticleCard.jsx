@@ -15,7 +15,7 @@ const ArticleCardComponent = ({ article, author, onReadArticle }) => (
       </div>
       <div className="article-content column flex-expand">
         <div className="article-author flex-static flex row-center">
-          <a className="link-accent-light text-truncate flex-expand">{author.fullname}</a>
+          <span className="text-muted text-truncate flex-expand">{author.fullname}</span>
           <div className="avatar img-cover img-circle"
                style={{backgroundImage: `url(${author.avatarURL})`}}>
           </div>

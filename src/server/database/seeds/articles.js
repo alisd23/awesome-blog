@@ -13,19 +13,19 @@ export default (connection) => {
       const articles: Article[] = [
         {
           title: 'Amazing First Blog post with a long title',
-          content: loremIpsum,
+          content: `${loremIpsum}\n\n${loremIpsum}`,
           author: authors[0]._id,
           image: '1'
         },
         {
           title: 'Amazing Second Blog post',
-          content: loremIpsum,
+          content: `${loremIpsum}`,
           author: authors[1]._id,
           image: '2'
         },
         {
           title: 'Third Blog post',
-          content: loremIpsum,
+          content: `${loremIpsum}\n\n${loremIpsum}\n\n${loremIpsum}`,
           author: authors[0]._id,
           image: '1'
         },
@@ -37,7 +37,7 @@ export default (connection) => {
         },
         {
           title: 'Cool post',
-          content: loremIpsum,
+          content: `${loremIpsum}\n\n${loremIpsum}`,
           author: authors[0]._id,
           image: '1'
         }

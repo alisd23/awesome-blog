@@ -13,11 +13,12 @@ const Schema = mongoose.Schema;
  * @param {Date}      created
  */
 const authorSchema = new Schema({
-  fruksID   : Number,
-  firstname : String,
-  lastname  : String,
-  avatar    : String,
-  created   : { type: Date, default: Date.now }
+  fruksID     : Number,
+  firstname   : String,
+  lastname    : String,
+  twitter     : String,
+  avatar      : String,
+  created     : { type: Date, default: Date.now }
 });
 
 export default mongoose.model('Author', authorSchema);

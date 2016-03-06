@@ -118,16 +118,27 @@ fieldset[disabled] a.btn {
   @include button-outline-variant($btn-danger-bg);
 }
 
-.btn-white-accent {
-  @include button-outline-variant(white);
-
+/**
+ * Accented buttons
+ */
+@mixin btn-accent($color) {
   &:hover,
   &:active,
   &:focus {
-    .icon {
+    // Support for transition version
+    &, .icon {
       color: $teal;
     }
+
+    .text {
+      color: $color;
+    }
   }
+}
+
+.btn-white-accent {
+  @include button-outline-variant(white);
+  @include btn-accent(white);
 }
 
 .btn-transition {
