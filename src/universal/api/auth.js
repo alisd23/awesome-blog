@@ -49,7 +49,7 @@ export function authenticateWithToken(token: string) {
     return Promise.reject();
 
   console.log(token);
-  
+
   return fetch(`/api/token-auth/${token}`, POST_CONFIG)
     .then(response => response.json())
     .then(data => {
@@ -69,20 +69,30 @@ export function authenticateWithToken(token: string) {
  */
 export function authenticateWithCredentials(email, password) {
   return fetch(`${config.fruks_web_hostname}/api/login`, {
-      ...POST_CONFIG,
-      mode: 'cors',
-      body: JSON.stringify({ email, password })
-    })
+    ...POST_CONFIG,
+    mode: 'cors',
+    body: JSON.stringify({ email, password })
+  })
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        console.log(data);
         return authenticateWithToken(data.token);
       } else {
         throw new Error('Authentication failed');
       }
     });
 }
+
+
+export function logout() {
+  return fetch(`${config.fruks_web_hostname}/api/logout`, {
+    ...POST_CONFIG,
+    mode: 'cors',
+  })
+    .then(response => response.json());
+    // Don't care about errors here
+}
+
 
 export function fetchArticles() {
   return fetch('/api/articles', GET_CONFIG)

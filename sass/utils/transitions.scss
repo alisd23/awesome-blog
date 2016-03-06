@@ -64,6 +64,27 @@
 }
 
 /**
+ * DROPDOWN TRANSITION
+ */
+.dropdown-enter,
+.dropdown-leave.dropdown-leave-active {
+  opacity: 0;
+  top: calc(100% - 10px);
+}
+
+.dropdown-leave,
+.dropdown-enter.dropdown-enter-active {
+  opacity: 1;
+  top: 100%;
+}
+
+.dropdown-enter.dropdown-enter-active,
+.dropdown-leave.dropdown-leave-active {
+  transition: opacity 0.35s ease, top 0.3s $sharp-ease-in-out;
+}
+
+
+/**
  * FADE TRANSITION
  */
 .logo-fade-enter {

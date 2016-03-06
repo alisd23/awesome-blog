@@ -1,4 +1,8 @@
-import { authenticateFromSession, authenticateWithCredentials } from '../../api/auth';
+import {
+  authenticateFromSession,
+  authenticateWithCredentials,
+  logout as apiLogout
+} from '../../api/auth';
 import User from '../../Objects/User';
 
 // Action constants
@@ -7,6 +11,7 @@ const LOGIN_FROM_TOKEN = 'LOGIN_FROM_TOKEN';
 const LOGIN_FROM_CREDENTIALS = 'LOGIN_FROM_CREDENTIALS';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
+const LOGOUT = 'LOGOUT';
 
 /**
  * Auth initial state
@@ -46,6 +51,11 @@ export default function reducer(state = initialState, action) {
         loggingIn: false,
         user: new User(action.user)
       };
+    case LOGOUT:
+      return {
+        ...state,
+        user: null
+      };
     default:
       return state;
   };
@@ -57,13 +67,11 @@ export default function reducer(state = initialState, action) {
 //----------------------------//
 
 /**
- * Login failure action creator
- * @return {Object} Login failure action
+ * Login failure action
+ * @type {Object}
  */
-function loginFailure() {
-  return {
-    type: LOGIN_FAILURE
-  }
+const loginFailure = {
+  type: LOGIN_FAILURE
 }
 
 /**
@@ -75,6 +83,14 @@ function loginSuccess(user: User) {
     type: LOGIN_SUCCESS,
     user
   }
+}
+
+/**
+ * Logout action
+ * @type {Object}
+ */
+const logoutSuccess = {
+  type: LOGOUT
 }
 
 /**
@@ -99,22 +115,19 @@ export function loginFromSession() {
       })
       .catch((err) => {
         dispatch(loginFailure());
-        // Create new alert if necessary
-        // dispatch(loginFailure());
       });
   }
 }
 
 /**
  * Action creator for logging in with username & password
- * @param  {String} username
- * @param  {String} password
- * @return {Object} Login with credentials thunk action
+ * @param  {Object}   data        - username and password
+ * @param  {Function} dispatch
+ * @return {Promise}  - Rejects to notify form of any errors
  */
-
-export function loginWithCredentials({ email, password }, dispatch) {
+export function loginWithCredentials(data, dispatch) {
   return new Promise((resolve, reject) => {
-    authenticateWithCredentials(email, password)
+    authenticateWithCredentials(data.email, data.password)
       .then((user) => {
         dispatch(loginSuccess(user));
         resolve();
@@ -124,3 +137,19 @@ export function loginWithCredentials({ email, password }, dispatch) {
       });
   });
 };
+
+/**
+ * Simple
+ * @return {[type]} [description]
+ */
+export function logout() {
+  return (dispatch) => {
+    apiLogout()
+      .then(response => {
+        dispatch(logoutSuccess);
+      })
+      .catch((err) => {
+        dispatch(logoutSuccess);
+      });
+  }
+}

@@ -150,6 +150,13 @@ $navbar-height:             $navbar-logo-height + ($navbar-padding-y * 2);
 $navbar-height-mobile:      $navbar-logo-height-mobile + ($navbar-padding-y-mobile * 2);
 
 
+//== Popover (bootstrap 3)
+//
+//##
+
+$popover-fallback-border-color:       $gray-lighter;
+$popover-arrow-outer-fallback-color:  $gray-lighter;
+
 //== Buttons
 //
 //##

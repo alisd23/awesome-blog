@@ -61,7 +61,7 @@
   .nav-left, .nav-right {
     display: flex;
     align-items: center;
-    overflow: hidden;
+    // overflow: hidden;
   }
   .nav-right {
     max-width: 50%;
@@ -98,7 +98,7 @@
     .avatar {
       width: 40px;
       height: 40px;
-      margin-left: $spacer;
+      margin-right: $spacer;
 
       &.no-avatar {
         border: solid 1px $gray-lighter;

@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import NavbarUser from '../../containers/navbar/NavbarUser';
 import { SOLID, TRANSPARENT} from '../../constants/NavbarTypes';
 
 const NavbarActionsComponent = ({ user, type, onLoginClicked }) => {
@@ -12,18 +13,7 @@ const NavbarActionsComponent = ({ user, type, onLoginClicked }) => {
       {
         user
           ?
-            <div className="nav-user flex row-center">
-              <a className={classnames('text-truncate flex-expand', linkClass)}>
-                {user.fullname}
-              </a>
-              <div
-                className={classnames(
-                  user.avatar ? '' : 'no-avatar',
-                  "avatar img-cover img-circle flex-static"
-                )}
-                style={{backgroundImage: `url(${user.avatarURL})`}}>
-              </div>
-            </div>
+            <NavbarUser user={user} linkClass={linkClass} />
           :
             <div className="nav-actions flex row-center">
               <a onClick={onLoginClicked}
