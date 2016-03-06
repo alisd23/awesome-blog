@@ -174,9 +174,11 @@ $btn-danger-bg:         $brand-danger;
 //== Inputs
 //
 //##
-
+//
+$input-border-color:              $gray-lighter;
+$input-box-shadow:                none;
 $input-box-shadow-focus:          rgba($teal, .6);
-$input-border-focus:              $teal;
+$input-border-focus:              rgba($teal, .6);
 $input-padding-x-xl:              1.5rem;
 $input-padding-y-xl:              0.8rem;
 $input-border-radius-xl:          $border-radius-xl;

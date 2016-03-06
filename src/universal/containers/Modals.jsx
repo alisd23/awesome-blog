@@ -5,15 +5,14 @@ import { connect } from 'react-redux'
 import LoginModal from '../containers/Modals/LoginModal';
 import Modals from '../constants/Modals';
 
-@connect()
+@connect(mapStateToProps)
 export default class ModalsContainer extends React.Component {
   static propTypes = {
     openModal: React.PropTypes.string
   }
 
   render() {
-    const { openModal } = this.props;
-    console.log(openModal)
+    const { openModal, user } = this.props;
 
     return (
       <div id="modals">
@@ -25,7 +24,7 @@ export default class ModalsContainer extends React.Component {
             (() => {
               switch (openModal) {
                 case Modals.LOGIN:
-                  return <LoginModal />
+                  return !user && <LoginModal />
                 default:
                   return null;
               }
@@ -34,5 +33,11 @@ export default class ModalsContainer extends React.Component {
         </ReactCSSTransitionGroup>
       </div>
     );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user
   }
 }

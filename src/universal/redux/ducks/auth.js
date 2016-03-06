@@ -1,10 +1,10 @@
-import { authenticateFromSession } from '../../api/auth';
+import { authenticateFromSession, authenticateWithCredentials } from '../../api/auth';
 import User from '../../Objects/User';
 
 // Action constants
 const LOGIN_FROM_SESSION = 'LOGIN_FROM_SESSION';
 const LOGIN_FROM_TOKEN = 'LOGIN_FROM_TOKEN';
-const LOGIN_FROM_DETAILS = 'LOGIN_FROM_DETAILS';
+const LOGIN_FROM_CREDENTIALS = 'LOGIN_FROM_CREDENTIALS';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
@@ -30,7 +30,7 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_FROM_SESSION:
     case LOGIN_FROM_TOKEN:
-    case LOGIN_FROM_DETAILS:
+    case LOGIN_FROM_CREDENTIALS:
       return {
         ...state,
         loggingIn: true
@@ -81,7 +81,7 @@ function loginSuccess(user: User) {
  * Login from session action creator
  * dispatches initial action to show login attempt has started, then attempts to
  * authenticate, dispatching success or failure actions
- * @return {Object} Login success action
+ * @return {Object} Login from session thunk action
  */
 export function loginFromSession() {
   return (dispatch) => {
@@ -104,3 +104,23 @@ export function loginFromSession() {
       });
   }
 }
+
+/**
+ * Action creator for logging in with username & password
+ * @param  {String} username
+ * @param  {String} password
+ * @return {Object} Login with credentials thunk action
+ */
+
+export function loginWithCredentials({ email, password }, dispatch) {
+  return new Promise((resolve, reject) => {
+    authenticateWithCredentials(email, password)
+      .then((user) => {
+        dispatch(loginSuccess(user));
+        resolve();
+      })
+      .catch((err) => {
+        reject({ _error: 'Invalid username or password :(' });
+      });
+  });
+};

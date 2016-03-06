@@ -68,10 +68,10 @@ match(matchParams, (error, redirectLocation, renderProps) => {
   //  HOT RELOADING REDUCERS  //
   //--------------------------//
   if (__DEVELOPMENT__ && module.hot) {
+    console.log("CORE");
 
     // CORE REDUCERS
     module.hot.accept('../universal/redux/core', () => {
-      console.log("CORE");
       reducerRegistry.updateReducers(store, require('../universal/redux/core').default);
     });
   }

@@ -1,4 +1,5 @@
 import { routerReducer } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form';
 import articles from './ducks/articles';
 import authors from './ducks/authors';
 import auth from './ducks/auth';
@@ -11,7 +12,8 @@ const reducers = {
   auth,
 
   // Third party
-  routing: routerReducer
+  routing: routerReducer,
+  form: formReducer
 }
 
 // FOR REDUCER HOT RELOADING //

@@ -1,11 +1,21 @@
 
+import config from '../../server/config';
+
 const GET_CONFIG = {
   method: 'GET',
-  credentials: 'include'
+  credentials: 'include',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
 };
 const POST_CONFIG = {
   method: 'POST',
-  credentials: 'include'
+  credentials: 'include',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
 };
 
 /**
@@ -14,7 +24,7 @@ const POST_CONFIG = {
  * @return {Promise}  - Resolves to the result from the authenticateWithToken function
  */
 export function authenticateFromSession() {
-  return fetch('http://fruks.app/ajax/webtoken', {
+  return fetch(`${config.fruks_web_hostname}/ajax/webtoken`, {
       ...GET_CONFIG,
       mode: 'cors'
     })
@@ -38,11 +48,36 @@ export function authenticateWithToken(token: string) {
   if (!token)
     return Promise.reject();
 
+  console.log(token);
+  
   return fetch(`/api/token-auth/${token}`, POST_CONFIG)
     .then(response => response.json())
     .then(data => {
       if (data.success) {
         return data.user;
+      } else {
+        throw new Error('Authentication failed');
+      }
+    });
+}
+
+/**
+ * Authenticate with FruksWeb API with credentials
+ * @param  {String}   - email
+ * @param  {String}   - password
+ * @return {Promise}  - resolves to the user
+ */
+export function authenticateWithCredentials(email, password) {
+  return fetch(`${config.fruks_web_hostname}/api/login`, {
+      ...POST_CONFIG,
+      mode: 'cors',
+      body: JSON.stringify({ email, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        console.log(data);
+        return authenticateWithToken(data.token);
       } else {
         throw new Error('Authentication failed');
       }
