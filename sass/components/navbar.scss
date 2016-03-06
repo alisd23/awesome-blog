@@ -99,6 +99,10 @@
       width: 40px;
       height: 40px;
       margin-left: $spacer;
+
+      &.no-avatar {
+        border: solid 1px $gray-lighter;
+      }
     }
   }
 }

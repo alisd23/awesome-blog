@@ -32,7 +32,7 @@ export default class HomeContainer extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: AppState) {
   return {
     loading: state.global.loading,
     otherArticles: getNonHeadlineArticles(state.articles),

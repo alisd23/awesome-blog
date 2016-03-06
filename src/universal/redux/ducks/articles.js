@@ -1,16 +1,21 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 import Article from '../../Objects/Article';
 
+// Action constants
 const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 
-const initialState = {
-  articles: {}
-}
+/**
+ * Initial articles state
+ * @type {Object} - A map of id -> Article object
+ */
+const initialState = {}
 
-//----------------------------//
-//           Handler          //
-//----------------------------//
-
+/**
+ * Redcuer for articles
+ * @param  {Object} state   - Current articles state
+ * @param  {Object} action  - Next action to process
+ * @return {Object}         - Next global state
+ */
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_ARTICLES: {
@@ -35,6 +40,10 @@ export default function reducer(state = initialState, action) {
 //           Actions          //
 //----------------------------//
 
+/**
+ * Action creator for receving new articles
+ * @return {Object}   - Receive Articles action
+ */
 export function receiveArticles() {
   return {
     type: RECEIVE_ARTICLES
@@ -57,12 +66,27 @@ export function articlesToState(list) {
   return articles;
 }
 
+/**
+ * Get all the articles in array form
+ * @param  {Object} articles  - Articles state
+ * @return {Article[]}        - Array of all articles
+ */
 export function getArticlesArray(articles) {
   return Object.keys(articles).map((k) => articles[k]);
 }
+/**
+ * Get headline article (currently newest article)
+ * @param  {Object} articles  - Articles state
+ * @return {Article}          - Headline article
+ */
 export function getHeadlineArticle(articles) {
   return getArticlesArray(articles)[0]
 }
+/**
+ * Get all NON-headline articles
+ * @param  {Object} articles  - Articles state
+ * @return {Article[]}        - Array of non-headline articles
+ */
 export function getNonHeadlineArticles(articles) {
   return getArticlesArray(articles).filter((a, i) => i > 0);
 }

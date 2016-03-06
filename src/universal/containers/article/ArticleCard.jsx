@@ -25,7 +25,7 @@ export default class ArticleCard extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state: AppState, ownProps) {
   return {
     author: state.authors[ownProps.article.author]
   }

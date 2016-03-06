@@ -31,7 +31,7 @@ export default class ArticleContainer extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state: AppState, ownProps) {
   const article = state.articles[ownProps.params.id]
   return {
     article,

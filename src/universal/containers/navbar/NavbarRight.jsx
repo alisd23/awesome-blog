@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import NavActions from '../../components/navbar/NavActions';
 import HamburgerMenu from '../../components/navbar/HamburgerMenu';
 import MobileMenu from '../../components/MobileMenu';
-import { toggleMobileNav } from '../../redux/ducks/global';
+import { toggleMobileNav, openModal } from '../../redux/ducks/global';
+import Modals from '../../constants/Modals';
 
 @connect(mapStateToProps)
 export default class NavbarRightContainer extends React.Component {
@@ -23,7 +24,8 @@ export default class NavbarRightContainer extends React.Component {
 
         <NavActions
           user={user}
-          type={type} />
+          type={type}
+          onLoginClicked={() => dispatch(openModal(Modals.LOGIN))} />
 
         <HamburgerMenu
           mobileNavOpen={mobileNavOpen}
@@ -45,10 +47,9 @@ export default class NavbarRightContainer extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state: AppState, ownProps) {
   return {
     user: state.auth.user,
-    type: state.global.navbarType,
     mobileNavOpen: state.global.mobileNavOpen
   }
 }

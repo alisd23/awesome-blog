@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Navbar from './navbar/Navbar';
 import PageLoader from '../components/PageLoader';
+import Modals from './Modals';
 import config from '../../config';
 import { scrolled } from '../redux/ducks/global';
 
@@ -38,13 +39,15 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { location, openModal, children } = this.props;
     return (
       <div id="app" className="cover" ref="app">
         <GeminiScrollbar ref="scrollbar" autoshow={true}>
           <Helmet {...config.app.head}/>
-          <Navbar location={this.props.location} />
+          <Navbar location={location} />
+          <Modals openModal={openModal} />
           <div id="main">
-            { this.props.children }
+            { children }
           </div>
         </GeminiScrollbar>
       </div>
@@ -54,6 +57,7 @@ export default class App extends React.Component {
 
 function mapStateToProps(state: AppState) {
   return {
-    loading: state.global.loading
+    loading: state.global.loading,
+    openModal: state.global.openModal
   }
 }

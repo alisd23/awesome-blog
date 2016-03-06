@@ -42,7 +42,7 @@ export default class NavbarContainer extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state: AppState, ownProps) {
   return {
     user: state.auth.user,
     type: state.global.navbarType,

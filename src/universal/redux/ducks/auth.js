@@ -1,22 +1,31 @@
-
 import { authenticateFromSession } from '../../api/auth';
 import User from '../../Objects/User';
 
+// Action constants
 const LOGIN_FROM_SESSION = 'LOGIN_FROM_SESSION';
 const LOGIN_FROM_TOKEN = 'LOGIN_FROM_TOKEN';
 const LOGIN_FROM_DETAILS = 'LOGIN_FROM_DETAILS';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+/**
+ * Auth initial state
+ * @type {Object} - State
+ *  - user:       Current logged in user (if any)
+ *  - loggingIn:  True if user is currently logging in (loading state)
+ */
 const initialState = {
   user: null,
   loggingIn: false
 }
 
-//----------------------------//
-//           Handler          //
-//----------------------------//
 
+/**
+ * Reducer to handle auth state - Authenticated user and logging in state
+ * @param  {Object} state   - Current auth state
+ * @param  {Object} action  - Next action to process
+ * @return {Object}         - Next auth state
+ */
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_FROM_SESSION:
