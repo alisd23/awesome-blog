@@ -48,8 +48,6 @@ export function authenticateWithToken(token: string) {
   if (!token)
     return Promise.reject();
 
-  console.log(token);
-
   return fetch(`/api/token-auth/${token}`, POST_CONFIG)
     .then(response => response.json())
     .then(data => {

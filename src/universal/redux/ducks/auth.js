@@ -114,7 +114,7 @@ export function loginFromSession() {
         }
       })
       .catch((err) => {
-        dispatch(loginFailure());
+        dispatch(loginFailure);
       });
   }
 }

@@ -26,7 +26,6 @@
   top: 100%;
   left: 0;
   z-index: $zindex-dropdown;
-  display: none; // none by default, but block on "open" of the menu
   float: left;
   min-width: 160px;
   padding: 5px 0;
@@ -97,19 +96,6 @@
       background-image: none; // Remove CSS gradient
       @include reset-filter();
     }
-  }
-}
-
-// Open state for the dropdown
-.open {
-  // Show the menu
-  .dropdown-menu {
-    display: block;
-  }
-
-  // Remove the outline when :focus is triggered
-  > a {
-    outline: 0;
   }
 }
 

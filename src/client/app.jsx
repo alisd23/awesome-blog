@@ -68,7 +68,6 @@ match(matchParams, (error, redirectLocation, renderProps) => {
   //  HOT RELOADING REDUCERS  //
   //--------------------------//
   if (__DEVELOPMENT__ && module.hot) {
-    console.log("CORE");
 
     // CORE REDUCERS
     module.hot.accept('../universal/redux/core', () => {

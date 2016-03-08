@@ -13,6 +13,12 @@
     }
   }
 
+  .headline-article {
+    flex-basis: 75%;
+    @include media-breakpoint-down(lg) {
+      flex-basis: 100%;
+    }
+  }
   .article-inner {
     justify-content: center;
 
@@ -44,8 +50,8 @@
 }
 .headline-article {
   color: white;
-  flex-basis: 100%;
   justify-content: center;
+  flex-basis: 100%;
 }
 .headline-user {
   background-color: $gray-lightest;

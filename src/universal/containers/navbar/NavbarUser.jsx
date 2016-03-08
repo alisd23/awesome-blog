@@ -1,8 +1,9 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { logout } from '../../redux/ducks/auth';
+import config from '../../../server/config';
+import Dropdown from '../Dropdown';
 
 @connect()
 export default class NavbarUserComponent extends React.Component {
@@ -14,7 +15,7 @@ export default class NavbarUserComponent extends React.Component {
     const { user, linkClass, dispatch } = this.props;
 
     return (
-        <div className="nav-user flex row-center dropdown open">
+        <div className="nav-user flex row-center dropdown">
           <div
             className={classnames(
               user.avatar ? '' : 'no-avatar',
@@ -24,7 +25,7 @@ export default class NavbarUserComponent extends React.Component {
           </div>
 
           <a
-            onClick={() => this.toggleDropdown()}
+            ref="trigger"
             className={classnames('text-truncate flex-expand dropdown-toggle', linkClass)}>
             <span className="flex row-center">
               {user.fullname}
@@ -32,28 +33,14 @@ export default class NavbarUserComponent extends React.Component {
             </span>
           </a>
 
-          <ReactCSSTransitionGroup
-            transitionName="dropdown"
-            transitionEnterTimeout={350}
-            transitionLeaveTimeout={350} >
-            {
-              this.state.open &&
-                <div
-                  className="dropdown-menu dropdown-menu-right"
-                  onClick={() => this.toggleDropdown(false)}>
-                  <a className="dropdown-item" onClick={() => dispatch(logout())}>Logout</a>
-                  {
-                    user.isAuthor &&
-                      <a className="dropdown-item">Create Blog post</a>
-                  }
-                </div>
-            }
-          </ReactCSSTransitionGroup>
+          <Dropdown
+            getTrigger={() => this.refs.trigger}
+            className="dropdown-menu-right">
+            {/* Dropdown content */}
+            <a className="dropdown-item text-primary" href={`${config.fruks_web_hostname}`}>Go to Fruks</a>
+            <a className="dropdown-item" onClick={() => dispatch(logout())}>Logout</a>
+          </Dropdown>
         </div>
     );
-  }
-
-  toggleDropdown(state) {
-    this.setState({ open: state != null ? state : !this.state.open });
   }
 }
