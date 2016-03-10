@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeadlineArticleComponent = ({ article, author, onReadArticle }) => (
+const HeadlineArticleComponent = ({ article, author, onReadArticle, showLikes }) => (
 
   <div className="headline-article article flex">
     <div className="article-inner column container">
@@ -30,9 +30,9 @@ const HeadlineArticleComponent = ({ article, author, onReadArticle }) => (
           <h5 className="article-date">{article.createdPretty}</h5>
         </div>
         {
-          article.likes.length > 0 &&
-            <div className="likes-display">
-              <i className="heart icon material-icons md-36">favorite</i>
+          article.likes.length > 0 && showLikes &&
+            <div className="likes-display animate">
+              <i className="icon material-icons md-36">thumb_up</i>
               <div className="count m-l-sm">{article.likes.length}</div>
             </div>
         }

@@ -9,7 +9,8 @@ const HeadlineComponent = ({ article, author, onReadArticle, onLikeClicked }) =>
     <HeadlineArticle
       article={article}
       author={author}
-      onReadArticle={onReadArticle} />
+      onReadArticle={onReadArticle}
+      showLikes={true} />
 
     {/* Headline Author component */}
     <HeadlineAuthor author={author} />

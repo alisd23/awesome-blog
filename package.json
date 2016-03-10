@@ -25,6 +25,7 @@
     "jsonwebtoken": "^5.7.0",
     "knex": "^0.10.0",
     "material-design-icons": "^2.2.0",
+    "mo-js": "^0.147.4",
     "moment": "^2.11.2",
     "mongodb": "^2.1.7",
     "mongoose": "^4.4.5",

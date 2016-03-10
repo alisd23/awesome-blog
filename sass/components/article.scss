@@ -149,14 +149,15 @@ $article-height: 500px;
   }
 }
 
+
 @keyframes Heartbeat {
   0%, 100% {
     transform: scale(0.9) rotate(2deg);
-    color: $heart-red;
+    color: $orange;
   }
   50% {
     transform: scale(1.1) rotate(-6deg);
-    color: darken($heart-red, 6%);
+    color: lighten($orange, 6%);
   }
 }
 
@@ -167,9 +168,29 @@ $article-height: 500px;
   justify-content: center;
   align-items: center;
 
-  .heart {
-    color: $heart-red;
+  &.animate .icon {
     animation: Heartbeat infinite 2.8s $sharp-ease-in-out;
+  }
+  &.clickable {
+
+    .icon {
+      cursor: pointer;
+    }
+    .icon, .count {
+      color: $gray-light;
+      transition: all 0.3s ease-out;
+    }
+    &.active {
+      .icon { color: $orange; }
+      .count { color: $orange-dark; }
+    }
+    &.unliked .count {
+      opacity: 0;
+    }
+
+    &:not(.active):hover .icon {
+      color: lighten($orange, 25%);
+    }
   }
 
   .count {

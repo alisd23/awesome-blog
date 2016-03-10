@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import { mixin } from 'core-decorators';
 import { NavbarTransparent } from '../mixins/navbar';
 import HeadlineArticleComponent from '../components/headline/HeadlineArticle';
 import ArticleBodyComponent from '../components/article/ArticleBody';
 import config from '../../config';
-import Helmet from 'react-helmet';
+import { toggleArticleLike } from '../redux/ducks/articles';
 
 @connect(mapStateToProps)
 @mixin(NavbarTransparent)
@@ -17,15 +18,23 @@ export default class ArticleContainer extends React.Component {
   }
 
   render() {
-    const { article, author } = this.props;
+    const { article, author, user, isLiked, dispatch } = this.props;
 
     return (
       <div id="article">
         <Helmet {...config.app.head}/>
+
         <div className="article-banner">
           <HeadlineArticleComponent author={author} article={article} />
         </div>
-        <ArticleBodyComponent author={author} article={article} />
+
+        <ArticleBodyComponent
+          author={author}
+          article={article}
+          user={user}
+          isLiked={isLiked}
+          handleLike={user && (() => dispatch(toggleArticleLike(article)))} />
+
       </div>
     )
   }
@@ -36,5 +45,8 @@ function mapStateToProps(state: AppState, ownProps) {
   return {
     article,
     author: state.authors[article.author],
+    user: state.auth.user,
+    isLiked: state.auth.user &&
+             article.likes.indexOf(state.auth.user.id) !== -1
   }
 }
