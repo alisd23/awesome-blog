@@ -21,6 +21,7 @@ export function authenticateWithToken(req, res) {
   jwt.verify(token, config.app_key, (err, decoded) => {
     if (err || !decoded) {
       console.error('JWT decoding failed', err);
+      res.status('500').send({ err: `Get user failed - ${err}`});
     } else {
       getUser(decoded.id)
         .then(user => {

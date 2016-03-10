@@ -50,6 +50,7 @@ $article-height: 500px;
     overflow: hidden;
     z-index: 1;
     cursor: pointer;
+    color: white;
 
     @include media-breakpoint-down(sm) {
       padding: $header-padding * 0.75;
@@ -146,4 +147,34 @@ $article-height: 500px;
     flex-direction: row-reverse;
     margin-top: $spacer;
   }
+}
+
+@keyframes Heartbeat {
+  0%, 100% {
+    transform: scale(0.9) rotate(2deg);
+    color: $heart-red;
+  }
+  50% {
+    transform: scale(1.1) rotate(-6deg);
+    color: darken($heart-red, 6%);
+  }
+}
+
+// Like showing on
+.likes-display {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .heart {
+    color: $heart-red;
+    animation: Heartbeat infinite 2.8s $sharp-ease-in-out;
+  }
+
+  .count {
+    font-weight: bold;
+    font-size: $font-size-xl;
+  }
+
 }

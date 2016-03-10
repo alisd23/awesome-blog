@@ -2,7 +2,7 @@ import {
   authenticateFromSession,
   authenticateWithCredentials,
   logout as apiLogout
-} from '../../api/auth';
+} from '../../client-api/authAPI';
 import User from '../../Objects/User';
 
 // Action constants

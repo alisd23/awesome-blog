@@ -1,8 +1,13 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 import Article from '../../Objects/Article';
+import {
+  likeArticle as apiLikeArticle,
+  unlikeArticle as apiUnlikeArticle } from '../../client-api/articlesAPI';
 
 // Action constants
 const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
+const ARTICLE_LIKE = 'UPDATE_ARTICLE_LIKE';
+const ARTICLE_UNLIKE = 'UPDATE_ARTICLE_UNLIKE';
 
 /**
  * Initial articles state
@@ -17,17 +22,51 @@ const initialState = {}
  * @return {Object}         - Next global state
  */
 export default function reducer(state = initialState, action) {
-  switch (action.type) {
-    case RECEIVE_ARTICLES: {
-      const { articles } = action;
-      const newArticles = {}
-      articles.forEach((post) => {
-        newArticles[post.id] = new Article(post);
-      });
-      // Merge the bloposts as to not duplicate posts
+  const { type, payload, error } = action;
+
+  switch (type) {
+    case ARTICLE_LIKE : {
+      const { articleId, userId } = payload;
+      const article = state[articleId];
+      let newLikesArray;
+
+      if (error) {
+        newLikesArray = article.meta.likes.filter(id => id != userId);
+      } else {
+        newLikesArray = article.meta.likes.concat(userId);
+      }
+
       return {
         ...state,
-        ...newArticles
+        [articleId]: new Article({
+          ...article,
+          meta: {
+            ...article.meta,
+            likes: newLikesArray
+          }
+        })
+      };
+    }
+    case ARTICLE_UNLIKE : {
+      const { articleId, userId } = payload;
+      const article = state[articleId];
+      let newLikesArray;
+
+      if (error) {
+        newLikesArray = article.meta.likes.concat(userId);
+      } else {
+        newLikesArray = article.meta.likes.filter(id => id != userId);
+      }
+
+      return {
+        ...state,
+        [articleId]: new Article({
+          ...article,
+          meta: {
+            ...article.meta,
+            likes: newLikesArray
+          }
+        })
       };
     }
     default:
@@ -39,17 +78,73 @@ export default function reducer(state = initialState, action) {
 //----------------------------//
 //           Actions          //
 //----------------------------//
-
+//
 /**
- * Action creator for receving new articles
- * @return {Object}   - Receive Articles action
+ * Liking/Unliking of article actions
  */
-export function receiveArticles() {
+export function likeArticle(articleId: String, userId: number) {
   return {
-    type: RECEIVE_ARTICLES
-  };
+    type: ARTICLE_LIKE,
+    payload: { articleId, userId }
+  }
+}
+export function unlikeArticle(articleId: String, userId: number) {
+  return {
+    type: ARTICLE_UNLIKE,
+    payload: { articleId, userId }
+  }
 }
 
+/**
+ * Liking/Unliking failure actions (must revert what the above actions did)
+ */
+export function likeArticleFailed(articleId: String, userId: number) {
+  return {
+    type: ARTICLE_LIKE,
+    payload: { articleId, userId },
+    error: true
+  }
+}
+export function unlikeArticleFailed(articleId: String, userId: number) {
+  return {
+    type: ARTICLE_UNLIKE,
+    payload: { articleId, userId },
+    error: true
+  }
+}
+
+/**
+ * Action creator which toggles the 'like' status for the given article
+ * and user IF a user is logged in
+ * @param  {Article} article  - Article to like or unlike
+ * @return {Function}         - Redux thunk action creator
+ */
+export function toggleArticleLike(article: Article) {
+  return (dispatch, getState) => {
+    const user = getState().auth.user;
+    if (!user)
+      return;
+
+    const articleLiked = article.meta.likes.indexOf(user.id) !== -1;
+    const apiAction = articleLiked ? apiUnlikeArticle : apiLikeArticle;
+
+    articleLiked
+      ? dispatch(unlikeArticle(article.id, user.id))
+      : dispatch(likeArticle(article.id, user.id));
+
+    apiAction(article.id)
+      .then(() => {
+        // Do nothing if on success (optimistic UI - UI updated preemptively)
+        console.log('Article ', article.id, articleLiked ? 'UNLIKED' : 'LIKED');
+      })
+      .catch((err) => {
+        console.log('Article ', articleLiked ? 'UNLIKED' : 'LIKED', 'ERROR: ', err);
+        articleLiked
+          ? dispatch(unlikeArticleFailed(article.id, user.id))
+          : dispatch(likeArticleFailed(article.id, user.id));
+      });
+  }
+}
 
 //----------------------------//
 //           Helpers          //

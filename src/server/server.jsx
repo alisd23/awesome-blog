@@ -65,7 +65,8 @@ export default (isoTools, __DEVELOPMENT__) => {
   app.use('/api', authMiddleware.checkSession);
 
   app.get('/api/articles', articleApi.getArticles);
-  app.get('/api/like-article/:id', articleApi.likeArticle);
+  app.post('/api/like-article/:id', articleApi.likeArticle);
+  app.post('/api/unlike-article/:id', articleApi.unlikeArticle);
 
 
   /**

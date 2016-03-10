@@ -1,22 +1,6 @@
 
 import config from '../../server/config';
-
-const GET_CONFIG = {
-  method: 'GET',
-  credentials: 'include',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }
-};
-const POST_CONFIG = {
-  method: 'POST',
-  credentials: 'include',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }
-};
+import { GET_CONFIG, POST_CONFIG } from './config';
 
 /**
  * Attempt authentication using the fruksWeb session if it exists.

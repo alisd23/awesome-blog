@@ -6,7 +6,7 @@ import Author from '../../universal/Objects/Author';
  * Get ALL the articles from the database
  * @return {Promise} Resolves to an array of articles
  */
-export function getAllAuthors() {
+export function getAuthors() {
   return AuthorModel
     .find().exec()
     .then((rawAuthors: any[]) =>

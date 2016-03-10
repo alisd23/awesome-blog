@@ -5,8 +5,8 @@ import { match, RouterContext } from 'react-router';
 import { createOnServer } from '../universal/Store';
 import Html from './html';
 
-import { getAllArticles } from './controllers/ArticleController';
-import { getAllAuthors } from './controllers/AuthorController';
+import { getArticles } from './controllers/ArticleController';
+import { getAuthors } from './controllers/AuthorController';
 import { articlesToState } from '../universal/redux/ducks/articles';
 import { authorsToState } from '../universal/redux/ducks/authors';
 
@@ -80,8 +80,8 @@ export default function getInitialHtml(renderProps, reducerRegistry, isoTools) {
  */
 function getHomeState(sharedState, renderProps) {
   return Promise.all([
-    getAllArticles(),
-    getAllAuthors()
+    getArticles(),
+    getAuthors()
   ])
     .then(([articles, authors]) => {
       return {

@@ -29,6 +29,13 @@ const HeadlineArticleComponent = ({ article, author, onReadArticle }) => (
           </h3>
           <h5 className="article-date">{article.createdPretty}</h5>
         </div>
+        {
+          article.likes.length > 0 &&
+            <div className="likes-display">
+              <i className="heart icon material-icons md-36">favorite</i>
+              <div className="count m-l-sm">{article.likes.length}</div>
+            </div>
+        }
       </div>
     </div>
   </div>

@@ -10,6 +10,13 @@ const ArticleCardComponent = ({ article, author, onReadArticle }) => (
           <h2 className="article-title small-caps text-white text-center">
             {article.title}
           </h2>
+          {
+            article.likes.length > 0 &&
+              <div className="likes-display">
+                <i className="heart icon material-icons md-36">favorite</i>
+                <div className="count m-l-sm">{article.likes.length}</div>
+              </div>
+          }
         </div>
         <div className="read-action flex center-a small-caps">See article</div>
       </div>

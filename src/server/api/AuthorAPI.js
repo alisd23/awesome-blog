@@ -1,12 +1,12 @@
 
-import { getAllAuthors } from '../controllers/ArticleController';
+import { getAuthors as getAuthorsCtrl } from '../controllers/ArticleController';
 
 /**
  * Retrieve all articles and send result back to client
  * @return {void}
  */
 export function getAuthors(req, res) {
-  getAllAuthors()
+  getAuthorsCtrl()
     .then((authors: Author[]) => {
       res.status(200).send({
         success: 1,

@@ -11,7 +11,7 @@ const Schema = mongoose.Schema;
  * @param {string}    image
  * @param {Author}    author
  * @param {Date}      created
- * @param {number}    meta.likes
+ * @param {number}    meta.likes  - Array of FruksWeb ids which have liked the article
  */
 const articleSchema = new Schema({
   title   : String,
@@ -20,7 +20,7 @@ const articleSchema = new Schema({
   author  : { type: Schema.Types.ObjectId, ref: 'Author' },
   created : { type: Date, default: Date.now },
   meta: {
-    likes: { type: Number, default: 0 }
+    likes: { type: [Number], default: [] }
   }
 });
 
