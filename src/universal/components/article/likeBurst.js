@@ -1,7 +1,11 @@
 
-import mojs from 'mo-js';
-
 export default (el, elIcon, elCount) => {
+  if (typeof window !== 'undefined') {
+    const mojs = require('mo-js');
+  } else {
+    return;
+  }
+
   const scaleCurve = mojs.easing.path('M0,100 L25,99.9999983 C26.2328835,75.0708847 19.7847843,0 100,0');
   const tweens = [
     // burst animation

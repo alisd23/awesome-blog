@@ -171,10 +171,12 @@ $article-height: 500px;
   &.animate .icon {
     animation: Heartbeat infinite 2.8s $sharp-ease-in-out;
   }
-
-  .icon {
-    cursor: pointer;
+  &.clickable {
+    .icon {
+      cursor: pointer;
+    }
   }
+
   .icon, .count {
     color: $gray-light;
     transition: all 0.3s ease-out;
