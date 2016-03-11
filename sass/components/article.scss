@@ -171,26 +171,24 @@ $article-height: 500px;
   &.animate .icon {
     animation: Heartbeat infinite 2.8s $sharp-ease-in-out;
   }
-  &.clickable {
 
-    .icon {
-      cursor: pointer;
-    }
-    .icon, .count {
-      color: $gray-light;
-      transition: all 0.3s ease-out;
-    }
-    &.active {
-      .icon { color: $orange; }
-      .count { color: $orange-dark; }
-    }
-    &.unliked .count {
-      opacity: 0;
-    }
+  .icon {
+    cursor: pointer;
+  }
+  .icon, .count {
+    color: $gray-light;
+    transition: all 0.3s ease-out;
+  }
+  &.active {
+    .icon { color: $orange; }
+    .count { color: $orange-dark; }
+  }
+  &.unliked .count {
+    opacity: 0;
+  }
 
-    &:not(.active):hover .icon {
-      color: lighten($orange, 25%);
-    }
+  &:not(.active):hover .icon {
+    color: lighten($orange, 25%);
   }
 
   .count {

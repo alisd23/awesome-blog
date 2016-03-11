@@ -34,7 +34,12 @@ export default class LikeButtonComponent extends React.Component {
 
   @throttle(100)
   onLikeClicked() {
-    this.likeAnimation && !this.props.isLiked && this.likeAnimation();
-    this.props.handleLike && this.props.handleLike();
+    this.likeAnimation
+      && this.props.user
+      && !this.props.isLiked
+      && this.likeAnimation();
+      
+    this.props.handleLike
+      && this.props.handleLike();
   }
 };

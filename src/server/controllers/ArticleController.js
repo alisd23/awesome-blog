@@ -41,7 +41,6 @@ export function likeArticle(articleId, userId) {
     )
     .exec()
     .then(result => {
-      console.log("LIKED: ", result);
       if (!result.ok) {
         throw new Error('Article like failed')
       }
@@ -62,7 +61,6 @@ export function unlikeArticle(articleId, userId) {
     )
     .exec()
     .then(result => {
-      console.log("UNLIKED: ", result);
       if (!result.ok) {
         throw new Error('Article unlike failed')
       }

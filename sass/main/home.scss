@@ -4,11 +4,14 @@
   padding-top: $spacer-lg + $navbar-height;
 
   .articles-section {
+    overflow-x: hidden;
     padding-top: $spacer-xl * 2;
+    padding-bottom: $spacer-xl * 2;
     background-color: $gray-lightest;
 
     @include media-breakpoint-down(md) {
       padding-top: $spacer-lg;
+      padding-bottom: $spacer-xl;
     }
   }
 

@@ -39,7 +39,7 @@
     opacity: 0;
   }
   .menu {
-    left: 100%;
+    right: -100%;
   }
 }
 
@@ -49,17 +49,17 @@
     opacity: 1;
   }
   .menu {
-    left: 25%;
+    right: 0;
   }
 }
 
 .menu-slide-enter.menu-slide-enter-active,
 .menu-slide-leave.menu-slide-leave-active {
   .backdrop {
-    transition: opacity 0.4s ease-out;
+    transition: opacity 0.25s ease-out;
   }
   .menu {
-    transition: left 0.5s $sharp-ease-in-out;
+    transition: right 0.35s ease-out;
   }
 }
 

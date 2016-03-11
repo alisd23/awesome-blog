@@ -33,8 +33,8 @@ export default class NavbarRightContainer extends React.Component {
 
         <ReactCSSTransitionGroup
           transitionName='menu-slide'
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
+          transitionEnterTimeout={350}
+          transitionLeaveTimeout={350}
         >
           {
             mobileNavOpen &&

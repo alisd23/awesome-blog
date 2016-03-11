@@ -15,6 +15,7 @@ export default class LoginModal extends React.Component {
       <Modal
         onClose={() => dispatch(closeModal(Modals.LOGIN))}
         title="Login"
+        subtitle="Login with your fruks account"
         modalClasses="login-modal"
       >
         <LoginForm onSubmit={loginWithCredentials} />

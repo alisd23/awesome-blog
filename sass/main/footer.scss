@@ -1,0 +1,43 @@
+
+#footer {
+  padding: 5rem 3rem 3rem 3rem;
+  background-color: $teal;
+  color: white;
+
+  background: linear-gradient(135deg, lighten($teal, 10%), darken($teal-darker, 10%));
+  background-size: 200% 200%;
+  animation: FooterBackground 10s ease-out infinite;
+
+  @include media-breakpoint-down(xs) {
+    margin-top: 2rem;
+  }
+
+  .site-link {
+    transition: all 0.3s $sharp-ease-in-out;
+    transform: scale(1);
+    text-align: center;
+
+    p {
+      transition: all 0.3s $sharp-ease-in-out;
+    }
+    img {
+      height: 60px;
+      margin: 2.4rem 0;
+    }
+    &:hover {
+      p {
+        transform: scale(1.1);
+      }
+    }
+  }
+  .copyright {
+    font-size: $font-size-sm;
+    text-align: center;
+  }
+}
+
+@keyframes FooterBackground {
+  0%    { background-position: 0% 91% }
+  50%   { background-position: 100% 10% }
+  100%  { background-position: 0% 91% }
+}

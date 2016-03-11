@@ -12,6 +12,9 @@
   @include link-variant($twitter, darken($twitter, 25%));
 }
 
+.link-white {
+  @include link-variant(white, $gray-lighter);
+}
 .link-light {
   @include link-variant($gray-medium, $gray-light);
 }

@@ -30,8 +30,13 @@
   .modal-header {
     text-align: center;
   }
+  .modal-subtitle {
+    text-align: center;
+    color: $gray-light;
+    margin-top: 1.5rem;
+  }
   .modal-body {
-    margin-top: 3rem;
+    margin-top: 2.6rem;
   }
 
   .close {

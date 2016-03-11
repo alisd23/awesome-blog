@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 
 import Navbar from './navbar/Navbar';
-import PageLoader from '../components/PageLoader';
+import Footer from '../components/Footer';
 import Modals from './Modals';
 import config from '../../config';
 import { scrolled } from '../redux/ducks/global';
@@ -49,6 +49,7 @@ export default class App extends React.Component {
           <div id="main">
             { children }
           </div>
+          <Footer />
         </GeminiScrollbar>
       </div>
     )

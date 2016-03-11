@@ -7,6 +7,8 @@ import HeadlineArticleComponent from '../components/headline/HeadlineArticle';
 import ArticleBodyComponent from '../components/article/ArticleBody';
 import config from '../../config';
 import { toggleArticleLike } from '../redux/ducks/articles';
+import { openModal } from '../redux/ducks/global';
+import Modals from '../constants/Modals';
 
 @connect(mapStateToProps)
 @mixin(NavbarTransparent)
@@ -33,7 +35,9 @@ export default class ArticleContainer extends React.Component {
           article={article}
           user={user}
           isLiked={isLiked}
-          handleLike={user && (() => dispatch(toggleArticleLike(article)))} />
+          handleLike={user
+            ? (() => dispatch(toggleArticleLike(article)))
+            : (() => dispatch(openModal(Modals.LOGIN)))} />
 
       </div>
     )
