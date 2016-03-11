@@ -10,6 +10,7 @@
   justify-content: center;
   top:  0;  bottom: 0;
   left: 0;  right:  0;
+  overflow: auto;
 
   .modal-backdrop {
     @extend .cover;
@@ -25,6 +26,12 @@
     padding: 4rem;
     border-radius: 5px;
     box-shadow: -5px 6px 10px rgba(0, 0, 0, 0.3);
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 0;
+      padding: 3rem;
+      margin: 1rem 1rem;
+    }
   }
 
   .modal-header {

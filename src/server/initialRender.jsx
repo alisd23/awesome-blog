@@ -1,9 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
+import { match, RouterContext, formatPattern } from 'react-router';
+
 import { createOnServer } from '../universal/Store';
 import Html from './html';
+import { SOLID, TRANSPARENT} from '../universal/constants/NavbarTypes';
 
 import { getArticles } from './controllers/ArticleController';
 import { getAuthors } from './controllers/AuthorController';
@@ -15,8 +17,9 @@ import { authorsToState } from '../universal/redux/ducks/authors';
  * @type {Object} - Map of pathname to handler
  */
 const stateHandlers = {
-  '/': getHomeState,
-  default: getHomeState
+  '/': getHomePageState,
+  '/article/.+': getArticlePageState,
+  default: getHomePageState
 }
 
 /**
@@ -33,18 +36,11 @@ const stateHandlers = {
 export default function getInitialHtml(renderProps, reducerRegistry, isoTools) {
 
   // Get correct handler for the state or a default handler if none is found
-  const stateHandler =
-    stateHandlers[renderProps.location.pathname]
-      || stateHandlers.default;
+  const stateHandler = matchRoute(renderProps.location.pathname);
 
-  const sharedState = {
-    routing: {
-      location: renderProps.location
-    }
-  }
-
-  return stateHandler(sharedState, renderProps)
-    .then((state) => {
+  return getSharedState(renderProps)
+    .then(sharedState => stateHandler(sharedState, renderProps))
+    .then(state => {
       const store = createOnServer(reducerRegistry, state);
 
       const component = (
@@ -73,21 +69,46 @@ export default function getInitialHtml(renderProps, reducerRegistry, isoTools) {
  */
 
 /**
- * State for the home page entry
+ * State for ALL pages - shared state
  * - routing
  * - articles
+ * - authors
  * @return {Promise} - Promise which resolves to the initial state
  */
-function getHomeState(sharedState, renderProps) {
+function getSharedState(renderProps) {
   return Promise.all([
     getArticles(),
     getAuthors()
   ])
     .then(([articles, authors]) => {
       return {
-        ...sharedState,
         articles: articlesToState(articles),
-        authors: authorsToState(authors)
+        authors: authorsToState(authors),
+        routing: {
+          location: renderProps.location
+        }
       };
     });
+}
+
+function getHomePageState(sharedState, renderProps) {
+  return Promise.resolve(sharedState);
+}
+
+function getArticlePageState(sharedState, renderProps) {
+  return Promise.resolve({
+    ...sharedState,
+    global: {
+      navbarType: TRANSPARENT
+    }
+  });
+}
+
+function matchRoute(url) {
+  for (let regex in stateHandlers) {
+    if (url.match(new RegExp(`^${regex}\$`))) {
+      return stateHandlers[regex];
+    }
+  }
+  return stateHandlers.default;
 }

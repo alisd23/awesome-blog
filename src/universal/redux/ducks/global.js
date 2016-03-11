@@ -64,7 +64,11 @@ export default function reducer(state = initialState, action) {
         openModal: null
       };
     default:
-      return state;
+      // If any state field doesn't exist, use initial state
+      return {
+        ...initialState,
+        ...state
+      }
   };
 }
 

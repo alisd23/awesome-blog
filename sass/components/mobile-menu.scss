@@ -17,5 +17,15 @@
     width: 75%;
     background-color: white;
     border-top: 1px solid $gray-lighter;
+    padding: $spacer-lg 2rem;
+
+    .menu-content {
+      padding: $spacer-lg 2rem;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+    }
   }
 }

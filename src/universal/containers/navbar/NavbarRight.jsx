@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import NavActions from '../../components/navbar/NavActions';
 import HamburgerMenu from '../../components/navbar/HamburgerMenu';
-import MobileMenu from '../../components/MobileMenu';
+import MobileMenu from './MobileMenu';
 import { toggleMobileNav, openModal } from '../../redux/ducks/global';
 import Modals from '../../constants/Modals';
 
@@ -38,8 +38,7 @@ export default class NavbarRightContainer extends React.Component {
         >
           {
             mobileNavOpen &&
-              <MobileMenu
-                closeMenu={() => dispatch(toggleMobileNav(false))} />
+              <MobileMenu />
           }
         </ReactCSSTransitionGroup>
       </div>

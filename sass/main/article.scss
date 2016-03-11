@@ -1,6 +1,14 @@
 
 #article {
 
+  .article {
+    padding-top: $navbar-height;
+
+    @include media-breakpoint-down(sm) {
+      padding-top: $navbar-height-mobile;
+    }
+  }
+
   .article-body {
     padding-top: 4rem;
     padding-bottom: $spacer-xl * 2;
@@ -8,6 +16,12 @@
     @include media-breakpoint-down(sm) {
       padding-top: $spacer-lg;
       padding-bottom: $spacer-xl;
+    }
+  }
+  .article-inner {
+    @include media-breakpoint-down(xs) {
+      padding-top: $spacer-lg;
+      padding-bottom: $spacer-lg;
     }
   }
 

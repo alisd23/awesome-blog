@@ -39,7 +39,6 @@ $hamburger-hover-transition-timing-function: linear !default;
   &::after {
     width: $hamburger-layer-width;
     height: $hamburger-layer-height;
-    background-color: $hamburger-layer-color;
     border-radius: $hamburger-layer-border-radius;
     position: absolute;
     transition: all 0.15s ease;
@@ -57,6 +56,40 @@ $hamburger-hover-transition-timing-function: linear !default;
 
   &::after {
     bottom: ($hamburger-layer-spacing + $hamburger-layer-height) * -1;
+  }
+}
+
+// COLOURS
+.navbar-solid .hamburger--slider {
+
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+    background-color: $teal;
+  }
+
+  &.is-active .hamburger-inner {
+    .hamburger-inner,
+    .hamburger-inner::before,
+    .hamburger-inner::after {
+      background-color: $gray-light;
+    }
+  }
+}
+.navbar-transparent .hamburger--slider {
+
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+    background-color: white;
+  }
+
+  &.is-active .hamburger-inner {
+    .hamburger-inner,
+    .hamburger-inner::before,
+    .hamburger-inner::after {
+      background-color: $gray-lighter;
+    }
   }
 }
 
@@ -78,18 +111,11 @@ $hamburger-hover-transition-timing-function: linear !default;
   }
 
   &.is-active {
-    color: $gray-light;
 
     .hamburger-inner {
       $y-offset: $hamburger-layer-spacing + $hamburger-layer-height;
 
       transform: translate3d(0, $y-offset, 0) rotate(45deg);
-
-      &,
-      &::before,
-      &::after {
-        background-color: $gray-light;
-      }
 
       &::before {
         transform: rotate(-45deg) translate3d($hamburger-layer-width / -7, $hamburger-layer-spacing * -1, 0);
