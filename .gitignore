@@ -4,3 +4,4 @@ webpack-stats.json
 javascript
 compiled
 build
+src/server/config.js

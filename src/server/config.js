@@ -4,7 +4,7 @@
 // SET THESE TO BE YOUR SETTINGS //
 //-------------------------------//
 export const app_key = 'Jd72nShdlKnannfJdnswzoJeDNSjkWas';
-
+export const port = 8000;
 export const fruks_web_hostname = 'http://fruks.app';
 
 export const sql = {

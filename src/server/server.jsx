@@ -26,7 +26,7 @@ import config from './config';
  * @param  {bool} __DEVELOPMENT__ - Is development mode enabled?
  */
 export default (isoTools, __DEVELOPMENT__) => {
-  const PORT          = 8000;
+  const PORT          = config.port;
   const projectRoot   = path.join(__dirname, '../..');
 
   const app = express();
