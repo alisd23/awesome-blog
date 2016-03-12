@@ -2,7 +2,7 @@ import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux'
 
-import LoginModal from '../containers/Modals/LoginModal';
+import LoginModal from './modals/LoginModal';
 import Modals from '../constants/Modals';
 
 @connect(mapStateToProps)
