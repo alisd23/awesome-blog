@@ -42,7 +42,8 @@ export default (isoTools, __DEVELOPMENT__) => {
    *  MIDDLEWARE
    */
   if (process.NODE_ENV === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
+    console.log('Production mode');
+    app.set('trust proxy', 1); // trust first proxy
   }
 
   app.use(bodyParser.json());

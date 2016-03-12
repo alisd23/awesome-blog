@@ -55,7 +55,7 @@ const paths = {
 gulp.task('default', ['dev']);
 gulp.task('dev', ['clean', 'compile-server:dev', 'server:dev', 'webpack-dev-server']);
 gulp.task('prod', ['compile-server:prod', 'webpack:prod', 'server:prod']);
-gulp.task('compile', ['webpack:prod']);
+gulp.task('compile', ['compile-server:prod', 'webpack:prod']);
 
 gulp.task('clean', function() {
   return gulp.src(['compiled', 'build'])
@@ -80,17 +80,18 @@ gulp.task('seed', ['compile-server:dev'], function(cb) {
 function createServer() {
   return liveServer.new('compiled/server/boot.js');
 }
-function compileServer() {
-  return gulp.src([...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG], { cwd: 'src', base: 'src' })
-    .pipe(cached('babel'))
-    .pipe(sourcemaps.init())
-    .pipe(babel(babelConfig))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('compiled'));
+function compileServer(dev) {
+  var compilation = gulp.src([...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG], { cwd: 'src', base: 'src' })
+    .pipe(cached('babel'));
+
+  if (dev) { compilation = compilation.pipe(sourcemaps.init()); }
+  compilation = compilation.pipe(babel(babelConfig));
+  if (dev) { compilation= compilation.pipe(sourcemaps.write()); }
+  return compilation = compilation.pipe(gulp.dest('compiled'));
 }
 
 gulp.task('compile-server:prod', ['clean'], compileServer);
-gulp.task('compile-server:dev', ['clean'], compileServer);
+gulp.task('compile-server:dev', ['clean'], () => compileServer(true));
 
 gulp.task('server:prod', ['webpack:prod'], () => {
   const server = createServer();

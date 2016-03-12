@@ -34,5 +34,6 @@ export default {
 	app_key,
 	fruks_web_hostname,
 	sql,
-	session
+	session,
+	port
 }
