@@ -8,14 +8,14 @@ const environment = {
   }
 }[process.env.NODE_ENV || 'development'];
 
-export default Object.assign({
+export default {
   app: {
     title: 'Fruks Blog',
     description: 'Funky blog posts for students',
     head: {
       titleTemplate: 'Fruks Blog: %s',
       meta: [
-        {name: 'description', content: 'All the modern best practices in one example.'},
+        {name: 'description', content: 'Student blogs'},
         {charset: 'utf-8'},
         {property: 'og:site_name', content: 'Fruks Blog'},
         {property: 'og:title', content: 'Fruks Blog'},
@@ -23,5 +23,5 @@ export default Object.assign({
       ]
     }
   },
-
-}, environment);
+  ...environment
+};

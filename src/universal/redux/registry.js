@@ -6,10 +6,10 @@ class ReducerRegistry {
   static _emitChange;
 
   register(newReducers) {
-    this._reducers = Object.assign({},
-      this._reducers,
-      newReducers
-    );
+    this._reducers = {
+      ...this._reducers,
+      ...newReducers
+    };
     if (this._emitChange != null) {
       this._emitChange(this.getReducers());
     }
@@ -42,10 +42,10 @@ class ReducerRegistry {
 
     console.log("UPDATE REDUCERS: ", updatedReducers);
 
-    store.replaceReducer(combineReducers(Object.assign({},
-      currentReducers,
-      updatedReducers
-    )));
+    store.replaceReducer(combineReducers({
+      ...currentReducers,
+      ...updatedReducers
+    }));
   }
 }
 

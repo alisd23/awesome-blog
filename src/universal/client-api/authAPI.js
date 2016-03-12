@@ -1,4 +1,4 @@
-
+import 'isomorphic-fetch';
 import config from '../../server/config';
 import { GET_CONFIG, POST_CONFIG } from './config';
 
