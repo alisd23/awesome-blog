@@ -4,7 +4,7 @@ import HomePageComponent from '../components/Home';
 import { mixin } from 'core-decorators';
 import { NavbarSolid } from '../mixins/navbar';
 import { getHeadlineArticle, getNonHeadlineArticles } from '../redux/ducks/articles';
-import config from '../../config';
+import config from '../head.config';
 import Helmet from 'react-helmet';
 
 @connect(mapStateToProps)
@@ -23,7 +23,7 @@ export default class HomeContainer extends React.Component {
   render() {
     return (
       <div>
-        <Helmet {...config.app.head}/>
+        <Helmet {...config} title="Fruks Blog"/>
         <HomePageComponent
           otherArticles={this.props.otherArticles}
           headlineArticle={this.props.headlineArticle} />

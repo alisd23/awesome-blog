@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-const Helmet = require('react-helmet');
+import Helmet from 'react-helmet';
+import serverConfig from './config';
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -17,8 +18,6 @@ export default class Html extends React.Component {
 
   render() : React.ReactElement<HTMLProps> {
     const {assets, component, store} = this.props;
-      // console.log(assets.styles);
-      // console.log(assets.assets);
     let content = component ? renderToString(component) : '';
     let head = Helmet.rewind();
 
@@ -31,7 +30,7 @@ export default class Html extends React.Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="shortcut icon" href={`${serverConfig.fruks_web_hostname}/favicon.ico`} />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).map((style, key) =>
@@ -54,6 +53,25 @@ export default class Html extends React.Component {
           <div id="dev-tools"></div>
           <script dangerouslySetInnerHTML={{__html:  `window.__INITIAL_STATE__=${JSON.stringify(store.getState())};`}} charSet="UTF-8"/>
           <script src={assets.javascript.main} charSet="UTF-8"/>
+
+          {/* Facebook SDK */}
+          <script dangerouslySetInnerHTML={{__html: `
+            window.fbAsyncInit = function() {
+                FB.init({
+                  appId      : ${serverConfig.fb_app_id},
+                  xfbml      : true,
+                  version    : 'v2.5'
+                });
+              };
+
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/en_US/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+          `}}></script>
         </body>
       </html>
     );

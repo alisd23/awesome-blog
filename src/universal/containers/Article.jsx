@@ -5,7 +5,7 @@ import { mixin } from 'core-decorators';
 import { NavbarTransparent } from '../mixins/navbar';
 import HeadlineArticleComponent from '../components/headline/HeadlineArticle';
 import ArticleBodyComponent from '../components/article/ArticleBody';
-import config from '../../config';
+import config from '../head.config';
 import { toggleArticleLike } from '../redux/ducks/articles';
 import { openModal } from '../redux/ducks/global';
 import Modals from '../constants/Modals';
@@ -24,7 +24,8 @@ export default class ArticleContainer extends React.Component {
 
     return (
       <div id="article">
-        <Helmet {...config.app.head}/>
+        <Helmet {...config}
+          title={article.title} />
 
         <div className="article-banner">
           <HeadlineArticleComponent author={author} article={article} />

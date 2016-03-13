@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import Navbar from './navbar/Navbar';
 import Footer from '../components/Footer';
 import Modals from './Modals';
-import config from '../../config';
 import { scrolled } from '../redux/ducks/global';
 
 // Can call just like this with babel resolver plugin
@@ -43,7 +42,6 @@ export default class App extends React.Component {
     return (
       <div id="app">
         <GeminiScrollbar ref="scrollbar" autoshow={true}>
-          <Helmet {...config.app.head}/>
           <Navbar location={location} />
           <Modals openModal={openModal} />
           <div id="main">

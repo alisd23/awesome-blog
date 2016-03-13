@@ -1,11 +1,14 @@
 import React from 'react';
 import LikeButton from './LikeButton';
+import { shareArticle } from '../../client-api/facebookAPI';
+
+import fbLogo from '../../../../assets/images/fb_blue_40.png';
 
 const ArticleBodyComponent = ({ article, author, user, isLiked, handleLike }) => (
   <div className="article-body container">
 
     {/* Author info */}
-    <div className="article-body-top flex row-center flex-wrap">
+    <section className="article-body-top flex row-center flex-wrap">
       <div className="flex row-center flex-expand">
         <div className="avatar img-cover img-circle"
              style={{backgroundImage: `url(${author.avatarURL})`}}>
@@ -28,10 +31,19 @@ const ArticleBodyComponent = ({ article, author, user, isLiked, handleLike }) =>
         article={article}
         handleLike={handleLike} />
 
-    </div>
-    <div className="article-content lead">
+    </section>
+    <section className="article-content lead">
       { article.content }
-    </div>
+    </section>
+
+    <section className="article-share">
+      <h4 className="text-light small-caps m-b-lg">Share</h4>
+      <div className="icons">
+        <img className="social-icon"
+          src={fbLogo}
+          onClick={() => shareArticle(article)} />
+      </div>
+    </section>
 
   </div>
 );
