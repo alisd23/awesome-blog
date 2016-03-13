@@ -3,8 +3,9 @@
   position: fixed;
   top: $navbar-height-mobile;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 0;  right: 0;
+  overflow: hidden;
+  margin-top: -1px;
 
   .backdrop {
     @extend .cover;

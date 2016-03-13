@@ -1,4 +1,3 @@
-
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const uglify = require('gulp-uglify');
@@ -21,10 +20,13 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const stream = require('webpack-stream');
 
-var colors = require('colors');
+const colors = require('colors');
 
 const webpackPort = 9000;
 const serverPort = 8000;
+const ip = '192.168.0.2';
+const hostname = ip || 'localhost';
+
 
 const paths = {
   'SRC': 'src',
@@ -145,7 +147,6 @@ function listenToInput(server) {
   	}));
 }
 
-
 /*
  * WEBPACK TASKS
  */
@@ -161,16 +162,16 @@ gulp.task('webpack-dev-server', ['server:dev'], function(callback) {
   new WebpackDevServer(webpack(webpackDevConfig), {
     // Tell wepback to pass (proxy) all requests to our server
     hot: true,
-    open: 'http://localhost:9000/webpack-dev-server/',
+    open: `http://${hostname}:9000/webpack-dev-server/`,
     noInfo: true,
     stats: {
       colors: true
     },
     proxy: {
-      '/' : `http://localhost:${serverPort}`
+      '/' : `http://${hostname}:${serverPort}`
     }
-  }).listen(webpackPort, 'localhost', function(err) {
+  }).listen(webpackPort, hostname, function(err) {
     if (err) throw new gutil.PluginError('webpack-dev-server', err);
-    gutil.log('[webpack-dev-server]', `http://localhost:${webpackPort}/webpack-dev-server/index.html`);
+    gutil.log('[webpack-dev-server]', `http://${hostname}:${webpackPort}/webpack-dev-server/index.html`);
   });
 });

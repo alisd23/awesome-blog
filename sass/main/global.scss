@@ -1,9 +1,8 @@
 
-body {
-  overflow: hidden;
+body, html {
+  overflow-x: hidden;
 }
 
 #app {
   overflow: auto;
-  -webkit-overflow-scrolling: touch;
 }

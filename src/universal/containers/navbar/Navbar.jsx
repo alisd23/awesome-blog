@@ -27,7 +27,7 @@ export default class NavbarContainer extends React.Component {
   render() {
     const { user, type, offTop, location, dispatch, mobileNavOpen } = this.props;
     const notMobile = typeof window === 'undefined'
-      || window.screen.width > screenSizes.xs.max;
+      || document.body.clientWidth > screenSizes.xs.max;
     return (
       <NavbarComponent
         clickNavLink={(route) => dispatch(push(route))}
@@ -35,7 +35,7 @@ export default class NavbarContainer extends React.Component {
         links={links}
         user={user}
         mobileNavOpen={mobileNavOpen}
-        type={offTop && notMobile ? SOLID : type}
+        type={(offTop && notMobile) || mobileNavOpen ? SOLID : type}
         offTop={notMobile ? offTop : 'false'}
       />
     )

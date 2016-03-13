@@ -21,7 +21,8 @@ $scrollbar-padding: 5px;
 
 /* fallback for native floating scrollbars */
 .gm-prevented {
-  -webkit-overflow-scrolling: touch;
+  // Don't need this line as on ioss body will be the scrollable element
+  // -webkit-overflow-scrolling: touch;
 }
 .gm-prevented .gm-scrollbar {
   display: none;
@@ -29,7 +30,7 @@ $scrollbar-padding: 5px;
 
 /* actual gemini-scrollbar styles */
 .gm-scrollbar-container {
-  position: relative;
+  position: absolute;
   overflow: hidden!important;
   width: 100%;
   height: 100%;

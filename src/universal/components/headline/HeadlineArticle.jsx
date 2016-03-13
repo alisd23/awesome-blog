@@ -16,7 +16,9 @@ const HeadlineArticleComponent = ({ article, author, onReadArticle, showLikes })
             <div className="article-action flex-static center-a">
               <a className="btn btn-white-accent btn-transition" onClick={onReadArticle}>
                 <span className="text small-caps">Read Article</span>
-                <i className="icon material-icons">local_library</i>
+                <div className="icon">
+                  <i className="material-icons">local_library</i>
+                </div>
               </a>
             </div>
         }

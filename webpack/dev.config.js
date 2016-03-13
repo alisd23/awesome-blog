@@ -10,6 +10,9 @@ const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('.
 
 const shared = require('./shared-config')(webpackIsomorphicToolsPlugin);
 
+const ip = '192.168.0.2';
+const hostname = ip || 'localhost';
+
 module.exports = Object.assign({},
 	// Include shared config
 	shared.main,
@@ -18,14 +21,14 @@ module.exports = Object.assign({},
 		// debug: true,
 		output: Object.assign({},
 			{
-				publicPath: 'http://localhost:9000/'
+				publicPath: `http://${hostname}:9000/`
 			},
 			shared.output
 		),
 		pathInfo: true,
 	  devtool: 'cheap-module-inline-source-map',
 		entry: [
-	    'webpack-dev-server/client?http://localhost:9000', // WebpackDevServer host and port
+	    `webpack-dev-server/client?http://${hostname}:9000`, // WebpackDevServer host and port
 	    'webpack/hot/only-dev-server', // 'only' prevents reload on syntax errors
 			'./src/client/app.jsx'
 		],

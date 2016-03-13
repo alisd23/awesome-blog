@@ -28,20 +28,20 @@ export default class App extends React.Component {
         this.props.dispatch(scrolled(e.currentTarget.scrollTop));
     }
     this.refs.scrollbar.refs['scroll-view'].addEventListener('scroll', onScroll);
-    this.refs.app.addEventListener('scroll', onScroll);
+    document.body.addEventListener('scroll', onScroll);
 
     // Listen for History location events and scroll to top on change
     // NOTE - DEPRECATED as of react-router 2.0.0
     this.props.history.listen(() => {
       this.refs.scrollbar.refs['scroll-view'].scrollTop = 0;
-      this.refs.app.scrollTop = 0;
+      document.body.scrollTop = 0;
     });
   }
 
   render() {
     const { location, openModal, children } = this.props;
     return (
-      <div id="app" className="cover" ref="app">
+      <div id="app">
         <GeminiScrollbar ref="scrollbar" autoshow={true}>
           <Helmet {...config.app.head}/>
           <Navbar location={location} />

@@ -8,10 +8,6 @@
   background-size: 200% 200%;
   animation: FooterBackground 10s ease-out infinite;
 
-  @include media-breakpoint-down(xs) {
-    margin-top: 2rem;
-  }
-
   .site-link {
     transition: all 0.3s $sharp-ease-in-out;
     transform: scale(1);
