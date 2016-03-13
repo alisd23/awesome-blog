@@ -66,7 +66,7 @@
   min-height: 500px;
 
   @include media-breakpoint-down(sm) {
-    min-height: auto;
+    min-height: 0;
   }
 
   > div {
@@ -98,6 +98,7 @@
     line-height: normal;
 
     @include media-breakpoint-down(sm) {
+      flex: 1 0 100%;
       font-size: 2.8rem;
     }
     @include media-breakpoint-down(xs) {

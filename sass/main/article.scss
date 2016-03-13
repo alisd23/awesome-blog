@@ -7,6 +7,10 @@
     @include media-breakpoint-down(sm) {
       padding-top: $navbar-height-mobile;
     }
+
+    .article-title {
+      flex: 0 0 100%;
+    }
   }
 
   .article-body {
@@ -19,7 +23,7 @@
     }
   }
   .article-inner {
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
       padding-top: $spacer-lg;
       padding-bottom: $spacer-lg;
     }
