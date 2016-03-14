@@ -6,6 +6,7 @@
 export const app_key = 'Jd72nShdlKnannfJdnswzoJeDNSjkWas';
 export const port = 8000;
 export const fruks_web_hostname = 'http://fruks.app';
+export const fb_app_id = '1500505256932291';
 
 export const sql = {
 	user: 'homestead',
@@ -35,5 +36,6 @@ export default {
 	fruks_web_hostname,
 	sql,
 	session,
-	port
+	port,
+	fb_app_id
 }
