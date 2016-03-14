@@ -29,7 +29,7 @@ export default class routes {
 
   configure() {
     return (
-      <Route onUpdate={(a) => console.log(a, this)} path='/' component={App}>
+      <Route path='/' component={App}>
         <IndexRoute getComponent={::this.getHomePage} />
         <Route path='/article/:id' getComponent={::this.getArticlePage}/>
       </Route>

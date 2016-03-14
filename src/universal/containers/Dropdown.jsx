@@ -57,7 +57,6 @@ export default class Dropdown extends React.Component {
    * @param  {event} e  - Click event
    */
   offClickListener = (e) => {
-    console.log(this.props.getTrigger());
     let level = 0;
     for (var element = e.target; element; element = element.parentNode) {
       if (element === this.refs.menu ||

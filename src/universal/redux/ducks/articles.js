@@ -135,10 +135,8 @@ export function toggleArticleLike(article: Article) {
     apiAction(article.id)
       .then(() => {
         // Do nothing if on success (optimistic UI - UI updated preemptively)
-        console.log('Article ', article.id, articleLiked ? 'UNLIKED' : 'LIKED');
       })
       .catch((err) => {
-        console.log('Article ', articleLiked ? 'UNLIKED' : 'LIKED', 'ERROR: ', err);
         articleLiked
           ? dispatch(unlikeArticleFailed(article.id, user.id))
           : dispatch(likeArticleFailed(article.id, user.id));

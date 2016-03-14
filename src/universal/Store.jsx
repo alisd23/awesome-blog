@@ -16,14 +16,23 @@ import { browserHistory } from 'react-router';
  * @param  {Object} initialState    - Initial state from server
  * @return {store}                  - Redux store
  */
-export function createOnClient(history, reducerRegistry, DevTools, initialState) {
+export function createOnClient(history, reducerRegistry, initialState, DevTools) {
 
-  const middleware = [thunk, logger(), routerMiddleware(history)];
+  const middleware = [thunk, routerMiddleware(history)];
 
-  const finalCreateStore = compose(
-    applyMiddleware(...middleware),
-    DevTools.instrument()
-  )(createStore);
+  let finalCreateStore;
+
+  if (__DEVELOPMENT__) {
+    middleware.push(logger());
+    finalCreateStore = compose(
+      applyMiddleware(...middleware),
+      DevTools.instrument()
+    )(createStore);
+  } else {
+    finalCreateStore = compose(
+      applyMiddleware(...middleware)
+    )(createStore);
+  }
 
   initialState = transformInitialState(initialState);
 

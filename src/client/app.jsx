@@ -16,16 +16,19 @@ import { createOnClient } from '../universal/Store';
 import coreReducers from '../universal/redux/core';
 import { loginFromSession } from '../universal/redux/ducks/auth';
 
-const DevToolsComponent =
-  <DockMonitor
-      toggleVisibilityKey="ctrl-h"
-      changePositionKey="ctrl-q"
-      defaultPosition="bottom"
-      defaultIsVisible={false} >
-    <LogMonitor theme="tomorrow" />
-  </DockMonitor>
+let DevTools;
 
-const DevTools = createDevTools(DevToolsComponent);
+if (__DEVELOPMENT__) {
+  const DevToolsComponent =
+    <DockMonitor
+        toggleVisibilityKey="ctrl-h"
+        changePositionKey="ctrl-q"
+        defaultPosition="bottom"
+        defaultIsVisible={false} >
+      <LogMonitor theme="tomorrow" />
+    </DockMonitor>
+  DevTools = createDevTools(DevToolsComponent);
+}
 
 reducerRegistry.register(coreReducers);
 const routes = new Routes(reducerRegistry);
@@ -42,7 +45,7 @@ const matchParams = {
 match(matchParams, (error, redirectLocation, renderProps) => {
 
   const initialState  = window.__INITIAL_STATE__;
-  const store         = createOnClient(browserHistory, reducerRegistry, DevTools, initialState);
+  const store         = createOnClient(browserHistory, reducerRegistry, initialState, DevTools);
   const history       = syncHistoryWithStore(browserHistory, store);
 
   // Attempt athentication from FruksWeb session token
@@ -59,11 +62,13 @@ match(matchParams, (error, redirectLocation, renderProps) => {
     document.getElementById('root')
   );
 
-  // RENDER DEV TOOLS
-  render(
-    <DevTools store={store} />,
-    document.getElementById('dev-tools')
-  )
+  if (__DEVELOPMENT__) {
+    // RENDER DEV TOOLS
+    render(
+      <DevTools store={store} />,
+      document.getElementById('dev-tools')
+    );
+  }
 
   //--------------------------//
   //  HOT RELOADING REDUCERS  //

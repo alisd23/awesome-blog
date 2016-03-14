@@ -35,6 +35,12 @@ module.exports = function(webpackIsomorphicToolsPlugin) {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loaders: [
+          // {
+          //   loader: 'webpack-strip',
+          //   query: {
+          //     strip: __DEVELOPMENT__ ? [] : ['console.debug']
+          //   }
+          // },
           { loader: 'react-hot' },
           {
             loader: 'babel',

@@ -40,7 +40,7 @@ class ReducerRegistry {
         delete updatedReducers[reducer];
     });
 
-    console.log("UPDATE REDUCERS: ", updatedReducers);
+    console.debug("UPDATE REDUCERS: ", updatedReducers);
 
     store.replaceReducer(combineReducers({
       ...currentReducers,
