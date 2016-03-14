@@ -1,5 +1,5 @@
 
-import config from '../../server/config';
+import localConfig from '../../server/local.config';
 
 /**
  * Class representing a User
@@ -40,7 +40,7 @@ export default class User {
     if (this.avatar) {
       return this.isAuthor
         ? `/assets/images/avatars/${this.avatar}.jpg`
-        : `${config.fruks_web_hostname}/images/avatars/${this.avatar}.jpg`;
+        : `${localConfig.fruks_web_hostname}/images/avatars/${this.avatar}.jpg`;
     } else {
       return `/assets/images/avatars/placeholder.jpg`;
     }

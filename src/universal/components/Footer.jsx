@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import config from '../../server/config';
+import localConfig from '../../server/local.config';
 
 const whiteLogo = require('../../../assets/images/white_logo.png');
 
@@ -10,7 +10,7 @@ const FooterComponent = ({ closeMenu }) => {
     <section id="footer" className="column center-a">
       <h5 className="site-link">
         <a className="link-white small-caps"
-          href={config.fruks_web_hostname}>
+          href={localConfig.fruks_web_hostname}>
           <p className="m-a-0">fruks.com</p>
           <img src={whiteLogo} />
         </a>

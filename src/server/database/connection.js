@@ -1,7 +1,7 @@
 
 import mongoose from 'mongoose';
 import knex from 'knex';
-import config from '../config.js';
+import localConfig from '../local.config';
 
 knex.Promise = Promise;
 
@@ -42,11 +42,11 @@ export function connectMySql() {
   sqlConnection = knex({
     client: 'mysql',
     connection: {
-      host      : config.sql.host,
-      user      : config.sql.user,
-      password  : config.sql.password,
-      database  : config.sql.database,
-      port      : config.sql.port
+      host      : localConfig.sql.host,
+      user      : localConfig.sql.user,
+      password  : localConfig.sql.password,
+      database  : localConfig.sql.database,
+      port      : localConfig.sql.port
     },
     // debug: process.NODE_ENV !== 'production'
   });

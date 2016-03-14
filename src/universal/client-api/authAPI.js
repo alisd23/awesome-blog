@@ -1,5 +1,5 @@
 import 'isomorphic-fetch';
-import config from '../../server/config';
+import localConfig from '../../server/local.config';
 import { GET_CONFIG, POST_CONFIG } from './config';
 
 /**
@@ -8,7 +8,7 @@ import { GET_CONFIG, POST_CONFIG } from './config';
  * @return {Promise}  - Resolves to the result from the authenticateWithToken function
  */
 export function authenticateFromSession() {
-  return fetch(`${config.fruks_web_hostname}/ajax/webtoken`, {
+  return fetch(`${localConfig.fruks_web_hostname}/ajax/webtoken`, {
       ...GET_CONFIG,
       mode: 'cors'
     })
@@ -50,7 +50,7 @@ export function authenticateWithToken(token: string) {
  * @return {Promise}  - resolves to the user
  */
 export function authenticateWithCredentials(email, password) {
-  return fetch(`${config.fruks_web_hostname}/api/login`, {
+  return fetch(`${localConfig.fruks_web_hostname}/api/login`, {
     ...POST_CONFIG,
     mode: 'cors',
     body: JSON.stringify({ email, password })
@@ -67,7 +67,7 @@ export function authenticateWithCredentials(email, password) {
 
 
 export function logout() {
-  return fetch(`${config.fruks_web_hostname}/api/logout`, {
+  return fetch(`${localConfig.fruks_web_hostname}/api/logout`, {
     ...POST_CONFIG,
     mode: 'cors',
   })

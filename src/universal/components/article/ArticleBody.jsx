@@ -1,8 +1,9 @@
 import React from 'react';
 import LikeButton from './LikeButton';
-import { shareArticle } from '../../client-api/facebookAPI';
+import { shareArticle, tweetArticle } from '../../client-api/socialAPI';
 
 import fbLogo from '../../../../assets/images/fb_blue_40.png';
+import twtrLogo from '../../../../assets/images/twitter_blue_40.png';
 
 const ArticleBodyComponent = ({ article, author, user, isLiked, handleLike }) => (
   <div className="article-body container">
@@ -42,6 +43,9 @@ const ArticleBodyComponent = ({ article, author, user, isLiked, handleLike }) =>
         <img className="social-icon"
           src={fbLogo}
           onClick={() => shareArticle(article)} />
+        <img className="social-icon"
+          src={twtrLogo}
+          onClick={() => tweetArticle(article)} />
       </div>
     </section>
 

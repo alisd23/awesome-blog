@@ -1,9 +1,9 @@
 
 import jwt from 'jsonwebtoken';
-import config from '../config.js';
-import Author from '../../universal/Objects/Author.js';
-import User from '../../universal/Objects/User.js';
-import { getUser } from '../database/sql/commands.js';
+import localConfig from '../local.config';
+import Author from '../../universal/Objects/Author';
+import User from '../../universal/Objects/User';
+import { getUser } from '../database/sql/commands';
 import { findAuthor } from '../controllers/AuthorController';
 
 /**
@@ -18,7 +18,7 @@ export function authenticateWithToken(req, res) {
     res.status('400').send('Token Authentication failed');
 
   // Verify and Decode JWT token
-  jwt.verify(token, config.app_key, (err, decoded) => {
+  jwt.verify(token, localConfig.app_key, (err, decoded) => {
     if (err || !decoded) {
       console.error('JWT decoding failed', err);
       res.status('500').send({ err: `Get user failed - ${err}`});

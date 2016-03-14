@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { reduxForm } from 'redux-form';
-import config from '../../../server/config';
+import localConfig from '../../../server/local.config';
 import ValidationInput from '../../components/forms/ValidationInput';
 
 const validate = (values) => {
@@ -71,7 +71,7 @@ export default class LoginForm extends React.Component {
         <span>
           <span>Don't have a Fruks account?</span>
           <a
-            href={`${config.fruks_web_hostname}/register`}
+            href={`${localConfig.fruks_web_hostname}/register`}
             className="link-accent strong m-l-d">Sign up here</a>
         </span>
 

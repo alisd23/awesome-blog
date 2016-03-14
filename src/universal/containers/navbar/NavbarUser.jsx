@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { logout } from '../../redux/ducks/auth';
-import config from '../../../server/config';
+import localConfig from '../../../server/local.config';
 import Dropdown from '../Dropdown';
 
 @connect()
@@ -37,7 +37,7 @@ export default class NavbarUserComponent extends React.Component {
             getTrigger={() => this.refs.trigger}
             className="dropdown-menu-right">
             {/* Dropdown content */}
-            <a className="dropdown-item text-primary" href={`${config.fruks_web_hostname}`}>Go to Fruks</a>
+            <a className="dropdown-item text-primary" href={`${localConfig.fruks_web_hostname}`}>Go to Fruks</a>
             <a className="dropdown-item" onClick={() => dispatch(logout())}>Logout</a>
           </Dropdown>
         </div>

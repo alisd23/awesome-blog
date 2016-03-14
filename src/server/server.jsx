@@ -17,7 +17,8 @@ import initialRender from './initialRender';
 import articleApi from './api/ArticleAPI';
 import authApi from './api/AuthAPI';
 import authMiddleware from './middleware/Auth';
-import config from './config';
+import localConfig from './local.config';
+import appConfig from './app.config';
 
 
 /**
@@ -26,7 +27,7 @@ import config from './config';
  * @param  {bool} __DEVELOPMENT__ - Is development mode enabled?
  */
 export default (isoTools, __DEVELOPMENT__) => {
-  const PORT          = config.port;
+  const PORT          = localConfig.port;
   const projectRoot   = path.join(__dirname, '../..');
 
   const app = express();
@@ -50,7 +51,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   app.use(express.static(path.join(projectRoot, 'build')));
 
   app.use(session({
-    ...config.session,
+    ...appConfig.session,
   	store: new MongoStore({ mongooseConnection: mongoose.connection }),
   }));
 
