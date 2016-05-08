@@ -9,7 +9,7 @@ let mongoConnection;
  * @return {Object} The mongoose/MongoDB connection
  */
 export function connectMongoDB() {
-  const DB_URL = 'mongodb://localhost/fruks-blog';
+  const DB_URL = 'mongodb://localhost/blog';
 
   if (mongoConnection)
     return mongoConnection;
