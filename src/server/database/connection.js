@@ -1,12 +1,8 @@
 
 import mongoose from 'mongoose';
-import knex from 'knex';
 import localConfig from '../local.config';
 
-knex.Promise = Promise;
-
 let mongoConnection;
-let sqlConnection;
 
 /**
  * Create the MongoDB database connection
@@ -29,27 +25,4 @@ export function connectMongoDB() {
   });
 
   return mongoConnection;
-}
-
-/**
- * Create the MySQL database connection
- * @return {Object} Knex MySQL object
- */
-export function connectMySql() {
-  if (sqlConnection)
-    return sqlConnection;
-
-  sqlConnection = knex({
-    client: 'mysql',
-    connection: {
-      host      : localConfig.sql.host,
-      user      : localConfig.sql.user,
-      password  : localConfig.sql.password,
-      database  : localConfig.sql.database,
-      port      : localConfig.sql.port
-    },
-    // debug: process.NODE_ENV !== 'production'
-  });
-
-  return sqlConnection;
 }

@@ -20,8 +20,8 @@ export function getAuthors() {
  * Get ALL the articles from the database
  * @return {Promise} Resolves to an array of articles
  */
-export function findAuthor(id: number) {
+export function findAuthor(_id: string) {
   return AuthorModel
-    .findOne({ fruksID: id }).exec()
+    .findOne({ _id }).exec()
     .then((rawAuthor) => rawAuthor ? new Author(rawAuthor) : null);
 }

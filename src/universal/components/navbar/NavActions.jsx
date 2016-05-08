@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import NavbarUser from '../../containers/navbar/NavbarUser';
 import { SOLID, TRANSPARENT} from '../../constants/NavbarTypes';
 
-const NavbarActionsComponent = ({ user, type, onLoginClicked }) => {
+const NavbarActionsComponent = ({ user, type, onLoginClicked, onRegisterClicked }) => {
 
   const linkClass = type === SOLID ? 'link-accent' : 'link-accent-white';
   const buttonClass = type === SOLID ? 'btn-primary-outline' : 'btn-white-accent';
@@ -20,9 +20,9 @@ const NavbarActionsComponent = ({ user, type, onLoginClicked }) => {
                 className={classnames('strong small-caps m-r-lg', linkClass)}>
                  Login
                </a>
-              <a href="https://www.fruks.com/register"
+              <a onClick={onRegisterClicked}
                  className={classnames('btn btn-caps strong', buttonClass)}>
-                Join Fruks
+                Join us
               </a>
             </div>
       }

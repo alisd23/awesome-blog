@@ -14,7 +14,6 @@ import reducerRegistry from '../universal/redux/registry';
 import Routes from '../universal/Routes';
 import { createOnClient } from '../universal/Store';
 import coreReducers from '../universal/redux/core';
-import { loginFromSession } from '../universal/redux/ducks/auth';
 
 let DevTools;
 
@@ -48,8 +47,6 @@ match(matchParams, (error, redirectLocation, renderProps) => {
   const store         = createOnClient(browserHistory, reducerRegistry, initialState, DevTools);
   const history       = syncHistoryWithStore(browserHistory, store);
 
-  // Attempt athentication from FruksWeb session token
-  store.dispatch(loginFromSession());
   routes.injectStore(store);
 
   // RENDER APP

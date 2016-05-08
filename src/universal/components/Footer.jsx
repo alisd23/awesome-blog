@@ -9,14 +9,13 @@ const FooterComponent = ({ closeMenu }) => {
   return (
     <section id="footer" className="column center-a">
       <h5 className="site-link">
-        <a className="link-white small-caps"
-          href={localConfig.fruks_web_hostname}>
-          <p className="m-a-0">fruks.com</p>
+        <div className="link-white small-caps">
+          <p className="m-a-0">Awesome Blog Site</p>
           <img src={whiteLogo} />
-        </a>
+        </div>
       </h5>
       <div className="copyright">
-        <p className="m-b-sm">© Fruks Partnership Company 2016</p>
+        <p className="m-b-sm">© Awesome Blog Company 2016</p>
         <p className="m-b-0">All Rights Reserved</p>
       </div>
     </section>

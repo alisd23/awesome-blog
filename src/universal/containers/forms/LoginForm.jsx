@@ -3,12 +3,14 @@ import classnames from 'classnames';
 import { reduxForm } from 'redux-form';
 import localConfig from '../../../server/local.config';
 import ValidationInput from '../../components/forms/ValidationInput';
+import Modals from '../../constants/Modals';
+import { openModal } from '../../redux/ducks/global';
 
 const validate = (values) => {
   const errors = {};
 
-  if (!values.email) {
-    errors.email = 'Email Required';
+  if (!values.username) {
+    errors.username = 'username Required';
   }
 
   if (!values.password) {
@@ -19,7 +21,7 @@ const validate = (values) => {
 
 const formData = {
   form: 'login',
-  fields: ['email', 'password'],
+  fields: ['username', 'password'],
   validate
 }
 
@@ -33,7 +35,7 @@ export default class LoginForm extends React.Component {
 
   render() {
     const {
-      fields: { email, password },
+      fields: { username, password },
       handleSubmit,
       error,
       submitting
@@ -48,9 +50,8 @@ export default class LoginForm extends React.Component {
       <form onSubmit={handleSubmit}>
 
         <ValidationInput
-          name='Email'
-          type='email'
-          inputData={email} />
+          name='Username'
+          inputData={username} />
 
         <ValidationInput
           name='Password'
@@ -69,9 +70,9 @@ export default class LoginForm extends React.Component {
         </button>
 
         <span>
-          <span>Don't have a Fruks account?</span>
+          <span>Don't have an Awesome Blog account?</span>
           <a
-            href={`${localConfig.fruks_web_hostname}/register`}
+            onClick={() => dispatch(openModal(Modals.LOGIN))}
             className="link-accent strong m-l-d">Sign up here</a>
         </span>
 

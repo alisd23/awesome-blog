@@ -25,7 +25,8 @@ export default class NavbarRightContainer extends React.Component {
         <NavActions
           user={user}
           type={type}
-          onLoginClicked={() => dispatch(openModal(Modals.LOGIN))} />
+          onLoginClicked={() => dispatch(openModal(Modals.LOGIN))}
+          onRegisterClicked={() => dispatch(openModal(Modals.LOGIN))} />
 
         <HamburgerMenu
           mobileNavOpen={mobileNavOpen}

@@ -4,7 +4,7 @@ import Modal from '../../components/Modal';
 import LoginForm from '../forms/LoginForm';
 import Modals from '../../constants/Modals';
 import { closeModal } from '../../redux/ducks/global';
-import { loginWithCredentials } from '../../redux/ducks/auth';
+import { login } from '../../redux/ducks/auth';
 
 @connect(mapStateToProps)
 export default class LoginModal extends React.Component {
@@ -15,10 +15,10 @@ export default class LoginModal extends React.Component {
       <Modal
         onClose={() => dispatch(closeModal(Modals.LOGIN))}
         title="Login"
-        subtitle="Login with your fruks account"
+        subtitle="Login with your blog account"
         modalClasses="login-modal"
       >
-        <LoginForm onSubmit={loginWithCredentials} />
+        <LoginForm onSubmit={login} />
       </Modal>
     );
   }

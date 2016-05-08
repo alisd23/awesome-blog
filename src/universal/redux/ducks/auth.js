@@ -1,14 +1,11 @@
 import {
-  authenticateFromSession,
-  authenticateWithCredentials,
-  logout as apiLogout
+  logout as apiLogout,
+  login as apiLogin
 } from '../../client-api/authAPI';
 import User from '../../Objects/User';
 
 // Action constants
-const LOGIN_FROM_SESSION = 'LOGIN_FROM_SESSION';
-const LOGIN_FROM_TOKEN = 'LOGIN_FROM_TOKEN';
-const LOGIN_FROM_CREDENTIALS = 'LOGIN_FROM_CREDENTIALS';
+const LOGIN = 'LOGIN';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT';
@@ -33,9 +30,7 @@ const initialState = {
  */
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_FROM_SESSION:
-    case LOGIN_FROM_TOKEN:
-    case LOGIN_FROM_CREDENTIALS:
+    case LOGIN:
       return {
         ...state,
         loggingIn: true
@@ -94,41 +89,15 @@ const logoutSuccess = {
 }
 
 /**
- * Login from session action creator
- * dispatches initial action to show login attempt has started, then attempts to
- * authenticate, dispatching success or failure actions
- * @return {Object} Login from session thunk action
+ * Simple form login
+ * @return {[type]} [description]
  */
-export function loginFromSession() {
-  return (dispatch) => {
-    dispatch({
-      type: LOGIN_FROM_SESSION
-    });
-
-    authenticateFromSession()
-      .then((user) => {
-        if (user) {
-          dispatch(loginSuccess(user));
-        } else {
-          throw new Error('Login failed');
-        }
-      })
-      .catch((err) => {
-        dispatch(loginFailure);
-      });
-  }
-}
-
-/**
- * Action creator for logging in with username & password
- * @param  {Object}   data        - username and password
- * @param  {Function} dispatch
- * @return {Promise}  - Rejects to notify form of any errors
- */
-export function loginWithCredentials(data, dispatch) {
+export function login({ username, password }, dispatch) {
+  console.log('ATTEMPT LOGIN')
   return new Promise((resolve, reject) => {
-    authenticateWithCredentials(data.email, data.password)
+    apiLogin(username, password)
       .then((user) => {
+        console.log('[AUTH] Login Success');
         dispatch(loginSuccess(user));
         resolve();
       })
@@ -139,7 +108,7 @@ export function loginWithCredentials(data, dispatch) {
 };
 
 /**
- * Simple
+ * Simple logout
  * @return {[type]} [description]
  */
 export function logout() {

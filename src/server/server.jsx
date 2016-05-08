@@ -9,13 +9,13 @@ import expressSession from 'express-session';
 import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 
-import { connectMongoDB, connectMySql } from './database/connection';
+import { connectMongoDB } from './database/connection';
 import Routes from '../universal/Routes';
 import coreReducers from '../universal/redux/core';
 import reducerRegistry from '../universal/redux/registry';
 import initialRender from './initialRender';
-import articleApi from './api/ArticleAPI';
 import authApi from './api/AuthAPI';
+import articleApi from './api/ArticleAPI';
 import authMiddleware from './middleware/Auth';
 import localConfig from './local.config';
 import appConfig from './app.config';
@@ -35,7 +35,6 @@ export default (isoTools, __DEVELOPMENT__) => {
   // Connect to mySQL and mono databases when server launches. Connections
   // can be retrieved by these same methods later
   const mongoConn = connectMongoDB();
-  const sqlConn = connectMySql();
 
   const MongoStore = connectMongo(expressSession);
 
@@ -61,10 +60,11 @@ export default (isoTools, __DEVELOPMENT__) => {
   */
 
   // UNAUTHENTICATED ROUTES
-  app.post('/api/token-auth/:token', authApi.authenticateWithToken);
+  app.use('/api/login', authApi.login);
 
   // AUTHENTICATED ROUTES
   app.use('/api', authMiddleware.checkSession);
+  app.use('/api/logout', authApi.logout);
 
   app.get('/api/articles', articleApi.getArticles);
   app.post('/api/like-article/:id', articleApi.likeArticle);

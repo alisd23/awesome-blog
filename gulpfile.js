@@ -44,7 +44,7 @@ const paths = {
   * ---------------------
   * 1) [gulp] (default) - runs [gulp dev]
   * 2) [gulp dev]       - Compiles with hot reloading, starts dev server, listens for changes
-  * 3) [gulp dev]       - Compiles production code, starts prod server
+  * 3) [gulp prod]       - Compiles production code, starts prod server
   * 4) [gulp compile]   - Compiles production code only
   * 5) [gulp clean]     - Cleans compiled and build folder
   * 6) [gulp seed]      - Seeds MongoDB database with test data
