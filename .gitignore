@@ -5,3 +5,4 @@ javascript
 compiled
 build
 src/server/local.config.js
+npm-debug.log

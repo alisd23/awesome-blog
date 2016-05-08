@@ -17,9 +17,12 @@ import initialRender from './initialRender';
 import authApi from './api/AuthAPI';
 import articleApi from './api/ArticleAPI';
 import authMiddleware from './middleware/Auth';
-import localConfig from './local.config';
 import appConfig from './app.config';
 
+// If deployed on server, use server config
+const localConfig = process.env.CONFIG === 'server'
+  ? require('./server.config')
+  : require('./local.config');
 
 /**
  * Main server start function
@@ -27,7 +30,7 @@ import appConfig from './app.config';
  * @param  {bool} __DEVELOPMENT__ - Is development mode enabled?
  */
 export default (isoTools, __DEVELOPMENT__) => {
-  const PORT          = localConfig.port;
+  const PORT          = localConfig.port || process.env.PORT;
   const projectRoot   = path.join(__dirname, '../..');
 
   const app = express();
@@ -41,7 +44,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   /**
    *  MIDDLEWARE
    */
-  if (process.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     console.log('Production mode');
     app.set('trust proxy', 1); // trust first proxy
   }

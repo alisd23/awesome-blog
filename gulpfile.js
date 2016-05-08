@@ -60,8 +60,8 @@ gulp.task('prod', ['compile-server:prod', 'webpack:prod', 'server:prod']);
 gulp.task('compile', ['compile-server:prod', 'webpack:prod']);
 
 gulp.task('clean', function() {
-  return gulp.src(['compiled', 'build'])
-    .pipe(clean());
+  return gulp.src(['compiled', 'build/*'])
+    .pipe(clean({force: true}));
 });
 
 /*
