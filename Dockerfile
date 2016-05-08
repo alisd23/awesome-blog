@@ -6,8 +6,6 @@ COPY package.json ./
 RUN npm cache clean
 RUN npm install
 
-RUN npm run seed
-
 COPY . ./
 RUN npm run build
 
