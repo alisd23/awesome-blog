@@ -11,5 +11,3 @@ RUN npm run build
 
 EXPOSE 9999
 ENV NODE_ENV=production PORT=9999 CONFIG=server
-
-ENTRYPOINT npm run server
