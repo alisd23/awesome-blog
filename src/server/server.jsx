@@ -17,12 +17,7 @@ import initialRender from './initialRender';
 import authApi from './api/AuthAPI';
 import articleApi from './api/ArticleAPI';
 import authMiddleware from './middleware/Auth';
-import appConfig from './app.config';
-
-// If deployed on server, use server config
-const localConfig = process.env.CONFIG === 'server'
-  ? require('./server.config')
-  : require('./local.config');
+import config from './app.config';
 
 /**
  * Main server start function
@@ -30,14 +25,14 @@ const localConfig = process.env.CONFIG === 'server'
  * @param  {bool} __DEVELOPMENT__ - Is development mode enabled?
  */
 export default (isoTools, __DEVELOPMENT__) => {
-  const PORT          = localConfig.port || process.env.PORT;
+  const PORT          = config.port || process.env.PORT;
   const projectRoot   = path.join(__dirname, '../..');
 
   const app = express();
 
   // Connect to mySQL and mono databases when server launches. Connections
   // can be retrieved by these same methods later
-  const mongoConn = connectMongoDB();
+  const mongoConn = connectMongoDB(config.mongo_url);
 
   const MongoStore = connectMongo(expressSession);
 
@@ -53,7 +48,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   app.use(express.static(path.join(projectRoot, 'build')));
 
   app.use(session({
-    ...appConfig.session,
+    ...config.session,
   	store: new MongoStore({ mongooseConnection: mongoose.connection }),
   }));
 

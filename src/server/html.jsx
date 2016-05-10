@@ -2,8 +2,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import Helmet from 'react-helmet';
-import localConfig from './local.config';
-import appConfig from './app.config';
+import config from './app.config';
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -31,7 +30,7 @@ export default class Html extends React.Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
-          <link rel="shortcut icon" href={`${localConfig.fruks_web_hostname}/favicon.ico`} />
+          {/*<link rel="shortcut icon" href={`${config.fruks_web_hostname}/favicon.ico`} />*/}
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).map((style, key) =>
@@ -59,7 +58,7 @@ export default class Html extends React.Component {
           <script dangerouslySetInnerHTML={{__html: `
             window.fbAsyncInit = function() {
                 FB.init({
-                  appId      : ${appConfig.fb_app_id},
+                  appId      : ${config.fb_app_id},
                   xfbml      : true,
                   version    : 'v2.5'
                 });

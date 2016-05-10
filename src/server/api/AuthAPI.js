@@ -1,6 +1,5 @@
 
 import jwt from 'jsonwebtoken';
-import localConfig from '../local.config';
 import User from '../../universal/Objects/User';
 
 /**

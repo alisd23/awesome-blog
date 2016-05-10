@@ -1,4 +1,7 @@
-import localConfig from './local.config';
+
+const config = process.env.CONFIG === 'server'
+  ? require('./server.config')
+  : require('./local.config');
 
 //-------------------------------//
 // SHOULDN'T NEED TO TOUCH THESE //
@@ -7,7 +10,7 @@ import localConfig from './local.config';
 export const fb_app_id = '1500505256932291';
 
 export const session = {
-	secret: localConfig.secret_key,
+	secret: config.secret_key,
 	cookie: {
 		maxAge: 60 * 60 * 24 * 1000, /* 24 hours */
 		secure: process.NODE_ENV === 'production',
@@ -19,5 +22,6 @@ export const session = {
 
 export default {
 	fb_app_id,
-	session
+	session,
+  ...config
 }

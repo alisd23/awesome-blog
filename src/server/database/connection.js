@@ -1,6 +1,5 @@
-
 import mongoose from 'mongoose';
-import localConfig from '../local.config';
+import config from '../app.config';
 
 let mongoConnection;
 
@@ -9,7 +8,7 @@ let mongoConnection;
  * @return {Object} The mongoose/MongoDB connection
  */
 export function connectMongoDB() {
-  const DB_URL = 'mongodb://localhost/blog';
+  const DB_URL = `mongodb://${config.mongo_url}/blog`;
 
   if (mongoConnection)
     return mongoConnection;

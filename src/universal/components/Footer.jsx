@@ -1,6 +1,5 @@
 import React from 'react';
 import classnames from 'classnames';
-import localConfig from '../../server/local.config';
 
 const whiteLogo = require('../../../assets/images/white_logo.png');
 

@@ -1,5 +1,4 @@
-
-import localConfig from '../../server/local.config';
+import config from '../../server/app.config';
 
 /**
  * Class representing a User
@@ -37,13 +36,9 @@ export default class User {
    * @return {String} Absolute path to the avatar image
    */
   get avatarURL() {
-    if (this.avatar) {
-      return this.isAuthor
-        ? `/assets/images/avatars/${this.avatar}.jpg`
-        : `${localConfig.fruks_web_hostname}/images/avatars/${this.avatar}.jpg`;
-    } else {
-      return `/assets/images/avatars/placeholder.jpg`;
-    }
+    return this.avatar
+      ? `/assets/images/avatars/${this.avatar}.jpg`
+      : `/assets/images/avatars/placeholder.jpg`;
   }
 
   /**

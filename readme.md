@@ -1,5 +1,5 @@
 
-# Fruks blog
+# Awesome blog
 
 ## Install dependencies
 

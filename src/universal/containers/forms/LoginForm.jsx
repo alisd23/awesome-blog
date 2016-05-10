@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
 import { reduxForm } from 'redux-form';
-import localConfig from '../../../server/local.config';
 import ValidationInput from '../../components/forms/ValidationInput';
 import Modals from '../../constants/Modals';
 import { openModal } from '../../redux/ducks/global';

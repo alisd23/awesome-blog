@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { toggleMobileNav, openModal } from '../../redux/ducks/global';
 import Modals from '../../constants/Modals';
 import { logout } from '../../redux/ducks/auth';
-import localConfig from '../../../server/local.config';
 
 @connect(mapStateToProps)
 export default class MobileMenuContainer extends React.Component {
@@ -28,16 +27,11 @@ export default class MobileMenuContainer extends React.Component {
                   <h5>{user.fullname}</h5>
                   <div className="link-accent p-a-md"
                     onClick={() => dispatch(logout())}>Logout</div>
-                  <a className="btn btn-block btn-lg btn-primary-outline btn-caps m-t-md"
-                      href={`${localConfig.fruks_web_hostname}`}>Go to fruks</a>
                 </div>
               :
                 <div className="menu-content cover column center-a">
                   <a className="btn btn-block btn-lg btn-secondary btn-caps"
                     onClick={::this.loginClicked}>Login</a>
-                  <h6 className="small-caps m-y-md text-xs-center text-muted">OR</h6>
-                  <a className="btn btn-block btn-lg btn-primary-outline btn-caps"
-                    href={`${localConfig.fruks_web_hostname}/register`}>Join Fruks</a>
                 </div>
           }
         </div>

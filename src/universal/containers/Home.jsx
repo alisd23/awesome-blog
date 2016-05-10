@@ -23,7 +23,7 @@ export default class HomeContainer extends React.Component {
   render() {
     return (
       <div>
-        <Helmet {...config} title="Fruks Blog"/>
+        <Helmet {...config} title="Awesome Blog"/>
         <HomePageComponent
           otherArticles={this.props.otherArticles}
           headlineArticle={this.props.headlineArticle} />

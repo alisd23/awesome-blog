@@ -1,11 +1,11 @@
 
 import { connectMongoDB } from '../connection';
-
+import config from './app.config';
 import articleSeeder from './articles';
 import authorSeeder from './authors';
 
 // Connect to database
-const connection = connectMongoDB();
+const connection = connectMongoDB(config.mongo_url);
 
 // Run seeds sequentially (due to database references)
 const seeders = [

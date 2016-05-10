@@ -1,5 +1,4 @@
 import 'isomorphic-fetch';
-import localConfig from '../../server/local.config';
 import { GET_CONFIG, POST_CONFIG } from './config';
 
 /**

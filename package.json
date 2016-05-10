@@ -1,7 +1,7 @@
 {
-  "name": "fruks-blog",
+  "name": "awesome-blog",
   "version": "0.0.1",
-  "description": "Blog application for Fruks",
+  "description": "An awesome blog application",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
