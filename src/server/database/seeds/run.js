@@ -1,6 +1,6 @@
 
 import { connectMongoDB } from '../connection';
-import config from './app.config';
+import config from '../../app.config';
 import articleSeeder from './articles';
 import authorSeeder from './authors';
 
