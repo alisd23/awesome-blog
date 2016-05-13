@@ -52,8 +52,7 @@
     "redux-thunk": "^1.0.3",
     "resolve-url-loader": "^1.4.3",
     "url-loader": "^0.5.7",
-    "vague-time": "^1.3.2",
-    "webpack-dev-server": "github:alisd23/webpack-dev-server"
+    "vague-time": "^1.3.2"
   },
   "author": "Ali Sheehan-Dare <alisd23@live.co.uk>",
   "license": "ISC",
