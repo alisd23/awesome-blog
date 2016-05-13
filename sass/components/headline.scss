@@ -85,7 +85,6 @@
     }
   }
   .article-image {
-    @extend .background-cover;
     transition: all 0.6s $sharp-ease-in-out;
   }
   .article-content {

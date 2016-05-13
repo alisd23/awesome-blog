@@ -28,7 +28,9 @@
     "jsonfile": "^2.2.3",
     "jsonwebtoken": "^5.7.0",
     "knex": "^0.10.0",
+    "material-design-iconfont": "^0.1.7",
     "material-design-icons": "^2.2.0",
+    "minimatch": "^3.0.0",
     "mo-js": "^0.147.4",
     "moment": "^2.11.2",
     "mongodb": "^2.1.7",
@@ -98,7 +100,7 @@
     "tsd": "^0.6.5",
     "webpack": "^2.1.0-beta.4",
     "webpack-combine-loaders": "^1.0.0",
-    "webpack-dev-server": "^2.0.0-beta",
+    "webpack-dev-server": "alisd23/webpack-dev-server",
     "webpack-isomorphic-tools": "^2.2.30",
     "webpack-stream": "^3.1.0"
   }

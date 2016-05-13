@@ -24,7 +24,8 @@ const colors = require('colors');
 
 const webpackPort = 9000;
 const serverPort = 8000;
-const ip = '192.168.0.2';
+// const ip = '192.168.0.2';
+const ip = undefined;
 const hostname = ip || 'localhost';
 
 

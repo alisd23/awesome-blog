@@ -10,7 +10,8 @@ const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('.
 
 const shared = require('./shared-config')(webpackIsomorphicToolsPlugin);
 
-const ip = '192.168.0.2';
+// const ip = '192.168.0.2';
+const ip = null;
 const hostname = ip || 'localhost';
 
 module.exports = Object.assign({},
