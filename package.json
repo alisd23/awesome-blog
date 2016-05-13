@@ -28,8 +28,7 @@
     "jsonfile": "^2.2.3",
     "jsonwebtoken": "^5.7.0",
     "knex": "^0.10.0",
-    "material-design-iconfont": "^0.1.7",
-    "material-design-icons": "^2.2.0",
+    "material-design-icons": "^2.2.3",
     "minimatch": "^3.0.0",
     "mo-js": "^0.147.4",
     "moment": "^2.11.2",
@@ -53,8 +52,7 @@
     "redux-thunk": "^1.0.3",
     "resolve-url-loader": "^1.4.3",
     "url-loader": "^0.5.7",
-    "vague-time": "^1.3.2",
-    "webpack-isomorphic-tools": "^2.2.30"
+    "vague-time": "^1.3.2"
   },
   "author": "Ali Sheehan-Dare <alisd23@live.co.uk>",
   "license": "ISC",
