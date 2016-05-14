@@ -7,6 +7,7 @@ RUN npm cache clean
 RUN npm install
 
 COPY . ./
+COPY ./src/server/local.config.example.js ./src/server/local.config.js
 RUN npm run build
 
 EXPOSE 9999
