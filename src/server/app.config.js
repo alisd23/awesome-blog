@@ -16,7 +16,7 @@ export const session = {
 		secure: process.NODE_ENV === 'production',
 	},
 	name: 'awesomeBlog',
-	resave: false,
+	resave: true,
 	saveUninitialized: false
 };
 

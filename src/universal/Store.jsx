@@ -6,7 +6,7 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import Article from '../universal/Objects/Article';
-import Author from '../universal/Objects/Author';
+import User from '../universal/Objects/User';
 import { browserHistory } from 'react-router';
 
 /**
@@ -86,7 +86,7 @@ export function createOnServer(reducerRegistry, initialState) {
 function transformInitialState(state) {
   const stateToClass = {
     articles: Article,
-    authors: Author
+    authors: User
   }
 
   // Convert initial state in to the correct Objects
@@ -95,6 +95,9 @@ function transformInitialState(state) {
       state[name][id] = new stateToClass[name](state[name][id]);
     }
   }
+
+  if (state.auth.user)
+    state.auth.user = new User(state.auth.user);
 
   return state;
 }

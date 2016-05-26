@@ -1,4 +1,4 @@
-import Author from './Author';
+import User from './User';
 import moment from 'moment';
 import vagueTime from 'vague-time';
 
@@ -9,7 +9,7 @@ export default class Article {
   id      : string;
   title   : string;
   content : string;
-  author  : Author;
+  author  : User;
   image   : string;
   created : Date;
   meta    : any;

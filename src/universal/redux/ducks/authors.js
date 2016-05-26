@@ -1,9 +1,9 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
-import Author from '../../Objects/Author';
+import User from '../../Objects/User';
 
 /**
  * Initial authors state
- * @type {Object} - A map of id -> Author object
+ * @type {Object} - A map of id -> User object
  */
 const initialState = {};
 
@@ -28,8 +28,8 @@ export default function reducer(state = initialState, action) {
 //----------------------------//
 
 /**
- * Transforms an array of authors into the state equivalent (id => Author)
- * @param  {Author[]} list  - list of authors
+ * Transforms an array of authors into the state equivalent (id => User)
+ * @param  {User[]} list  - list of authors
  * @return {Object}          - A mapping of id to author (the state)
  */
 export function authorsToState(list) {

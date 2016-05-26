@@ -27,8 +27,7 @@ import config from './app.config';
 export default (isoTools, __DEVELOPMENT__) => {
   const PORT          = process.env.PORT || config.port;
   const projectRoot   = path.join(__dirname, '../..');
-
-  const app = express();
+  const app           = express();
 
   // Connect to mySQL and mono databases when server launches. Connections
   // can be retrieved by these same methods later
@@ -52,17 +51,18 @@ export default (isoTools, __DEVELOPMENT__) => {
   	store: new MongoStore({ mongooseConnection: mongoose.connection }),
   }));
 
-
   /**
   *  API ROUTES
   */
 
   // UNAUTHENTICATED ROUTES
-  app.use('/api/login', authApi.login);
+  app.post('/api/login', authApi.login);
+  app.post('/api/register', authApi.register);
 
   // AUTHENTICATED ROUTES
   app.use('/api', authMiddleware.checkSession);
-  app.use('/api/logout', authApi.logout);
+
+  app.post('/api/logout', authApi.logout);
 
   app.get('/api/articles', articleApi.getArticles);
   app.post('/api/like-article/:id', articleApi.likeArticle);
@@ -79,6 +79,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   *  INITIAL RENDER
   */
   function handleInitialRender(req, res) {
+    console.log(req.session.user);
 
     reducerRegistry.register(coreReducers);
     const routes = new Routes(reducerRegistry);
@@ -97,8 +98,7 @@ export default (isoTools, __DEVELOPMENT__) => {
         } else if (redirectLocation) {
           res.redirect(302, redirectLocation.pathname + redirectLocation.search);
         } else if (renderProps) {
-
-          initialRender(renderProps, reducerRegistry, isoTools)
+          initialRender(renderProps, reducerRegistry, isoTools, req.session.user)
             .then((html) => {
               res.status(200).send(html);
             })

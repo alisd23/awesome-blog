@@ -7,7 +7,7 @@ import { getAuthors as getAuthorsCtrl } from '../controllers/ArticleController';
  */
 export function getAuthors(req, res) {
   getAuthorsCtrl()
-    .then((authors: Author[]) => {
+    .then((authors: User[]) => {
       res.status(200).send({
         success: 1,
         authors: authors

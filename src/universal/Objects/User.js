@@ -9,6 +9,7 @@ export default class User {
   lastname  : string;
   avatar    : string;
   created   : Date;
+  twitter   : string;
 
   /**
    * Creates a new user object
@@ -22,10 +23,12 @@ export default class User {
     this.id = user.id || user._id;
     this.firstname = user.firstname;
     this.lastname = user.lastname;
+    this.username = user.username;
     this.created = user.created;
+    this.twitter = user.twitter;
     // If the user is an author we can assume that they have a 'fruks-blog'
     // account so can use the avatar from there
-    this.isAuthor = user.isAuthor || false;
+    this.isAuthor = !!user.isAuthor;
     // If user is an author, get image from fruksBlog server
     // otherwise look in fruksWeb server
     this.avatar = this.isAuthor ? user.avatar : user.image;
@@ -47,5 +50,13 @@ export default class User {
    */
   get fullname() {
     return `${this.firstname} ${this.lastname}`;
+  }
+
+  /**
+   * Gets the link to the authors Twitter page
+   * @return {string} Twitter URL
+   */
+  get twitterURL() {
+    return `https://twitter.com/${this.twitter}`;
   }
 }

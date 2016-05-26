@@ -1,18 +1,16 @@
-
-import AuthorModel from '../database/models/Author';
-import Author from '../../universal/Objects/Author';
+import UserModel from '../database/models/User';
+import User from '../../universal/Objects/User';
 
 /**
  * Get ALL the articles from the database
  * @return {Promise} Resolves to an array of articles
  */
 export function getAuthors() {
-  return AuthorModel
-    .find().exec()
-    .then((rawAuthors: any[]) =>
-      rawAuthors.map((a) => {
-        return new Author(a);
-      })
+  return UserModel
+    .find({ isAuthor: true})
+    .exec()
+    .then((rawAuthors: User[]) =>
+      rawAuthors.map((a) => new User(a))
     );
 }
 
@@ -21,7 +19,11 @@ export function getAuthors() {
  * @return {Promise} Resolves to an array of articles
  */
 export function findAuthor(_id: string) {
-  return AuthorModel
-    .findOne({ _id }).exec()
-    .then((rawAuthor) => rawAuthor ? new Author(rawAuthor) : null);
+  return UserModel
+    .findOne({
+      _id,
+      isAuthor: true
+    })
+    .exec()
+    .then((rawAuthor) => rawAuthor ? new User(rawAuthor) : null);
 }

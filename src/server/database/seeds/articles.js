@@ -1,13 +1,15 @@
 
 import Article from '../models/Article';
-import Author from '../models/Author';
+import User from '../models/User';
 import seeder from './seeder';
 import loremIpsum from '../../../universal/utils/loremIpsum';
 
 export default (connection) => {
   return Article.remove({})
     .then(() => {
-      return Author.find().exec();
+      return User
+        .find({ isAuthor: true })
+        .exec();
     })
     .then((authors) => {
       const articles: Article[] = [

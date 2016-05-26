@@ -59,10 +59,12 @@ function articleLikeHelper(req, res, action) {
   const articleID = req.params.id;
 
   if (!articleID) {
-    return res.send({
-      success: 0,
-      message: 'Invalid article'
-    }, 400)
+    return res
+      .status(400)
+      .send({
+        success: 0,
+        message: 'Invalid article'
+      });
   }
 
   action(articleID, userID)

@@ -93,12 +93,10 @@ const logoutSuccess = {
  * @return {[type]} [description]
  */
 export function login({ username, password }, dispatch) {
-  console.log('ATTEMPT LOGIN')
   return new Promise((resolve, reject) => {
     apiLogin(username, password)
-      .then((user) => {
-        console.log('[AUTH] Login Success');
-        dispatch(loginSuccess(user));
+      .then((res) => {
+        dispatch(loginSuccess(res.user));
         resolve();
       })
       .catch((err) => {

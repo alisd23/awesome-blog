@@ -11,6 +11,7 @@ import { getArticles } from './controllers/ArticleController';
 import { getAuthors } from './controllers/AuthorController';
 import { articlesToState } from '../universal/redux/ducks/articles';
 import { authorsToState } from '../universal/redux/ducks/authors';
+import User from '../universal/Objects/User';
 
 /**
  * State handlers, one for each route that can be accessed
@@ -33,12 +34,12 @@ const stateHandlers = {
  * @param  {any} isoTools         - Webpack isomorphic tools (the hack)
  * @return {string}               - HTML to send back to the client
  */
-export default function getInitialHtml(renderProps, reducerRegistry, isoTools) {
+export default function getInitialHtml(renderProps, reducerRegistry, isoTools, user) {
 
   // Get correct handler for the state or a default handler if none is found
   const stateHandler = matchRoute(renderProps.location.pathname);
 
-  return getSharedState(renderProps)
+  return getSharedState(renderProps, user)
     .then(sharedState => stateHandler(sharedState, renderProps))
     .then(state => {
       const store = createOnServer(reducerRegistry, state);
@@ -75,7 +76,7 @@ export default function getInitialHtml(renderProps, reducerRegistry, isoTools) {
  * - authors
  * @return {Promise} - Promise which resolves to the initial state
  */
-function getSharedState(renderProps) {
+function getSharedState(renderProps, user) {
   return Promise.all([
     getArticles(),
     getAuthors()
@@ -86,6 +87,10 @@ function getSharedState(renderProps) {
         authors: authorsToState(authors),
         routing: {
           location: renderProps.location
+        },
+        auth: {
+          loggingIn: false,
+          user: user ? new User(user) : null
         }
       };
     });

@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+ import 'isomorphic-fetch';
 import { GET_CONFIG, POST_CONFIG } from './config';
 
 /**
@@ -15,8 +15,7 @@ export function logout() {
  * Login
  * @return {Promise}
  */
-export function login({ username, password }) {
-  console.log('\n\nATTEMPT LOGIN\n\n')
+export function login(username, password) {
   return fetch(`api/login`, {
       ...POST_CONFIG,
       body: JSON.stringify({ username, password })
