@@ -1,4 +1,5 @@
 
 export default {
-  LOGIN: 'LOGIN'
+  LOGIN: 'LOGIN',
+  REGISTER: 'REGISTER'
 }

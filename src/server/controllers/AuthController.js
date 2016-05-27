@@ -5,7 +5,7 @@ import User from '../../universal/Objects/User';
  * Checks user details against the database
  * @return {Promise} Resolves to the new user
  */
-export function login(username, password) {
+export function login({ username, password }) {
   return UserModel
     .findOne({ username })
     .exec()
@@ -19,11 +19,19 @@ export function login(username, password) {
  * Register a new user to the database
  * @return {Promise} Resolves to the new user
  */
-export function register(user) {
-  const newUser = new User(user);
+export function register({ name, username, password }) {
+  const errors = [];
+  const [firstname, lastname] = name.split(' ');
+
+  const newUser = new UserModel({
+    firstname,
+    lastname,
+    username,
+    password
+  });
   return newUser
     .save()
-    .then(() => newUser);
+    .then((nUser) => (console.log('REGISTERED', nUser), newUser));
 }
 
 /**

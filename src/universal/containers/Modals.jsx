@@ -3,6 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux'
 
 import LoginModal from './modals/LoginModal';
+import RegisterModal from './modals/RegisterModal';
 import Modals from '../constants/Modals';
 
 @connect(mapStateToProps)
@@ -24,7 +25,9 @@ export default class ModalsContainer extends React.Component {
             (() => {
               switch (openModal) {
                 case Modals.LOGIN:
-                  return !user && <LoginModal />
+                  return !user && <LoginModal />;
+                case Modals.REGISTER:
+                  return !user && <RegisterModal />;
                 default:
                   return null;
               }

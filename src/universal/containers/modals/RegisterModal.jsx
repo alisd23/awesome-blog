@@ -1,23 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Modal from '../../components/Modal';
-import LoginForm from '../forms/LoginForm';
+import RegisterForm from '../forms/RegisterForm';
 import Modals from '../../constants/Modals';
 import { closeModal } from '../../redux/ducks/global';
 
 @connect(mapStateToProps)
-export default class LoginModal extends React.Component {
+export default class RegisterModal extends React.Component {
 
   render() {
     const { dispatch } = this.props;
     return (
       <Modal
-        onClose={() => dispatch(closeModal(Modals.LOGIN))}
-        title="Login"
-        subtitle="Login with your blog account"
-        modalClasses="login-modal"
+        onClose={() => dispatch(closeModal(Modals.REGISTER))}
+        title="Sign Up"
+        subtitle="Create a blog account"
+        modalClasses="register-modal"
       >
-        <LoginForm />
+        <RegisterForm />
       </Modal>
     );
   }

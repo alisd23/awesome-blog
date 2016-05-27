@@ -16,6 +16,9 @@ export default class Dropdown extends React.Component {
     this.props.getTrigger()
       .addEventListener('click', () => this.toggleDropdown());
   }
+  componentWillUnmount() {
+    document.removeEventListener('click', this.offClickListener);
+  }
   componentDidUpdate() {
     if (this.state.open) {
       // Add click off listener

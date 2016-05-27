@@ -79,8 +79,6 @@ export default (isoTools, __DEVELOPMENT__) => {
   *  INITIAL RENDER
   */
   function handleInitialRender(req, res) {
-    console.log(req.session.user);
-
     reducerRegistry.register(coreReducers);
     const routes = new Routes(reducerRegistry);
 

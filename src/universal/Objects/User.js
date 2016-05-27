@@ -22,7 +22,7 @@ export default class User {
   constructor(user) {
     this.id = user.id || user._id;
     this.firstname = user.firstname;
-    this.lastname = user.lastname;
+    this.lastname = user.lastname || '';
     this.username = user.username;
     this.created = user.created;
     this.twitter = user.twitter;

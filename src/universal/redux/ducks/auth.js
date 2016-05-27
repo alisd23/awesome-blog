@@ -1,14 +1,22 @@
 import {
   logout as apiLogout,
-  login as apiLogin
+  login as apiLogin,
+  register as apiRegister
 } from '../../client-api/authAPI';
+import { closeModal } from './global';
+import Modals from '../../constants/Modals';
 import User from '../../Objects/User';
 
 // Action constants
-const LOGIN = 'LOGIN';
+const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
-const LOGOUT = 'LOGOUT';
+
+const REGISTER_ATTEMPT = 'REGISTER_ATTEMPT';
+const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+const REGISTER_FAILURE = 'REGISTER_FAILURE';
+
+const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
 /**
  * Auth initial state
@@ -21,7 +29,6 @@ const initialState = {
   loggingIn: false
 }
 
-
 /**
  * Reducer to handle auth state - Authenticated user and logging in state
  * @param  {Object} state   - Current auth state
@@ -30,23 +37,26 @@ const initialState = {
  */
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN:
+    case LOGIN_ATTEMPT:
+    case REGISTER_ATTEMPT:
       return {
         ...state,
         loggingIn: true
       };
     case LOGIN_FAILURE:
+    case REGISTER_FAILURE:
       return {
         ...state,
         loggingIn: false
       };
     case LOGIN_SUCCESS:
+    case REGISTER_SUCCESS:
       return {
         ...state,
         loggingIn: false,
         user: new User(action.user)
       };
-    case LOGOUT:
+    case LOGOUT_SUCCESS:
       return {
         ...state,
         user: null
@@ -61,18 +71,12 @@ export default function reducer(state = initialState, action) {
 //           Actions          //
 //----------------------------//
 
-/**
- * Login failure action
- * @type {Object}
- */
+const loginAttempt = {
+  type: LOGIN_ATTEMPT
+}
 const loginFailure = {
   type: LOGIN_FAILURE
 }
-
-/**
- * Login success action creator
- * @return {Object} Login success action
- */
 function loginSuccess(user: User) {
   return {
     type: LOGIN_SUCCESS,
@@ -80,43 +84,71 @@ function loginSuccess(user: User) {
   }
 }
 
-/**
- * Logout action
- * @type {Object}
- */
-const logoutSuccess = {
-  type: LOGOUT
+const registerAttempt = {
+  type: REGISTER_ATTEMPT
+}
+const registerFailure = {
+  type: REGISTER_FAILURE
+}
+function registerSuccess(user: User) {
+  return {
+    type: REGISTER_SUCCESS,
+    user
+  }
 }
 
-/**
- * Simple form login
- * @return {[type]} [description]
- */
-export function login({ username, password }, dispatch) {
+const logoutSuccess = {
+  type: LOGOUT_SUCCESS
+}
+
+export function logout() {
+  return (dispatch) => {
+    apiLogout();
+    dispatch(logoutSuccess);
+  }
+}
+
+//----------------------------//
+//      Form Submissions      //
+//----------------------------//
+
+export function login(data, dispatch) {
   return new Promise((resolve, reject) => {
-    apiLogin(username, password)
-      .then((res) => {
+    dispatch(loginAttempt);
+
+    apiLogin(data)
+      .then(res => {
         dispatch(loginSuccess(res.user));
+        dispatch(closeModal(Modals.LOGIN));
         resolve();
       })
-      .catch((err) => {
-        reject({ _error: 'Invalid username or password :(' });
+      .catch(err => {
+        dispatch(loginFailure);
+        reject({
+          _error: 'Invalid username or password :('
+        });
       });
   });
 };
 
 /**
- * Simple logout
- * @return {[type]} [description]
+ * Simple form register
+ * @return {Promise}  Resolves to registered in user or rejects to a form submission
+ * error
  */
-export function logout() {
-  return (dispatch) => {
-    apiLogout()
-      .then(response => {
-        dispatch(logoutSuccess);
+export function register(data, dispatch) {
+  return new Promise((resolve, reject) => {
+    apiRegister(data)
+      .then(res => {
+        dispatch(registerSuccess(res.user));
+        dispatch(closeModal(Modals.REGISTER));
+        resolve();
       })
-      .catch((err) => {
-        dispatch(logoutSuccess);
+      .catch(err => {
+        dispatch(registerFailure);
+        reject({
+          _error: 'Invalid details :('
+        });
       });
-  }
-}
+  });
+};

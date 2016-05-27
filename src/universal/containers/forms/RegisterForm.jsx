@@ -4,29 +4,27 @@ import { reduxForm } from 'redux-form';
 import ValidationInput from '../../components/forms/ValidationInput';
 import Modals from '../../constants/Modals';
 import { openModal } from '../../redux/ducks/global';
-import { login } from '../../redux/ducks/auth';
+import { register } from '../../redux/ducks/auth';
 
 const validate = (values) => {
   const errors = {};
-
-  if (!values.username) {
-    errors.username = 'username Required';
-  }
-
-  if (!values.password) {
+  if (!values.name)
+    errors.name = 'Name required';
+  if (!values.username)
+    errors.username = 'Username Required';
+  if (!values.password)
     errors.password = 'Password required';
-  }
   return errors;
 };
 
 const formData = {
-  form: 'login',
-  fields: ['username', 'password'],
+  form: 'register',
+  fields: ['name', 'username', 'password'],
   validate
 }
 
 @reduxForm(formData)
-export default class LoginForm extends React.Component {
+export default class RegisterForm extends React.Component {
   static propTypes = {
     fields: React.PropTypes.object,
     handleSubmit: React.PropTypes.func,
@@ -35,7 +33,7 @@ export default class LoginForm extends React.Component {
 
   render() {
     const {
-      fields: { username, password },
+      fields: { name, username, password },
       handleSubmit,
       error,
       submitting,
@@ -48,7 +46,11 @@ export default class LoginForm extends React.Component {
     );
 
     return (
-      <form onSubmit={handleSubmit(login)}>
+      <form onSubmit={handleSubmit(register)}>
+
+        <ValidationInput
+          name='Name'
+          inputData={name} />
 
         <ValidationInput
           name='Username'
@@ -67,14 +69,14 @@ export default class LoginForm extends React.Component {
         <button
           className={buttonClasses}
           type="submit">
-          LOGIN
+          Sign up
         </button>
 
         <span>
-          <span>Don't have an Awesome Blog account?</span>
+          <span>Already have an Awesome Blog account?</span>
           <a
-            onClick={() => dispatch(openModal(Modals.REGISTER))}
-            className="link-accent strong m-l-d">Sign up here</a>
+            onClick={() => dispatch(openModal(Modals.LOGIN))}
+            className="link-accent strong m-l-d">Login here</a>
         </span>
 
       </form>
