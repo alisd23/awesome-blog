@@ -29,9 +29,7 @@ export function register({ name, username, password }) {
     username,
     password
   });
-  return newUser
-    .save()
-    .then((nUser) => (console.log('REGISTERED', nUser), newUser));
+  return newUser.save();
 }
 
 /**
