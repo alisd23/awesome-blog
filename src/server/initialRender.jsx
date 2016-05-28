@@ -11,7 +11,6 @@ import { getArticles } from './controllers/ArticleController';
 import { getAuthors } from './controllers/AuthorController';
 import { articlesToState } from '../universal/redux/ducks/articles';
 import { authorsToState } from '../universal/redux/ducks/authors';
-import User from '../universal/Objects/User';
 
 /**
  * State handlers, one for each route that can be accessed
@@ -90,7 +89,7 @@ function getSharedState(renderProps, user) {
         },
         auth: {
           loggingIn: false,
-          user: user ? new User(user) : null
+          user: user
         }
       };
     });

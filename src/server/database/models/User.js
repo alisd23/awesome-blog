@@ -52,4 +52,13 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
 
+
+// Duplicate the ID field.
+userSchema.virtual('id').get(function() {
+    return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+userSchema.set('toJSON', { virtuals: true });
+
 export default mongoose.model('User', userSchema);

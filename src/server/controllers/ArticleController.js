@@ -1,6 +1,4 @@
-
 import ArticleModel from '../database/models/Article';
-import Article from '../../universal/Objects/Article';
 import { Types } from 'mongoose';
 
 /**
@@ -10,12 +8,7 @@ import { Types } from 'mongoose';
 export function getArticles() {
   return ArticleModel
     .find()
-    .exec()
-    .then((rawArticles: Article[]) =>
-      rawArticles.map((post) => {
-        return new Article(post);
-      })
-    );
+    .exec();
 }
 
 /**
@@ -25,6 +18,8 @@ export function getArticles() {
  * @return {Promise} Resolves to the updated article
  */
 export function likeArticle(articleId, userId) {
+  console.log(articleId, userId);
+  
   return ArticleModel
     .update(
       // Conditions
@@ -42,7 +37,7 @@ export function likeArticle(articleId, userId) {
     .exec()
     .then(result => {
       if (!result.ok) {
-        throw new Error('Article like failed')
+        throw new Error('Article like failed');
       }
     })
 }
@@ -62,7 +57,7 @@ export function unlikeArticle(articleId, userId) {
     .exec()
     .then(result => {
       if (!result.ok) {
-        throw new Error('Article unlike failed')
+        throw new Error('Article unlike failed');
       }
     })
 }

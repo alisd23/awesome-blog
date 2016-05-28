@@ -19,10 +19,10 @@ export default class LikeButtonComponent extends React.Component {
         {
           'clickable': user,
           'active': isLiked,
-          'unliked': article.likes.length === 0
+          'unliked': article.meta.likes.length === 0
         }
       )}>
-        <div className="count m-r-sm" ref="count">{article.likes.length || 1}</div>
+        <div className="count m-r-sm" ref="count">{article.meta.likes.length || 1}</div>
         <div className="icon" ref="iconWrapper">
           <i className="material-icons md-36"
             ref="icon"
@@ -38,7 +38,7 @@ export default class LikeButtonComponent extends React.Component {
       && this.props.user
       && !this.props.isLiked
       && this.likeAnimation();
-      
+
     this.props.handleLike
       && this.props.handleLike();
   }

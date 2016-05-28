@@ -20,8 +20,16 @@ const articleSchema = new Schema({
   author  : { type: Schema.Types.ObjectId, ref: 'User' },
   created : { type: Date, default: Date.now },
   meta: {
-    likes: { type: [Number], default: [] }
+    likes: { type: [String], default: [] }
   }
 });
+
+// Duplicate the ID field.
+articleSchema.virtual('id').get(function() {
+    return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+articleSchema.set('toJSON', { virtuals: true });
 
 export default mongoose.model('Article', articleSchema);

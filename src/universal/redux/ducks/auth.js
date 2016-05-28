@@ -5,7 +5,6 @@ import {
 } from '../../client-api/authAPI';
 import { closeModal } from './global';
 import Modals from '../../constants/Modals';
-import User from '../../Objects/User';
 
 // Action constants
 const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
@@ -31,9 +30,6 @@ const initialState = {
 
 /**
  * Reducer to handle auth state - Authenticated user and logging in state
- * @param  {Object} state   - Current auth state
- * @param  {Object} action  - Next action to process
- * @return {Object}         - Next auth state
  */
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -54,7 +50,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         loggingIn: false,
-        user: new User(action.user)
+        user: action.user
       };
     case LOGOUT_SUCCESS:
       return {
@@ -132,9 +128,7 @@ export function login(data, dispatch) {
 };
 
 /**
- * Simple form register
- * @return {Promise}  Resolves to registered in user or rejects to a form submission
- * error
+ * Simple form register for redux-forms
  */
 export function register(data, dispatch) {
   return new Promise((resolve, reject) => {

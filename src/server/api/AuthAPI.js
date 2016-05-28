@@ -1,4 +1,3 @@
-import User from '../../universal/Objects/User';
 import {
   login as loginCtrl,
   register as registerCtrl

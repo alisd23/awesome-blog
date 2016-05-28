@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 
 import { toggleMobileNav, openModal } from '../../redux/ducks/global';
+import { getAvatarURL, getFullname } from '../../helpers/user';
 import Modals from '../../constants/Modals';
 import { logout } from '../../redux/ducks/auth';
 
@@ -22,9 +23,9 @@ export default class MobileMenuContainer extends React.Component {
               ?
                 <div className="menu-content cover column row-xs-center">
                   <div className="avatar img-cover img-circle m-b-md"
-                    style={{backgroundImage: `url(${user.avatarURL})`}}>
+                    style={{backgroundImage: `url(${getAvatarURL(user)})`}}>
                   </div>
-                  <h5>{user.fullname}</h5>
+                  <h5>{getFullname(user)}</h5>
                   <div className="link-accent p-a-md"
                     onClick={() => dispatch(logout())}>Logout</div>
                 </div>

@@ -1,4 +1,6 @@
 import React from 'react';
+import { getArticleImageURL, getArticleCreatedPretty } from '../../helpers/article';
+import { getFullname } from '../../helpers/user';
 
 const HeadlineArticleComponent = ({ article, author, onReadArticle, showLikes }) => (
 
@@ -6,7 +8,7 @@ const HeadlineArticleComponent = ({ article, author, onReadArticle, showLikes })
     <div className="article-inner column container">
       {/* Image */}
       <div className="article-image cover img-cover img-tint"
-           style={{backgroundImage: `url(${article.imageURL})`}}></div>
+           style={{backgroundImage: `url(${getArticleImageURL(article)})`}}></div>
 
       {/* Article TITLE and action button*/}
       <div className="article-content flex flex-wrap">
@@ -27,15 +29,15 @@ const HeadlineArticleComponent = ({ article, author, onReadArticle, showLikes })
         <div className="article-details flex">
           <h3 className="article-by">
             <span>By </span>
-            <span className="text-light"><strong>{author.fullname}</strong></span>
+            <span className="text-light"><strong>{getFullname(author)}</strong></span>
           </h3>
-          <h5 className="article-date">{article.createdPretty}</h5>
+          <h5 className="article-date">{getArticleCreatedPretty(article)}</h5>
         </div>
         {
-          article.likes.length > 0 && showLikes &&
+          article.meta.likes.length > 0 && showLikes &&
             <div className="likes-display animate">
               <i className="icon material-icons md-36">thumb_up</i>
-              <div className="count m-l-sm">{article.likes.length}</div>
+              <div className="count m-l-sm">{article.meta.likes.length}</div>
             </div>
         }
       </div>

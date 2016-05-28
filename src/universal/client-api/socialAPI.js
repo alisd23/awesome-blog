@@ -1,3 +1,5 @@
+import { getArticleImageURL } from '../helpers/article';
+
 /**
  * Open the share window for a facebook share
  * @param  {article}  - Article to share
@@ -9,7 +11,7 @@ export function shareArticle(article) {
   FB.ui({
     method: 'share',
     href: window.location.href,
-    picture: `${window.location.origin}${article.imageURL}`,
+    picture: `${window.location.origin}${getArticleImageURL(article)}`,
     title: article.title
   });
 }

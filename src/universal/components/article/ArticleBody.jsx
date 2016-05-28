@@ -1,6 +1,7 @@
 import React from 'react';
 import LikeButton from './LikeButton';
 import { shareArticle, tweetArticle } from '../../client-api/socialAPI';
+import { getAvatarURL, getFullname, getTwitterURL } from '../../helpers/user';
 
 import fbLogo from '../../../../assets/images/fb_blue_40.png';
 import twtrLogo from '../../../../assets/images/twitter_blue_40.png';
@@ -12,14 +13,14 @@ const ArticleBodyComponent = ({ article, author, user, isLiked, handleLike }) =>
     <section className="article-body-top flex row-center flex-wrap">
       <div className="flex row-center flex-expand">
         <div className="avatar img-cover img-circle"
-             style={{backgroundImage: `url(${author.avatarURL})`}}>
+             style={{backgroundImage: `url(${getAvatarURL(author)})`}}>
         </div>
         <div className="user-details flex-expand m-l-md">
-          <h5 className="m-a-0 text-muted"><span>{author.fullname}</span></h5>
+          <h5 className="m-a-0 text-muted"><span>{getFullname(author)}</span></h5>
           {
             author.twitter &&
               <div className="m-t-sm">
-                <a href={author.twitterURL} className="link-twitter text-truncate">@{author.twitter}</a>
+                <a href={getTwitterURL(author)} className="link-twitter text-truncate">@{author.twitter}</a>
               </div>
           }
         </div>

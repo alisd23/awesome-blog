@@ -52,6 +52,6 @@ function mapStateToProps(state: AppState, ownProps) {
     author: state.authors[article.author],
     user: state.auth.user,
     isLiked: state.auth.user &&
-             article.likes.indexOf(state.auth.user.id) !== -1
+             article.meta.likes.indexOf(state.auth.user.id) !== -1
   }
 }

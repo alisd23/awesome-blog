@@ -1,8 +1,10 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
-import Article from '../../Objects/Article';
+import moment from 'moment';
+import vagueTime from 'vague-time';
 import {
   likeArticle as apiLikeArticle,
-  unlikeArticle as apiUnlikeArticle } from '../../client-api/articlesAPI';
+  unlikeArticle as apiUnlikeArticle
+} from '../../client-api/articlesAPI';
 
 // Action constants
 const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
@@ -16,10 +18,7 @@ const ARTICLE_UNLIKE = 'UPDATE_ARTICLE_UNLIKE';
 const initialState = {}
 
 /**
- * Redcuer for articles
- * @param  {Object} state   - Current articles state
- * @param  {Object} action  - Next action to process
- * @return {Object}         - Next global state
+ * Reducer for articles
  */
 export default function reducer(state = initialState, action) {
   const { type, payload, error } = action;
@@ -38,13 +37,13 @@ export default function reducer(state = initialState, action) {
 
       return {
         ...state,
-        [articleId]: new Article({
+        [articleId]: {
           ...article,
           meta: {
             ...article.meta,
             likes: newLikesArray
           }
-        })
+        }
       };
     }
     case ARTICLE_UNLIKE : {
@@ -60,13 +59,13 @@ export default function reducer(state = initialState, action) {
 
       return {
         ...state,
-        [articleId]: new Article({
+        [articleId]: {
           ...article,
           meta: {
             ...article.meta,
             likes: newLikesArray
           }
-        })
+        }
       };
     }
     default:
@@ -78,7 +77,7 @@ export default function reducer(state = initialState, action) {
 //----------------------------//
 //           Actions          //
 //----------------------------//
-//
+
 /**
  * Liking/Unliking of article actions
  */
@@ -116,8 +115,6 @@ export function unlikeArticleFailed(articleId: String, userId: number) {
 /**
  * Action creator which toggles the 'like' status for the given article
  * and user IF a user is logged in
- * @param  {Article} article  - Article to like or unlike
- * @return {Function}         - Redux thunk action creator
  */
 export function toggleArticleLike(article: Article) {
   return (dispatch, getState) => {
@@ -144,42 +141,30 @@ export function toggleArticleLike(article: Article) {
   }
 }
 
+//------------------------------//
+//           Selectors          //
+//------------------------------//
+
+export const getArticlesArray = (state) =>
+  Object.keys(state.articles).map((k) => state.articles[k]);
+
+// Get headline article (currently newest article)
+export const getHeadlineArticle = (state) =>
+  getArticlesArray(state)[0];
+
+// Get all NON-headline articles
+export const getNonHeadlineArticles = (state) =>
+  getArticlesArray(state).filter((a, i) => i > 0);
+
 //----------------------------//
 //           Helpers          //
 //----------------------------//
 
 /**
  * Transforms an array of articles into the state equivalent (id => Article)
- * @param  {Article[]} list  - list of articles
- * @return {Object}          - A mapping of id to article (the state)
  */
-export function articlesToState(list) {
-  const articles = {};
-  list.forEach((a) => articles[a.id] = a);
-  return articles;
-}
-
-/**
- * Get all the articles in array form
- * @param  {Object} articles  - Articles state
- * @return {Article[]}        - Array of all articles
- */
-export function getArticlesArray(articles) {
-  return Object.keys(articles).map((k) => articles[k]);
-}
-/**
- * Get headline article (currently newest article)
- * @param  {Object} articles  - Articles state
- * @return {Article}          - Headline article
- */
-export function getHeadlineArticle(articles) {
-  return getArticlesArray(articles)[0]
-}
-/**
- * Get all NON-headline articles
- * @param  {Object} articles  - Articles state
- * @return {Article[]}        - Array of non-headline articles
- */
-export function getNonHeadlineArticles(articles) {
-  return getArticlesArray(articles).filter((a, i) => i > 0);
-}
+export const articlesToState = (list) =>
+  list.reduce((list, a) => ({
+    ...list,
+    [a.id]: a
+  }), {});
