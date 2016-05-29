@@ -75,22 +75,6 @@ export const changeNavbarType = (type) => () => (
   })
 );
 
-/**
- * Stick navbar action. Tells the store that the navbar should now be
- * stuck to the TOP of the page (not fixed)
- */
-export const stickNavbar = () => (
-  Observable.of({ type: STICK_NAVBAR })
-);
-
-/**
- * Stick navbar action. Tells the store that the navbar should now stay with
- * the users scrolling (fixed)
- */
-export const unstickNavbar = () => (
-  Observable.of({ type: UNSTICK_NAVBAR })
-);
-
 // Throttle for 200ms so loader doesn't show for quick loads
 const pageWait = 200;
 
@@ -121,9 +105,9 @@ export const toggleMobileNav = (open: boolean) => () => (
 export const scrolled = (topOffset: number) => (
   (actions, { getState }) => {
     if (topOffset === 0 && getState().global.offTop) {
-      return stickNavbar;
+      return Observable.of({ type: STICK_NAVBAR });
     } else if (topOffset !== 0 && !getState().global.offTop) {
-      return unstickNavbar;
+      return Observable.of({ type: UNSTICK_NAVBAR });
     } else {
       return Observable.empty();
     }

@@ -26,14 +26,15 @@ export default class App extends React.Component {
     const onScroll = (e) => {
       dispatch(scrolled(e.currentTarget.scrollTop));
     }
+    const onPageChange = (e) => {
+      this.refs.scrollbar.refs['scroll-view'].scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
     this.refs.scrollbar.refs['scroll-view'].addEventListener('scroll', onScroll);
     document.body.addEventListener('scroll', onScroll);
 
     // Listen for router change events and scroll to top
-    router.listen(() => {
-      this.refs.scrollbar.refs['scroll-view'].scrollTop = 0;
-      document.body.scrollTop = 0;
-    });
+    router.listen(onPageChange);
   }
 
   render() {
