@@ -27,6 +27,15 @@ const NavbarComponent = ({
 
   return (
     <div className={classnames('navbar-container', navbarClass)}>
+      <ReactCSSTransitionGroup
+        transitionName="page-load-widget"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500} >
+        {
+          pageLoading && <PageLoadWidget key="1" />
+        }
+      </ReactCSSTransitionGroup>
+
       <div className="container">
         <nav className="navbar">
           <NavbarLeft
@@ -40,15 +49,6 @@ const NavbarComponent = ({
             user={user} />
         </nav>
       </div>
-
-      <ReactCSSTransitionGroup
-        transitionName="page-load-widget"
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={500} >
-        {
-          pageLoading && <PageLoadWidget key="1" />
-        }
-      </ReactCSSTransitionGroup>
     </div>
   );
 }

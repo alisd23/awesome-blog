@@ -17,6 +17,10 @@
     width: 20px;
     height: 20px;
   }
+  &.spinner-xs:before {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 .spinner:not(:required) {
@@ -30,6 +34,9 @@
   }
   &.spinner-sm:before {
     border-width: 3px;
+  }
+  &.spinner-xs:before {
+    border-width: 2px;
   }
   &.spinner-light:before {
     border-color: rgba(#eee, 0.4);
