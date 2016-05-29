@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import GeminiScrollbar  from 'react-gemini-scrollbar';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -12,6 +13,7 @@ import { scrolled } from '../redux/ducks/global';
 import 'app.scss';
 
 @connect(mapStateToProps)
+@withRouter
 export default class App extends React.Component {
   static propTypes = {
     location: React.PropTypes.object, // react-redux-router gives this to us
@@ -19,18 +21,16 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    // Listen for scroll events, and fire off scroll action
-    // NOTE Currently only fires on devices that use gemini scrollbar
-    // i.e don't have an overlay scrollbar
+    const { router, dispatch } = this.props;
+
     const onScroll = (e) => {
-        this.props.dispatch(scrolled(e.currentTarget.scrollTop));
+      dispatch(scrolled(e.currentTarget.scrollTop));
     }
     this.refs.scrollbar.refs['scroll-view'].addEventListener('scroll', onScroll);
     document.body.addEventListener('scroll', onScroll);
 
-    // Listen for History location events and scroll to top on change
-    // NOTE - DEPRECATED as of react-router 2.0.0
-    this.props.history.listen(() => {
+    // Listen for router change events and scroll to top
+    router.listen(() => {
       this.refs.scrollbar.refs['scroll-view'].scrollTop = 0;
       document.body.scrollTop = 0;
     });
