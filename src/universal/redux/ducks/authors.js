@@ -26,8 +26,9 @@ export default function reducer(state = initialState, action) {
 /**
  * Transforms an array of authors into the state equivalent (id => User)
  */
-export const authorsToState = (list) =>
+export const authorsToState = (list) => (
   list.reduce((list, a) => ({
     ...list,
     [a.id]: a
-  }), {});
+  }), {})
+);

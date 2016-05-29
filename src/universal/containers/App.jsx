@@ -14,8 +14,7 @@ import 'app.scss';
 @connect(mapStateToProps)
 export default class App extends React.Component {
   static propTypes = {
-    clickNavLink: React.PropTypes.element,
-    location: React.PropTypes.object, // React router gives this to us
+    location: React.PropTypes.object, // react-redux-router gives this to us
     loading: React.PropTypes.bool,
   }
 
@@ -38,12 +37,12 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { location, openModal, children } = this.props;
+    const { location, children } = this.props;
     return (
       <div id="app">
         <GeminiScrollbar ref="scrollbar" autoshow={true}>
           <Navbar location={location} />
-          <Modals openModal={openModal} />
+          <Modals />
           <div id="main">
             { children }
           </div>
@@ -54,9 +53,8 @@ export default class App extends React.Component {
   }
 }
 
-function mapStateToProps(state: AppState) {
+function mapStateToProps(state) {
   return {
-    loading: state.global.loading,
-    openModal: state.global.openModal
+    loading: state.global.loading
   }
 }

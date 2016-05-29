@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import {
   logout as apiLogout,
   login as apiLogin,
@@ -67,50 +68,34 @@ export default function reducer(state = initialState, action) {
 //           Actions          //
 //----------------------------//
 
-const loginAttempt = {
-  type: LOGIN_ATTEMPT
-}
-const loginFailure = {
-  type: LOGIN_FAILURE
-}
-function loginSuccess(user: User) {
-  return {
+const loginSuccess = (user) => () => (
+  Observable.of({
     type: LOGIN_SUCCESS,
     user
-  }
-}
+  })
+);
 
-const registerAttempt = {
-  type: REGISTER_ATTEMPT
-}
-const registerFailure = {
-  type: REGISTER_FAILURE
-}
-function registerSuccess(user: User) {
-  return {
+const registerSuccess = (user) => () => (
+  Observable.of({
     type: REGISTER_SUCCESS,
     user
-  }
-}
+  })
+);
 
-const logoutSuccess = {
-  type: LOGOUT_SUCCESS
-}
-
-export function logout() {
-  return (dispatch) => {
+export const logout = () => (
+  (actions) => {
     apiLogout();
-    dispatch(logoutSuccess);
+    return Observable.of({ type: LOGOUT_SUCCESS });
   }
-}
+);
 
 //----------------------------//
 //      Form Submissions      //
 //----------------------------//
 
-export function login(data, dispatch) {
-  return new Promise((resolve, reject) => {
-    dispatch(loginAttempt);
+export const login = (data, dispatch) => (
+  new Promise((resolve, reject) => {
+    dispatch({ type: LOGIN_ATTEMPT });
 
     apiLogin(data)
       .then(res => {
@@ -119,19 +104,19 @@ export function login(data, dispatch) {
         resolve();
       })
       .catch(err => {
-        dispatch(loginFailure);
+        dispatch({ type: LOGIN_FAILURE });
         reject({
-          _error: 'Invalid username or password :('
+          _error: 'Invalid username or password'
         });
       });
-  });
-};
+  })
+);
 
 /**
  * Simple form register for redux-forms
  */
-export function register(data, dispatch) {
-  return new Promise((resolve, reject) => {
+export const register = (data, dispatch) => (
+  new Promise((resolve, reject) => {
     apiRegister(data)
       .then(res => {
         dispatch(registerSuccess(res.user));
@@ -139,10 +124,10 @@ export function register(data, dispatch) {
         resolve();
       })
       .catch(err => {
-        dispatch(registerFailure);
+        dispatch({ type: REGISTER_FAILURE });
         reject({
-          _error: 'Invalid details :('
+          _error: 'Invalid details'
         });
       });
-  });
-};
+  })
+);

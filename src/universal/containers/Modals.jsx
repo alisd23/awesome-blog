@@ -9,6 +9,7 @@ import Modals from '../constants/Modals';
 @connect(mapStateToProps)
 export default class ModalsContainer extends React.Component {
   static propTypes = {
+    user: React.PropTypes.object,
     openModal: React.PropTypes.string
   }
 
@@ -41,6 +42,7 @@ export default class ModalsContainer extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    openModal: state.global.openModal
   }
 }

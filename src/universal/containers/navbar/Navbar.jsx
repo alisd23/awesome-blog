@@ -25,7 +25,7 @@ export default class NavbarContainer extends React.Component {
   }
 
   render() {
-    const { user, type, offTop, location, dispatch, mobileNavOpen } = this.props;
+    const { user, type, offTop, location, dispatch, mobileNavOpen, pageLoading } = this.props;
     const notMobile = typeof window === 'undefined'
       || document.body.clientWidth > screenSizes.xs.max;
     return (
@@ -36,17 +36,18 @@ export default class NavbarContainer extends React.Component {
         user={user}
         mobileNavOpen={mobileNavOpen}
         type={(offTop && notMobile) || mobileNavOpen ? SOLID : type}
-        offTop={notMobile ? offTop : 'false'}
-      />
+        pageLoading={pageLoading}
+        offTop={notMobile ? offTop : 'false'} />
     )
   }
 }
 
-function mapStateToProps(state: AppState, ownProps) {
+function mapStateToProps(state, ownProps) {
   return {
     user: state.auth.user,
     type: state.global.navbarType,
     offTop: state.global.offTop,
-    mobileNavOpen: state.global.mobileNavOpen
+    mobileNavOpen: state.global.mobileNavOpen,
+    pageLoading: state.global.pageLoading
   }
 }

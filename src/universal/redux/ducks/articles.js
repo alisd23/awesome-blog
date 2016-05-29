@@ -1,4 +1,5 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
+import { Observable } from 'rxjs/Rx';
 import moment from 'moment';
 import vagueTime from 'vague-time';
 import {
@@ -81,46 +82,46 @@ export default function reducer(state = initialState, action) {
 /**
  * Liking/Unliking of article actions
  */
-export function likeArticle(articleId: String, userId: number) {
-  return {
+export const likeArticle = (articleId, userId) => () => (
+  Observable.of({
     type: ARTICLE_LIKE,
     payload: { articleId, userId }
-  }
-}
-export function unlikeArticle(articleId: String, userId: number) {
-  return {
+  })
+);
+export const unlikeArticle = (articleId, userId) => () => (
+  Observable.of({
     type: ARTICLE_UNLIKE,
     payload: { articleId, userId }
-  }
-}
+  })
+);
 
 /**
  * Liking/Unliking failure actions (must revert what the above actions did)
  */
-export function likeArticleFailed(articleId: String, userId: number) {
-  return {
+export const likeArticleFailed = (articleId, userId) => () => (
+  Observable.of({
     type: ARTICLE_LIKE,
     payload: { articleId, userId },
     error: true
-  }
-}
-export function unlikeArticleFailed(articleId: String, userId: number) {
-  return {
+  })
+);
+export const unlikeArticleFailed = (articleId, userId) => () => (
+  Observable.of({
     type: ARTICLE_UNLIKE,
     payload: { articleId, userId },
     error: true
-  }
-}
+  })
+);
 
 /**
  * Action creator which toggles the 'like' status for the given article
  * and user IF a user is logged in
  */
-export function toggleArticleLike(article: Article) {
-  return (dispatch, getState) => {
+export const toggleArticleLike = (article) => (
+  (actions, { dispatch, getState }) => {
     const user = getState().auth.user;
     if (!user)
-      return;
+      return Observable.empty();
 
     const articleLiked = article.meta.likes.indexOf(user.id) !== -1;
     const apiAction = articleLiked ? apiUnlikeArticle : apiLikeArticle;
@@ -129,32 +130,34 @@ export function toggleArticleLike(article: Article) {
       ? dispatch(unlikeArticle(article.id, user.id))
       : dispatch(likeArticle(article.id, user.id));
 
-    apiAction(article.id)
-      .then(() => {
-        // Do nothing if on success (optimistic UI - UI updated preemptively)
-      })
+    return apiAction(article.id)
+      // Do nothing if on success (optimistic UI - UI updated preemptively)
+      .then(() => Observable.empty())
       .catch((err) => {
         articleLiked
           ? dispatch(unlikeArticleFailed(article.id, user.id))
           : dispatch(likeArticleFailed(article.id, user.id));
       });
   }
-}
+);
 
 //------------------------------//
 //           Selectors          //
 //------------------------------//
 
-export const getArticlesArray = (state) =>
-  Object.keys(state.articles).map((k) => state.articles[k]);
+export const getArticlesArray = (state) => (
+  Object.keys(state.articles).map((k) => state.articles[k])
+);
 
 // Get headline article (currently newest article)
-export const getHeadlineArticle = (state) =>
-  getArticlesArray(state)[0];
+export const getHeadlineArticle = (state) => (
+  getArticlesArray(state)[0]
+);
 
 // Get all NON-headline articles
-export const getNonHeadlineArticles = (state) =>
-  getArticlesArray(state).filter((a, i) => i > 0);
+export const getNonHeadlineArticles = (state) => (
+  getArticlesArray(state).filter((a, i) => i > 0)
+);
 
 //----------------------------//
 //           Helpers          //
@@ -163,8 +166,9 @@ export const getNonHeadlineArticles = (state) =>
 /**
  * Transforms an array of articles into the state equivalent (id => Article)
  */
-export const articlesToState = (list) =>
+export const articlesToState = (list) => (
   list.reduce((list, a) => ({
     ...list,
     [a.id]: a
-  }), {});
+  }), {})
+);

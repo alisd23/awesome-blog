@@ -108,6 +108,27 @@
   transition: opacity 0.4s ease;
 }
 
+/**
+ * Page loader animation
+ */
+.page-load-widget-enter,
+.page-load-widget-leave.page-load-widget-leave-active {
+  opacity: 0;
+  transform: rotateX(-90deg);
+}
+
+.page-load-widget-leave,
+.page-load-widget-enter.page-load-widget-enter-active {
+  opacity: 1;
+  transform: rotateX(0);
+}
+
+.page-load-widget-enter.page-load-widget-enter-active,
+.page-load-widget-leave.page-load-widget-leave-active {
+  transform-origin: top;
+  transition: opacity 0.25s ease, transform 0.2s ease-out;
+}
+
 
 /****************************/
 /**  KEYFRAME TRANSITIONS  **/

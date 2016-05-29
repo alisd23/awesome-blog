@@ -10,7 +10,7 @@ import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 
 import { connectMongoDB } from './database/connection';
-import Routes from '../universal/Routes';
+import createRoutes from '../universal/Routes';
 import coreReducers from '../universal/redux/core';
 import reducerRegistry from '../universal/redux/registry';
 import initialRender from './initialRender';
@@ -68,19 +68,17 @@ export default (isoTools, __DEVELOPMENT__) => {
   app.post('/api/like-article/:id', articleApi.likeArticle);
   app.post('/api/unlike-article/:id', articleApi.unlikeArticle);
 
-
   /**
    * Any other request is handled by initial render function
    */
   app.get('*', handleInitialRender);
-
 
   /**
   *  INITIAL RENDER
   */
   function handleInitialRender(req, res) {
     reducerRegistry.register(coreReducers);
-    const routes = new Routes(reducerRegistry);
+    const routes = createRoutes(reducerRegistry);
 
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since

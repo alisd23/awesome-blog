@@ -11,7 +11,7 @@ import DockMonitor from 'redux-devtools-dock-monitor';
 import { createDevTools } from 'redux-devtools';
 
 import reducerRegistry from '../universal/redux/registry';
-import Routes from '../universal/Routes';
+import createRoutes from '../universal/Routes';
 import { createOnClient } from '../universal/Store';
 import coreReducers from '../universal/redux/core';
 
@@ -30,7 +30,7 @@ if (__DEVELOPMENT__) {
 }
 
 reducerRegistry.register(coreReducers);
-const routes = new Routes(reducerRegistry);
+const routes = createRoutes(reducerRegistry);
 
 const matchParams = {
   history: browserHistory,
@@ -42,7 +42,6 @@ const matchParams = {
  * which route we are in
  */
 match(matchParams, (error, redirectLocation, renderProps) => {
-
   const initialState  = window.__INITIAL_STATE__;
   const store         = createOnClient(browserHistory, reducerRegistry, initialState, DevTools);
   const history       = syncHistoryWithStore(browserHistory, store);
@@ -71,11 +70,9 @@ match(matchParams, (error, redirectLocation, renderProps) => {
   //  HOT RELOADING REDUCERS  //
   //--------------------------//
   if (__DEVELOPMENT__ && module.hot) {
-
     // CORE REDUCERS
     module.hot.accept('../universal/redux/core', () => {
       reducerRegistry.updateReducers(store, require('../universal/redux/core').default);
     });
   }
-
 });

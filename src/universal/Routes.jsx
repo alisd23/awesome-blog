@@ -4,6 +4,7 @@ import { Store } from 'redux';
 
 import App from './containers/App';
 import ReducerRegistry from './redux/registry';
+import { startPageChange, endPageChange } from './redux/ducks/global';
 
 // Webpack Hacky environment isomorphic stuff
 const ENV = typeof window !== 'undefined' ? 'client' : global.ENV;
@@ -11,70 +12,80 @@ const ENV = typeof window !== 'undefined' ? 'client' : global.ENV;
 if (typeof require.ensure !== "function") require.ensure = (d, c) => c(require);
 if (typeof require.include !== "function") require.include = () => {};
 
+// Factory function to create routes
+export default function(registry) {
+  const reducerRegistry = registry;
+  let store;
 
-export default class routes {
-  static store = null;
-  static reducerRegistry = null;
+  /**
+   * ROUTE HANDLERS
+   */
+  function getHomePage(location, cb) {
+    if (store)
+      store.dispatch(startPageChange);
 
-  constructor(reducerRegistry) {
-    this.reducerRegistry = reducerRegistry;
+    if (ENV === 'client') {
+      System.import('./containers/Home')
+        .then(container => changeScreen(location, cb, container.default));
+        // .catch(err => console.log('Epic fail: Home Page -- ', err));
+    } else {
+      require.ensure(['./containers/Home'], (require) => {
+        const container = require('./containers/Home').default;
+        changeScreen(location, cb, container);
+      });
+    }
+  }
+
+  function getArticlePage(location, cb) {
+    if (store)
+      store.dispatch(startPageChange);
+
+    if (ENV === 'client') {
+      System.import('./containers/Article')
+        .then(container => changeScreen(location, cb, container.default));
+        // .catch(err => console.log('Epic fail: Article Page -- ', err));
+    } else {
+      require.ensure(['./containers/Article'], (require) => {
+        const container = require('./containers/Article').default;
+        changeScreen(location, cb, container);
+      });
+    }
+  }
+
+  function changeScreen(location, cb, component, reducer) {
+    if (store)
+      store.dispatch(endPageChange);
+
+    if (reducer) {
+      reducerRegistry.register(reducer);
+    }
+
+    if (!store) {
+      cb(null, component);
+    // } else if (this.store.getState().routing.location.pathname === location.pathname) {
+    } else {
+      cb(null, component);
+    }
   }
 
   /**
   * Only need to inject this on the CLIENT side for lazy loading
   */
-  injectStore(store) {
-    this.store = store;
+  function injectStore(newStore) {
+    store = newStore;
   }
 
-  configure() {
+  function configure() {
     return (
       <Route path='/' component={App}>
-        <IndexRoute getComponent={::this.getHomePage} />
-        <Route path='/article/:id' getComponent={::this.getArticlePage}/>
+        <IndexRoute getComponent={getHomePage} />
+        <Route path='/article/:id' getComponent={getArticlePage}/>
       </Route>
     );
   }
 
-  /**
-   * ROUTE HANDLERS
-   */
-  getHomePage(location, cb) {
-    if (ENV === 'client') {
-      System.import('./containers/Home')
-        .then(container => this.changeScreen(location, cb, container.default));
-        // .catch(err => console.log('Epic fail: Home Page -- ', err));
-    } else {
-      require.ensure(['./containers/Home'], (require) => {
-        const container = require('./containers/Home').default;
-        this.changeScreen(location, cb, container);
-      });
-    }
-  }
-  getArticlePage(location, cb) {
-    if (ENV === 'client') {
-      System.import('./containers/Article')
-        .then(container => this.changeScreen(location, cb, container.default));
-        // .catch(err => console.log('Epic fail: Article Page -- ', err));
-    } else {
-      require.ensure(['./containers/Article'], (require) => {
-        const container = require('./containers/Article').default;
-        this.changeScreen(location, cb, container);
-      });
-    }
-  }
-
-  changeScreen(location, cb, component, reducer) {
-    if (reducer) {
-      this.reducerRegistry.register(reducer);
-    }
-
-    if (!this.store) {
-      cb(null, component);
-    // } else if (this.store.getState().routing.location.pathname === location.pathname) {
-    } else {
-      cb(null, component);
-      // this.store.dispatch(endLoading);
-    }
+  return {
+    configure,
+    injectStore
   }
 }

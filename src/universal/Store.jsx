@@ -3,7 +3,7 @@ import {applyMiddleware, createStore, combineReducers} from 'redux';
 import { routerMiddleware } from 'react-router-redux'
 import { compose } from 'redux';
 import logger from 'redux-logger';
-import thunk from 'redux-thunk';
+import { reduxObservable } from 'redux-observable';
 
 import { browserHistory } from 'react-router';
 
@@ -15,7 +15,7 @@ import { browserHistory } from 'react-router';
  * @return {store}                  - Redux store
  */
 export function createOnClient(history, reducerRegistry, initialState, DevTools) {
-  const middleware = [thunk, routerMiddleware(history)];
+  const middleware = [reduxObservable(), routerMiddleware(history)];
   let finalCreateStore;
 
   if (__DEVELOPMENT__) {
@@ -50,7 +50,7 @@ export function createOnClient(history, reducerRegistry, initialState, DevTools)
  * @return {store}                  - redux store
  */
 export function createOnServer(reducerRegistry, initialState) {
-  const middleware = [thunk];
+  const middleware = [reduxObservable()];
   const reducer = combineReducers(reducerRegistry.getReducers());
   const finalCreateStore = compose(
     applyMiddleware(...middleware)

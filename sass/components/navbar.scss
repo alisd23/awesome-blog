@@ -113,3 +113,17 @@
 .navbar-transparent {
   background-color: rgba(white, 0.1);
 }
+
+.page-load-widget {
+  position: absolute;
+  left: 0;  right: 0;
+  top:  100%;
+  background-color: $gray-darker;
+  color: $gray-lighter;
+  padding: 0.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1;
+  font-size: $font-size-xs;
+}
