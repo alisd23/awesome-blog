@@ -18,8 +18,6 @@ export function getArticles() {
  * @return {Promise} Resolves to the updated article
  */
 export function likeArticle(articleId, userId) {
-  console.log(articleId, userId);
-  
   return ArticleModel
     .update(
       // Conditions

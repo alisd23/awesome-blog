@@ -91,8 +91,8 @@ export const unstickNavbar = () => (
   Observable.of({ type: UNSTICK_NAVBAR })
 );
 
-// Throttle for 300ms so loader doesn't show for quick loads
-const pageWait = 300;
+// Throttle for 200ms so loader doesn't show for quick loads
+const pageWait = 200;
 
 export const startPageChange = (actions, { getState }) => (
   !getState().global.pageLoading

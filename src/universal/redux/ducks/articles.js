@@ -130,14 +130,15 @@ export const toggleArticleLike = (article) => (
       ? dispatch(unlikeArticle(article.id, user.id))
       : dispatch(likeArticle(article.id, user.id));
 
-    return apiAction(article.id)
-      // Do nothing if on success (optimistic UI - UI updated preemptively)
-      .then(() => Observable.empty())
-      .catch((err) => {
+    apiAction(article.id)
+      // Do nothing on success (optimistic UI - UI updated preemptively)
+      .catch((err) => (
         articleLiked
           ? dispatch(unlikeArticleFailed(article.id, user.id))
-          : dispatch(likeArticleFailed(article.id, user.id));
-      });
+          : dispatch(likeArticleFailed(article.id, user.id))
+      ));
+
+    return Observable.empty();
   }
 );
 
