@@ -30,7 +30,11 @@ if (__DEVELOPMENT__) {
 }
 
 reducerRegistry.register(coreReducers);
+
+const initialState = window.__INITIAL_STATE__;
+const store = createOnClient(browserHistory, reducerRegistry, initialState, DevTools);
 const routes = createRoutes(reducerRegistry);
+routes.injectStore(store);
 
 const matchParams = {
   history: browserHistory,
@@ -42,11 +46,7 @@ const matchParams = {
  * which route we are in
  */
 match(matchParams, (error, redirectLocation, renderProps) => {
-  const initialState  = window.__INITIAL_STATE__;
-  const store         = createOnClient(browserHistory, reducerRegistry, initialState, DevTools);
-  const history       = syncHistoryWithStore(browserHistory, store);
-
-  routes.injectStore(store);
+  const history = syncHistoryWithStore(browserHistory, store);
 
   // RENDER APP
   render(

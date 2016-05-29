@@ -124,7 +124,7 @@ export const openModal = (modal) => () => (
 /**
  * Only dispatches close Action if relevant modal is open
  */
-export const closeModal = (modal) => () => (
+export const closeModal = (modal) => (
   (actions, { getState }) => (
     getState().global.openModal === modal
       ? Observable.of({ type: CLOSE_MODAL })

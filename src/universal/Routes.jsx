@@ -16,6 +16,7 @@ if (typeof require.include !== "function") require.include = () => {};
 export default function(registry) {
   const reducerRegistry = registry;
   let store;
+  let hasUserSession;
 
   /**
    * ROUTE HANDLERS
@@ -52,6 +53,22 @@ export default function(registry) {
     }
   }
 
+  function getProfilePage(location, cb) {
+    if (store)
+      store.dispatch(startPageChange);
+
+    if (ENV === 'client') {
+      System.import('./containers/Profile')
+        .then(container => changeScreen(location, cb, container.default));
+        // .catch(err => console.log('Epic fail: Article Page -- ', err));
+    } else {
+      require.ensure(['./containers/Profile'], (require) => {
+        const container = require('./containers/Profile').default;
+        changeScreen(location, cb, container);
+      });
+    }
+  }
+
   function changeScreen(location, cb, component, reducer) {
     if (store)
       store.dispatch(endPageChange);
@@ -68,24 +85,49 @@ export default function(registry) {
     }
   }
 
+  const isAuthenticated = () => {
+    if (ENV === 'client') {
+      return store && store.getState().auth.user;
+    } else {
+      return hasUserSession;
+    }
+  };
+
+  function requireAuth(nextState, replace) {
+    console.log('REDIRECT ', !isAuthenticated(), store);
+    if (!isAuthenticated()) {
+      replace({ pathname: '/' });
+    }
+  }
+
   /**
   * Only need to inject this on the CLIENT side for lazy loading
   */
   function injectStore(newStore) {
     store = newStore;
   }
+  function injectUserSession(user) {
+    hasUserSession = !!user;
+  }
 
   function configure() {
     return (
       <Route path='/' component={App}>
         <IndexRoute getComponent={getHomePage} />
-        <Route path='/article/:id' getComponent={getArticlePage}/>
+        <Route
+          path='/article/:id'
+          getComponent={getArticlePage}/>
+        <Route
+          path='/account/profile'
+          getComponent={getProfilePage}
+          onEnter={requireAuth} />
       </Route>
     );
   }
 
   return {
     configure,
-    injectStore
+    injectStore,
+    injectUserSession
   }
 }

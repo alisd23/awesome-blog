@@ -79,6 +79,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   function handleInitialRender(req, res) {
     reducerRegistry.register(coreReducers);
     const routes = createRoutes(reducerRegistry);
+    routes.injectUserSession(req.session.user);
 
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
@@ -92,6 +93,7 @@ export default (isoTools, __DEVELOPMENT__) => {
         if (error) {
           res.status(500).send(error.message);
         } else if (redirectLocation) {
+          console.log('REDIRECT');
           res.redirect(302, redirectLocation.pathname + redirectLocation.search);
         } else if (renderProps) {
           initialRender(renderProps, reducerRegistry, isoTools, req.session.user)
@@ -102,7 +104,6 @@ export default (isoTools, __DEVELOPMENT__) => {
               console.log("Server.jsx -", err);
               res.status(500).send(err);
             });
-
         } else {
           res.status(404).send('Not found');
         }
