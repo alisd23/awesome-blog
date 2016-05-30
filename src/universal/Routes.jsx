@@ -94,7 +94,6 @@ export default function(registry) {
   };
 
   function requireAuth(nextState, replace) {
-    console.log('REDIRECT ', !isAuthenticated(), store);
     if (!isAuthenticated()) {
       replace({ pathname: '/' });
     }
