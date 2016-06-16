@@ -48,7 +48,7 @@ module.exports = Object.assign({},
 			loaders: shared.loaders.concat([
 	      {
 					test: /\.scss$/,
-					include: path.join(projectRootPath, 'sass'),
+					include: path.join(projectRootPath, 'src'),
 					loaders: [
 						{ loader: 'style' },
 						{

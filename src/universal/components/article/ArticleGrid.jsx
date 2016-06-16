@@ -1,5 +1,5 @@
 import React from 'react';
-import ArticleCardContainer from '../../containers/article/ArticleCard';
+import ArticleCardContainer from './ArticleCardContainer';
 
 const ArticleGridComponent = ({ articles }) => (
   <section className="container">

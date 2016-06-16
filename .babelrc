@@ -12,7 +12,7 @@
     [
       "resolver",
       {
-        "resolveDirs": ["sass", "src"]
+        "resolveDirs": ["src"]
       }
     ]
   ],

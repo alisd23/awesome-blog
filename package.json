@@ -98,9 +98,9 @@
     "source-map-support": "^0.4.0",
     "style-loader": "^0.13.0",
     "tsd": "^0.6.5",
-    "webpack": "^2.1.0-beta.7",
+    "webpack": "^2.1.0-beta.13",
     "webpack-combine-loaders": "^1.0.0",
-    "webpack-dev-server": "alisd23/webpack-dev-server",
+    "webpack-dev-server": "^2.1.0-beta.0",
     "webpack-isomorphic-tools": "^2.2.30",
     "webpack-stream": "^3.1.0"
   }

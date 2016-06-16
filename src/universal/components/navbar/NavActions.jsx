@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import NavbarUser from '../../containers/navbar/NavbarUser';
-import { SOLID, TRANSPARENT} from '../../constants/NavbarTypes';
+import NavbarUser from './NavbarUser';
+import { SOLID, TRANSPARENT} from './NavbarTypes';
 
 const NavbarActionsComponent = ({ user, type, onLoginClicked, onRegisterClicked }) => {
 

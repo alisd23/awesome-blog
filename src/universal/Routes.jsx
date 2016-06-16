@@ -2,7 +2,7 @@ import React from 'react';
 import { IndexRoute, Route } from 'react-router';
 import { Store } from 'redux';
 
-import App from './containers/App';
+import App from './components/App';
 import ReducerRegistry from './redux/registry';
 import { startPageChange, endPageChange } from './redux/ducks/global';
 
@@ -26,12 +26,11 @@ export default function(registry) {
       store.dispatch(startPageChange);
 
     if (ENV === 'client') {
-      System.import('./containers/Home')
+      System.import('./pages/home/HomeContainer')
         .then(container => changeScreen(location, cb, container.default));
-        // .catch(err => console.log('Epic fail: Home Page -- ', err));
     } else {
-      require.ensure(['./containers/Home'], (require) => {
-        const container = require('./containers/Home').default;
+      require.ensure(['./pages/home/HomeContainer'], (require) => {
+        const container = require('./pages/home/HomeContainer').default;
         changeScreen(location, cb, container);
       });
     }
@@ -42,12 +41,11 @@ export default function(registry) {
       store.dispatch(startPageChange);
 
     if (ENV === 'client') {
-      System.import('./containers/Article')
+      System.import('./pages/article/Article')
         .then(container => changeScreen(location, cb, container.default));
-        // .catch(err => console.log('Epic fail: Article Page -- ', err));
     } else {
-      require.ensure(['./containers/Article'], (require) => {
-        const container = require('./containers/Article').default;
+      require.ensure(['./pages/article/Article'], (require) => {
+        const container = require('./pages/article/Article').default;
         changeScreen(location, cb, container);
       });
     }
@@ -58,12 +56,12 @@ export default function(registry) {
       store.dispatch(startPageChange);
 
     if (ENV === 'client') {
-      System.import('./containers/Profile')
+      System.import('./pages/profile/Profile')
         .then(container => changeScreen(location, cb, container.default));
         // .catch(err => console.log('Epic fail: Article Page -- ', err));
     } else {
-      require.ensure(['./containers/Profile'], (require) => {
-        const container = require('./containers/Profile').default;
+      require.ensure(['./pages/profile/Profile'], (require) => {
+        const container = require('./pages/profile/Profile').default;
         changeScreen(location, cb, container);
       });
     }

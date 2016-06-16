@@ -5,7 +5,7 @@ import { match, RouterContext, formatPattern } from 'react-router';
 
 import { createOnServer } from '../universal/Store';
 import Html from './html';
-import { SOLID, TRANSPARENT} from '../universal/constants/NavbarTypes';
+import { SOLID, TRANSPARENT} from '../universal/components/navbar/NavbarTypes';
 
 import { getArticles } from './controllers/ArticleController';
 import { getAuthors } from './controllers/AuthorController';

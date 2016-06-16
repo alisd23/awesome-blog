@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import classnames from 'classnames';
-import { SOLID, TRANSPARENT} from '../../constants/NavbarTypes';
+import { SOLID, TRANSPARENT} from './NavbarTypes';
 
-import NavbarRight from '../../containers/navbar/NavbarRight';
+import NavbarRight from './NavbarRight';
 import NavbarLeft from './NavbarLeft';
 import PageLoadWidget from './PageLoadWidget';
 

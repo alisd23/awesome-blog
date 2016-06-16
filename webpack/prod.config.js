@@ -71,7 +71,7 @@ module.exports = Object.assign({},
 	      {
 	        test: /\.scss$/,
 	        loader: extractSASS.extract('style', ['css?importLoaders=1&minimize', 'postcss', 'sass']),
-					include: path.join(projectRootPath, 'sass')
+					include: path.join(projectRootPath, 'src')
 	      }
 			])
 		},

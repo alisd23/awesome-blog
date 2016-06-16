@@ -1,0 +1,200 @@
+$grid-padding-y: 0;
+$grid-padding-x: 3rem;
+$article-height: 500px;
+
+.articles-grid {
+  margin-left: -$grid-padding-x;
+  margin-right: -$grid-padding-x;
+
+  .article-wrapper {
+    padding: $grid-padding-y $grid-padding-x;
+    height: $article-height;
+    max-width: 100%;  // Prevent x-overflow for long words
+
+    @include media-breakpoint-up(lg) {
+      &:nth-child(2n) {
+        margin-top: calc((#{$article-height} / 4) + #{$grid-padding-x});
+      }
+      &:nth-child(n+3) {
+        .article-card {
+          margin-top: calc(#{$grid-padding-x} - (#{$article-height} / 4));
+        }
+      }
+    }
+    @include media-breakpoint-down(md) {
+      margin-top: 4rem;
+    }
+    @include media-breakpoint-down(sm) {
+      height: $article-height * 0.8;
+    }
+  }
+}
+
+.article-card {
+  box-shadow: -6px 10px 40px 6px rgba(0, 0, 0, 0.15);
+  background-color: white;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+
+  $header-padding: $spacer-lg;
+
+  .article-header {
+    position: relative;
+    padding: $header-padding;
+    height: $article-height / 2;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    overflow: hidden;
+    z-index: 1;
+    cursor: pointer;
+    color: white;
+
+    @include media-breakpoint-down(sm) {
+      padding: $header-padding * 0.75;
+      height: auto;
+      min-height: 45%;
+    }
+
+    .article-title {
+      @include media-breakpoint-down(sm) {
+        font-size: 1.8rem;
+      }
+    }
+
+    .article-image,
+    .article-image::before {
+      transition: all 0.5s $sharp-ease-in-out;
+    }
+
+    @include hover-focus {
+      .article-image {
+        transform: scale(1.1);
+        &:before {
+          background-color: rgba(black, 0.75);
+        }
+      }
+      .read-action {
+        opacity: 1;
+        bottom: 0;
+      }
+    }
+
+    .read-action {
+      height: $header-padding;
+      position: absolute;
+      bottom: -$header-padding;
+      left: 0;  right: 0;
+      opacity: 0;
+      transition: opacity 0.6s 0.15s ease-out, bottom 0.4s 0.15s $sharp-ease-in-out;
+      color: white;
+    }
+    .content {
+      z-index: 1;
+    }
+  }
+
+  // Article content //
+  .article-content {
+    padding: $spacer-md $spacer-lg $spacer-lg;
+
+    @include media-breakpoint-down(md) {
+      padding: $spacer-md 2rem 2rem;
+    }
+  }
+
+  .article-author {
+    margin-bottom: $spacer-md;
+
+    a {
+      &:hover {
+        + .avatar {
+          border-color: $teal;
+        }
+      }
+    }
+
+    .avatar {
+      order: -1;  // Push to left of text
+      transition: all 0.3s ease-out;
+      border: 2px solid white;
+      width: 44px;
+      height: 44px;
+      margin-right: $spacer;
+    }
+  }
+  .article-title {
+    color: white;
+    line-height: normal;
+  }
+  .article-blurb {
+    position: relative;
+    overflow: hidden;
+
+    &:after {
+      content: "";
+      display: block;
+      height: $line-height * $font-size-base * 3;
+      position: absolute;
+      bottom: 0;
+      left: 0;  right: 0;
+      background: linear-gradient(to top, rgba(white, 1), rgba(white, 0));
+    }
+  }
+  .article-footer {
+    flex-direction: row-reverse;
+    margin-top: $spacer;
+  }
+}
+
+
+@keyframes Heartbeat {
+  0%, 100% {
+    transform: scale(0.9) rotate(2deg);
+    color: $orange;
+  }
+  50% {
+    transform: scale(1.1) rotate(-6deg);
+    color: lighten($orange, 6%);
+  }
+}
+
+// Like showing on
+.likes-display {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.animate .icon {
+    animation: Heartbeat infinite 2.8s $sharp-ease-in-out;
+  }
+  &.clickable {
+    .icon {
+      cursor: pointer;
+    }
+  }
+
+  .icon, .count {
+    color: $gray-light;
+    transition: all 0.3s ease-out;
+  }
+  &.active {
+    .icon { color: $orange; }
+    .count { color: $orange-dark; }
+  }
+  &.unliked .count {
+    opacity: 0;
+  }
+
+  &:not(.active):hover .icon {
+    color: lighten($orange, 25%);
+  }
+
+  .count {
+    font-weight: bold;
+    font-size: $font-size-xl;
+  }
+
+}

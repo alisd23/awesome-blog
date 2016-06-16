@@ -5,7 +5,7 @@ import {
   register as apiRegister
 } from '../../client-api/authAPI';
 import { closeModal } from './global';
-import Modals from '../../constants/Modals';
+import ModalTypes from '../../components/modals/ModalTypes';
 
 // Action constants
 const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
@@ -100,7 +100,7 @@ export const login = (data, dispatch) => (
     apiLogin(data)
       .then(res => {
         dispatch(loginSuccess(res.user));
-        dispatch(closeModal(Modals.LOGIN));
+        dispatch(closeModal(ModalTypes.LOGIN));
         resolve();
       })
       .catch(err => {
@@ -120,7 +120,7 @@ export const register = (data, dispatch) => (
     apiRegister(data)
       .then(res => {
         dispatch(registerSuccess(res.user));
-        dispatch(closeModal(Modals.REGISTER));
+        dispatch(closeModal(ModalTypes.REGISTER));
         resolve();
       })
       .catch(err => {

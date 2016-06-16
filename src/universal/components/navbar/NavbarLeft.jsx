@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { SOLID, TRANSPARENT} from '../../constants/NavbarTypes';
+import { SOLID, TRANSPARENT} from './NavbarTypes';
 
 const NavbarLeftComponent = ({ clickNavLink, links, location, type }) => {
 

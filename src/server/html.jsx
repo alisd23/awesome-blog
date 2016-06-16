@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import Helmet from 'react-helmet';
@@ -16,7 +15,7 @@ import config from './app.config';
 
 export default class Html extends React.Component {
 
-  render() : React.ReactElement<HTMLProps> {
+  render() {
     const {assets, component, store} = this.props;
     let content = component ? renderToString(component) : '';
     let head = Helmet.rewind();

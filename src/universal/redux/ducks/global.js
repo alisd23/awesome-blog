@@ -1,7 +1,6 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
 import { Observable } from 'rxjs/Rx';
-import { SOLID, TRANSPARENT} from '../../constants/NavbarTypes';
-import Modals from '../../constants/Modals';
+import { SOLID, TRANSPARENT} from '../../components/navbar/NavbarTypes';
 
 // Action constants
 const CHANGE_NAVBAR = 'CHANGE_NAVBAR';

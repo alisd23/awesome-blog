@@ -1,0 +1,31 @@
+.mobile-menu {
+  position: fixed;
+  top: $navbar-height-mobile;
+  bottom: 0;
+  left: 0;  right: 0;
+  overflow: hidden;
+  margin-top: -1px;
+
+  .backdrop {
+    @extend .cover;
+    background-color: rgba(black, 0.5);
+  }
+  .menu {
+    position: absolute;
+    top: 0; bottom: 0;
+    right: 0;
+    width: 75%;
+    background-color: white;
+    border-top: 1px solid $gray-lighter;
+    padding: $spacer-lg 2rem;
+
+    .menu-content {
+      padding: $spacer-lg 2rem;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
