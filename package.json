@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node compiled/server/boot.js",
     "build": "gulp compile",
+    "dev": "gulp dev",
     "seed": "gulp seed"
   },
   "dependencies": {
@@ -79,6 +80,7 @@
     "gulp-clean": "^0.3.1",
     "gulp-cli": "^1.2.1",
     "gulp-live-server": "0.0.29",
+    "gulp-nodemon": "^2.1.0",
     "gulp-prompt": "^0.1.2",
     "gulp-remember": "^0.3.0",
     "gulp-run": "^1.6.12",

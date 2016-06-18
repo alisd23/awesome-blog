@@ -10,6 +10,7 @@ const changed = require('gulp-changed');
 const clean = require('gulp-clean');
 const exec = require('child_process').exec;
 const prompt = require('gulp-prompt');
+const nodemon = require('gulp-nodemon');
 const jsonfile = require('jsonfile');
 const babelConfig = jsonfile.readFileSync('./.babelrc');
 
@@ -37,6 +38,7 @@ const paths = {
    SERVER: ['server/**/*.js', 'server/**/*.jsx'],
    BUILD: 'build',
    CONFIG: 'config.js',
+   COMPILED: 'compiled'
  };
 
 
@@ -50,7 +52,6 @@ const paths = {
   * 5) [gulp clean]     - Cleans compiled and build folder
   * 6) [gulp seed]      - Seeds MongoDB database with test data
   */
-
 
  /*
   * MAIN TASKS
@@ -84,7 +85,11 @@ function createServer() {
   return liveServer.new('compiled/server/boot.js');
 }
 function compileServer(dev) {
-  var compilation = gulp.src([...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG], { cwd: 'src', base: 'src' })
+  var compilation = gulp
+    .src(
+      [...paths.SERVER, ...paths.UNIVERSAL],
+      { cwd: 'src', base: 'src' }
+    )
     .pipe(cached('babel'));
 
   if (dev) { compilation = compilation.pipe(sourcemaps.init()); }
@@ -101,52 +106,23 @@ gulp.task('server:prod', ['webpack:prod'], () => {
   server.start();
 });
 gulp.task('server:dev', ['compile-server:dev'], () => {
-  const server = createServer();
-  server.start();
-
-  const compiledWatcher = gulp.watch(
-    [...paths.SERVER, paths.CONFIG],
-    { cwd: 'compiled' },
-    () => {
-      server.start();
-
-      gutil.log(
-        ('\n -----------------------------\n' +
-        '|      SERVER RESTARTED       |' +
-        '\n -----------------------------\n')
-        .white);
-    }
-  );
-  compiledWatcher.on('change', function(event) {
-    gutil.log('COMPILED: '.magenta + 'File ' + event.path.cyan + ' was ' + event.type.green);
-  });
-
   const srcWatcher = gulp.watch(
-    [...paths.SERVER, ...paths.UNIVERSAL, paths.CONFIG],
+    [...paths.SERVER, ...paths.UNIVERSAL],
     { cwd: 'src' },
-    () => {
-      compileServer();
-      console.log("RE-COMPILING SERVER - Restart to take effect");
-    }
+    compileServer
   );
   srcWatcher.on('change', function(event) {
     gutil.log('SOURCE: '.magenta + 'File ' + event.path.cyan + ' was ' + event.type.green);
   });
 
-  listenToInput(server)
+  nodemon({
+    script: 'compiled/server/boot.js',
+    ext: 'js',
+    env: { 'NODE_ENV': 'development' },
+    watch: [paths.COMPILED]
+  });
 });
 
-function listenToInput(server) {
-  gulp.src('src').pipe(prompt.prompt({
-  		type: 'input',
-  		name: 'key',
-  		message: 'PRESS ENTER TO RESTART SERVER'
-  	}, function(res) {
-  		console.log("RESTARTING SERVER");
-  		server.start();
-      listenToInput(server);
-  	}));
-}
 
 /*
  * WEBPACK TASKS
