@@ -52,6 +52,7 @@
     "redux-form": "^5.2.4",
     "redux-logger": "^2.6.0",
     "redux-observable": "^0.6.0",
+    "reselect": "^2.5.1",
     "resolve-url-loader": "^1.4.3",
     "rxjs": "^5.0.0-beta.8",
     "url-loader": "^0.5.7",

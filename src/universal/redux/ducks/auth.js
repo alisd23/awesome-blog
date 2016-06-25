@@ -6,6 +6,8 @@ import {
 } from '../../client-api/authAPI';
 import { closeModal } from './global';
 import ModalTypes from '../../components/modals/ModalTypes';
+import action from '../action';
+import combineCoordinators from '../combineCoordinators';
 
 // Action constants
 const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
@@ -16,6 +18,7 @@ const REGISTER_ATTEMPT = 'REGISTER_ATTEMPT';
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
+const LOGOUT_ATTEMPT = 'LOGOUT_ATTEMPT';
 const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
 /**
@@ -29,11 +32,9 @@ const initialState = {
   loggingIn: false
 }
 
-/**
- * Reducer to handle auth state - Authenticated user and logging in state
- */
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
+// Reducer to handle auth state - Authenticated user and logging in state
+export default function reducer(state = initialState, { type, payload }) {
+  switch (type) {
     case LOGIN_ATTEMPT:
     case REGISTER_ATTEMPT:
       return {
@@ -51,7 +52,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         loggingIn: false,
-        user: action.user
+        user: payload.user
       };
     case LOGOUT_SUCCESS:
       return {
@@ -63,31 +64,42 @@ export default function reducer(state = initialState, action) {
   };
 }
 
-
 //----------------------------//
 //           Actions          //
 //----------------------------//
 
-const loginSuccess = (user) => () => (
-  Observable.of({
-    type: LOGIN_SUCCESS,
-    user
-  })
+const loginSuccess = (user) =>
+  action(LOGIN_SUCCESS, { user });
+
+const registerSuccess = (user) =>
+  action(REGISTER_SUCCESS, { user });
+
+const logoutSuccess = () =>
+  action(LOGOUT_SUCCESS);
+
+export const logout = () =>
+  action(LOGOUT_ATTEMPT);
+
+//------------------------------//
+//         Coordinators         //
+//------------------------------//
+
+const logoutCoordinator = (action$, { getState }) =>
+  action$
+    .ofType(LOGOUT_ATTEMPT)
+    .filter(action => Boolean(getCurrentUser(getState())))
+    .map(logoutSuccess)
+    .do(apiLogout);
+
+export const coordinator = combineCoordinators(
+  logoutCoordinator
 );
 
-const registerSuccess = (user) => () => (
-  Observable.of({
-    type: REGISTER_SUCCESS,
-    user
-  })
-);
+//------------------------------//
+//           Selectors          //
+//------------------------------//
 
-export const logout = () => (
-  (actions) => {
-    apiLogout();
-    return Observable.of({ type: LOGOUT_SUCCESS });
-  }
-);
+export const getCurrentUser = state => state.auth.user;
 
 //----------------------------//
 //      Form Submissions      //
@@ -112,9 +124,7 @@ export const login = (data, dispatch) => (
   })
 );
 
-/**
- * Simple form register for redux-forms
- */
+// Simple form register for redux-forms
 export const register = (data, dispatch) => (
   new Promise((resolve, reject) => {
     apiRegister(data)

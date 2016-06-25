@@ -37,7 +37,7 @@ export default class ArticleContainer extends React.Component {
           user={user}
           isLiked={isLiked}
           handleLike={user
-            ? (() => dispatch(toggleArticleLike(article)))
+            ? (() => dispatch(toggleArticleLike(article.id)))
             : (() => dispatch(openModal(ModalTypes.LOGIN)))} />
 
       </div>

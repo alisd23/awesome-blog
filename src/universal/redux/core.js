@@ -1,11 +1,12 @@
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
-import articles from './ducks/articles';
+import articles, { coordinator as articleCoordinator } from './ducks/articles';
 import authors from './ducks/authors';
-import auth from './ducks/auth';
-import global from './ducks/global';
+import auth, { coordinator as authCoordinator } from './ducks/auth';
+import global, { coordinator as globalCoordinator } from './ducks/global';
+import combineCoordinators from './combineCoordinators';
 
-const reducers = {
+export const reducers = {
   global,
   articles,
   authors,
@@ -14,8 +15,10 @@ const reducers = {
   // Third party
   routing: routerReducer,
   form: formReducer
-}
+};
 
-// FOR REDUCER HOT RELOADING //
-
-export default reducers;
+export const coordinators = combineCoordinators(
+  articleCoordinator,
+  authCoordinator,
+  globalCoordinator,
+);

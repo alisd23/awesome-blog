@@ -11,7 +11,7 @@ import mongoose from 'mongoose';
 
 import { connectMongoDB } from './database/connection';
 import createRoutes from '../universal/Routes';
-import coreReducers from '../universal/redux/core';
+import { reducers } from '../universal/redux/core';
 import reducerRegistry from '../universal/redux/registry';
 import initialRender from './initialRender';
 import authApi from './api/AuthAPI';
@@ -77,7 +77,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   *  INITIAL RENDER
   */
   function handleInitialRender(req, res) {
-    reducerRegistry.register(coreReducers);
+    reducerRegistry.register(reducers);
     const routes = createRoutes(reducerRegistry);
     routes.injectUserSession(req.session.user);
 
@@ -91,7 +91,7 @@ export default (isoTools, __DEVELOPMENT__) => {
       { routes: routes.configure(), location: req.url || '/' },
       (error, redirectLocation, renderProps) => {
         if (error) {
-          console.log('ERROR', error)
+          console.log('ERROR', error);
           res.status(500).send(error.message);
         } else if (redirectLocation) {
           res.redirect(302, redirectLocation.pathname + redirectLocation.search);
@@ -101,6 +101,7 @@ export default (isoTools, __DEVELOPMENT__) => {
               res.status(200).send(html);
             })
             .catch((err) => {
+              console.log('ERROR', error);
               res.status(500).send(err);
             });
         } else {

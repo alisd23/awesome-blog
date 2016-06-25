@@ -18,14 +18,11 @@ export default function reducer(state = initialState, action) {
   };
 }
 
-
 //----------------------------//
 //           Helpers          //
 //----------------------------//
 
-/**
- * Transforms an array of authors into the state equivalent (id => User)
- */
+// Transforms an array of authors into the state equivalent (id => User)
 export const authorsToState = (list) => (
   list.reduce((list, a) => ({
     ...list,

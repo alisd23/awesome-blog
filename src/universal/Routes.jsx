@@ -4,7 +4,8 @@ import { Store } from 'redux';
 
 import App from './components/App';
 import ReducerRegistry from './redux/registry';
-import { startPageChange, endPageChange } from './redux/ducks/global';
+import { coordinators } from './redux/core';
+import { startPageChange, pageLoadingEnd } from './redux/ducks/global';
 
 // Webpack Hacky environment isomorphic stuff
 const ENV = typeof window !== 'undefined' ? 'client' : global.ENV;
@@ -69,7 +70,7 @@ export default function(registry) {
 
   function changeScreen(location, cb, component, reducer) {
     if (store)
-      store.dispatch(endPageChange);
+      store.dispatch(pageLoadingEnd());
 
     if (reducer) {
       reducerRegistry.register(reducer);

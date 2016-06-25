@@ -1,16 +1,25 @@
 import { UPDATE_LOCATION } from 'react-router-redux';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import moment from 'moment';
 import vagueTime from 'vague-time';
+import { createSelector } from 'reselect';
+
 import {
   likeArticle as apiLikeArticle,
   unlikeArticle as apiUnlikeArticle
 } from '../../client-api/articlesAPI';
+import action from '../action';
+import combineCoordinators from '../combineCoordinators';
+import { getCurrentUser } from './auth';
 
 // Action constants
 const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
-const ARTICLE_LIKE = 'UPDATE_ARTICLE_LIKE';
-const ARTICLE_UNLIKE = 'UPDATE_ARTICLE_UNLIKE';
+const TOGGLE_ARTICLE_LIKE = 'TOGGLE_ARTICLE_LIKE';
+
+const ARTICLE_LIKE_REQUEST = 'ARTICLE_LIKE_REQUEST';
+const ARTICLE_LIKE_FAILURE = 'ARTICLE_LIKE_FAILURE';
+const ARTICLE_UNLIKE_REQUEST = 'ARTICLE_UNLIKE_REQUEST';
+const ARTICLE_UNLIKE_FAILURE = 'ARTICLE_UNLIKE_FAILURE';
 
 /**
  * Initial articles state
@@ -18,155 +27,148 @@ const ARTICLE_UNLIKE = 'UPDATE_ARTICLE_UNLIKE';
  */
 const initialState = {}
 
-/**
- * Reducer for articles
- */
+// Reducer for articles
 export default function reducer(state = initialState, action) {
   const { type, payload, error } = action;
 
   switch (type) {
-    case ARTICLE_LIKE : {
-      const { articleId, userId } = payload;
-      const article = state[articleId];
-      let newLikesArray;
-
-      if (error) {
-        newLikesArray = article.meta.likes.filter(id => id != userId);
-      } else {
-        newLikesArray = article.meta.likes.concat(userId);
-      }
-
-      return {
-        ...state,
-        [articleId]: {
-          ...article,
-          meta: {
-            ...article.meta,
-            likes: newLikesArray
+    case ARTICLE_LIKE_REQUEST:
+    case ARTICLE_LIKE_FAILURE:
+    case ARTICLE_UNLIKE_REQUEST:
+    case ARTICLE_UNLIKE_FAILURE:
+      const article = state[payload.articleId];
+      return article
+        ? {
+            ...state,
+            [article.id]: reduceArticle(article, action)
           }
-        }
-      };
-    }
-    case ARTICLE_UNLIKE : {
-      const { articleId, userId } = payload;
-      const article = state[articleId];
-      let newLikesArray;
-
-      if (error) {
-        newLikesArray = article.meta.likes.concat(userId);
-      } else {
-        newLikesArray = article.meta.likes.filter(id => id != userId);
-      }
-
-      return {
-        ...state,
-        [articleId]: {
-          ...article,
-          meta: {
-            ...article.meta,
-            likes: newLikesArray
-          }
-        }
-      };
-    }
+        : state;
     default:
       return state;
   };
 }
+
+// Reducer for a single Article
+const reduceArticle = (state = {}, { type, payload, error }) => {
+  switch (type) {
+    case ARTICLE_LIKE_REQUEST:
+    case ARTICLE_LIKE_FAILURE:
+    case ARTICLE_UNLIKE_REQUEST:
+    case ARTICLE_UNLIKE_FAILURE:
+      const { userId } = payload;
+      const isaLike =
+        type === ARTICLE_LIKE_REQUEST ||
+        type === ARTICLE_LIKE_FAILURE;
+
+      const newLikesArray = isaLike
+        ? error
+          ? state.meta.likes.filter(id => id != userId)
+          : state.meta.likes.concat(userId)
+        : error
+          ? state.meta.likes.concat(userId)
+          : state.meta.likes.filter(id => id != userId);
+
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          likes: newLikesArray
+        }
+      };
+  }
+};
 
 
 //----------------------------//
 //           Actions          //
 //----------------------------//
 
-/**
- * Liking/Unliking of article actions
- */
-export const likeArticle = (articleId, userId) => () => (
-  Observable.of({
-    type: ARTICLE_LIKE,
-    payload: { articleId, userId }
-  })
-);
-export const unlikeArticle = (articleId, userId) => () => (
-  Observable.of({
-    type: ARTICLE_UNLIKE,
-    payload: { articleId, userId }
-  })
-);
+// Liking/Unliking of article actions
+export const likeArticle = (articleId, userId) =>
+  action(ARTICLE_LIKE_REQUEST, { articleId, userId });
 
-/**
- * Liking/Unliking failure actions (must revert what the above actions did)
- */
-export const likeArticleFailed = (articleId, userId) => () => (
-  Observable.of({
-    type: ARTICLE_LIKE,
-    payload: { articleId, userId },
-    error: true
-  })
-);
-export const unlikeArticleFailed = (articleId, userId) => () => (
-  Observable.of({
-    type: ARTICLE_UNLIKE,
-    payload: { articleId, userId },
-    error: true
-  })
-);
+export const unlikeArticle = (articleId, userId) =>
+  action(ARTICLE_UNLIKE_REQUEST, { articleId, userId });
 
-/**
- * Action creator which toggles the 'like' status for the given article
- * and user IF a user is logged in
- */
-export const toggleArticleLike = (article) => (
-  (actions, { dispatch, getState }) => {
-    const user = getState().auth.user;
-    if (!user)
-      return Observable.empty();
+// Liking/Unliking failure actions (must revert what the above actions did)
+export const likeArticleFailed = (articleId, userId) =>
+  action(ARTICLE_LIKE_FAILED, { articleId, userId }, { error: true });
 
-    const articleLiked = article.meta.likes.indexOf(user.id) !== -1;
-    const apiAction = articleLiked ? apiUnlikeArticle : apiLikeArticle;
+export const unlikeArticleFailed = (articleId, userId) =>
+  action(ARTICLE_UNLIKE_FAILED, { articleId, userId }, { error: true });
 
-    articleLiked
-      ? dispatch(unlikeArticle(article.id, user.id))
-      : dispatch(likeArticle(article.id, user.id));
+export const toggleArticleLike = (articleId) =>
+  action(TOGGLE_ARTICLE_LIKE, { articleId });
 
-    apiAction(article.id)
-      // Do nothing on success (optimistic UI - UI updated preemptively)
-      .catch((err) => (
-        articleLiked
-          ? dispatch(unlikeArticleFailed(article.id, user.id))
-          : dispatch(likeArticleFailed(article.id, user.id))
-      ));
+//------------------------------//
+//         Coordinators         //
+//------------------------------//
 
-    return Observable.empty();
-  }
+const articleLikeCoordinator = (action$, { getState }) =>
+  action$
+    .ofType(TOGGLE_ARTICLE_LIKE)
+    .filter(action => Boolean(getCurrentUser(getState())))
+    .throttleTime(200)
+    .switchMap(({ payload }) => {
+      const { articleId } = payload;
+      const articleLiked = hasUserLikedArticle(getState(), { articleId });
+      const apiCall = articleLiked
+        ? apiUnlikeArticle
+        : apiLikeArticle;
+      const requestAction = articleLiked ? unlikeArticle : likeArticle;
+      const undoAction = articleLiked ? unlikeArticleFailed : likeArticleFailed;
+      const user = getCurrentUser(getState());
+
+      return Observable.fromPromise(apiCall(articleId))
+        .catch(err => Observable.of(undoAction(articleId, user.id)))
+        .startWith(requestAction(articleId, user.id))
+        .filter(a => a && a.type); // Filter non-actions
+    });
+
+export const coordinator = combineCoordinators(
+  articleLikeCoordinator
 );
 
 //------------------------------//
 //           Selectors          //
 //------------------------------//
 
-export const getArticlesArray = (state) => (
-  Object.keys(state.articles).map((k) => state.articles[k])
+export const getArticles = state => state.articles;
+export const getArticleIdParam = (state, params) => params.articleId;
+
+export const getSelectedArticle = createSelector(
+  getArticles,
+  getArticleIdParam,
+  (articles, id) => articles[id]
+);
+
+export const getArticlesArray = createSelector(
+  getArticles,
+  articles => Object.keys(articles).map(k => articles[k])
 );
 
 // Get headline article (currently newest article)
-export const getHeadlineArticle = (state) => (
-  getArticlesArray(state)[0]
+export const getHeadlineArticle = createSelector(
+  getArticlesArray,
+  articles => articles[0]
 );
 
-// Get all NON-headline articles
-export const getNonHeadlineArticles = (state) => (
-  getArticlesArray(state).filter((a, i) => i > 0)
+export const getNonHeadlineArticles = createSelector(
+  getArticlesArray,
+  articles => articles.filter((a, i) => i > 0)
+);
+
+export const hasUserLikedArticle = createSelector(
+  getSelectedArticle,
+  getCurrentUser,
+  (article, user) => article && user && article.meta.likes.find(id => user.id)
 );
 
 //----------------------------//
 //           Helpers          //
 //----------------------------//
 
-/**
- * Transforms an array of articles into the state equivalent (id => Article)
- */
+// Transforms an array of articles into the state equivalent (id => Article)
 export const articlesToState = (list) => (
   list.reduce((list, a) => ({
     ...list,

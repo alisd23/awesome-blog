@@ -13,7 +13,7 @@ import { createDevTools } from 'redux-devtools';
 import reducerRegistry from '../universal/redux/registry';
 import createRoutes from '../universal/Routes';
 import { createOnClient } from '../universal/Store';
-import coreReducers from '../universal/redux/core';
+import { reducers } from '../universal/redux/core';
 
 let DevTools;
 
@@ -29,7 +29,7 @@ if (__DEVELOPMENT__) {
   DevTools = createDevTools(DevToolsComponent);
 }
 
-reducerRegistry.register(coreReducers);
+reducerRegistry.register(reducers);
 
 const initialState = window.__INITIAL_STATE__;
 const store = createOnClient(browserHistory, reducerRegistry, initialState, DevTools);
@@ -72,7 +72,7 @@ match(matchParams, (error, redirectLocation, renderProps) => {
   if (__DEVELOPMENT__ && module.hot) {
     // CORE REDUCERS
     module.hot.accept('../universal/redux/core', () => {
-      reducerRegistry.updateReducers(store, require('../universal/redux/core').default);
+      reducerRegistry.updateReducers(store, require('../universal/redux/core').reducers);
     });
   }
 });
