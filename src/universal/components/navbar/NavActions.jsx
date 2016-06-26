@@ -9,13 +9,13 @@ const NavbarActionsComponent = ({ user, type, onLoginClicked, onRegisterClicked 
   const buttonClass = type === SOLID ? 'btn-primary-outline' : 'btn-white-accent';
 
   return (
-    <div className="regular">
+    <div className='regular'>
       {
         user
           ?
             <NavbarUser user={user} linkClass={linkClass} />
           :
-            <div className="nav-actions flex row-center">
+            <div className='nav-actions flex row-center'>
               <a onClick={onLoginClicked}
                 className={classnames('strong small-caps m-r-lg', linkClass)}>
                  Login

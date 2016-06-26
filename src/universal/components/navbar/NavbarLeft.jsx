@@ -11,15 +11,15 @@ const NavbarLeftComponent = ({ clickNavLink, links, location, type }) => {
   const buttonClass = type === SOLID ? 'btn-primary-outline' : 'btn-white-accent';
 
   return (
-    <div className="nav-left flex">
-      <a className="logo" onClick={() => clickNavLink('/')}>
+    <div className='nav-left flex'>
+      <a className='logo' onClick={() => clickNavLink('/')}>
         {
           type === SOLID
             ? <img src={tealLogo} key={0} />
             : <img src={whiteLogo} key={1} />
         }
       </a>
-      <ul className="links nav">
+      <ul className='links nav'>
       {
         links.map((link) => {
           const itemClasses = classnames(

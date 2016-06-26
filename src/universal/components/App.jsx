@@ -40,11 +40,11 @@ export default class App extends React.Component {
   render() {
     const { location, children } = this.props;
     return (
-      <div id="app">
-        <GeminiScrollbar ref="scrollbar" autoshow={true}>
+      <div id='app'>
+        <GeminiScrollbar ref='scrollbar' autoshow={true}>
           <Navbar location={location} />
           <Modals />
-          <div id="main">
+          <div id='main'>
             { children }
           </div>
           <Footer />

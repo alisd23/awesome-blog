@@ -17,9 +17,9 @@ export default class ModalsContainer extends React.Component {
     const { openModal, user } = this.props;
 
     return (
-      <div id="modals">
+      <div id='modals'>
         <ReactCSSTransitionGroup
-          transitionName="modal"
+          transitionName='modal'
           transitionEnterTimeout={500}
           transitionLeaveTimeout={500} >
           {

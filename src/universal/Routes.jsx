@@ -10,8 +10,8 @@ import { startPageChange, pageLoadingEnd } from './redux/ducks/global';
 // Webpack Hacky environment isomorphic stuff
 const ENV = typeof window !== 'undefined' ? 'client' : global.ENV;
 // Require ensure shim
-if (typeof require.ensure !== "function") require.ensure = (d, c) => c(require);
-if (typeof require.include !== "function") require.include = () => {};
+if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require);
+if (typeof require.include !== 'function') require.include = () => {};
 
 // Factory function to create routes
 export default function(registry) {
@@ -57,12 +57,12 @@ export default function(registry) {
       store.dispatch(startPageChange);
 
     if (ENV === 'client') {
-      System.import('./pages/profile/Profile')
+      System.import('./pages/profile/ProfileContainer')
         .then(container => changeScreen(location, cb, container.default));
         // .catch(err => console.log('Epic fail: Article Page -- ', err));
     } else {
-      require.ensure(['./pages/profile/Profile'], (require) => {
-        const container = require('./pages/profile/Profile').default;
+      require.ensure(['./pages/profile/ProfileContainer'], (require) => {
+        const container = require('./pages/profile/ProfileContainer').default;
         changeScreen(location, cb, container);
       });
     }

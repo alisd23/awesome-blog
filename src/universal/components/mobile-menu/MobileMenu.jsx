@@ -14,24 +14,24 @@ export default class MobileMenuContainer extends React.Component {
     const { closeMenu, user, dispatch } = this.props;
 
     return (
-      <div className="mobile-menu">
-        <div className="backdrop"
+      <div className='mobile-menu'>
+        <div className='backdrop'
           onClick={() => dispatch(toggleMobileNav(false))}></div>
-        <div className="menu">
+        <div className='menu'>
           {
             user
               ?
-                <div className="menu-content cover column row-xs-center">
-                  <div className="avatar img-cover img-circle m-b-md"
+                <div className='menu-content cover column row-xs-center'>
+                  <div className='avatar img-cover img-circle m-b-md'
                     style={{backgroundImage: `url(${getAvatarURL(user)})`}}>
                   </div>
                   <h5>{getFullname(user)}</h5>
-                  <div className="link-accent p-a-md"
+                  <div className='link-accent p-a-md'
                     onClick={() => dispatch(logout())}>Logout</div>
                 </div>
               :
-                <div className="menu-content cover column center-a">
-                  <a className="btn btn-block btn-lg btn-secondary btn-caps"
+                <div className='menu-content cover column center-a'>
+                  <a className='btn btn-block btn-lg btn-secondary btn-caps'
                     onClick={::this.loginClicked}>Login</a>
                 </div>
           }

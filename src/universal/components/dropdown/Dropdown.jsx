@@ -34,13 +34,13 @@ export default class Dropdown extends React.Component {
 
     return (
       <ReactCSSTransitionGroup
-        transitionName="dropdown"
+        transitionName='dropdown'
         transitionEnterTimeout={350}
         transitionLeaveTimeout={350} >
         {
           this.state.open &&
             <div
-              ref="menu"
+              ref='menu'
               className={classnames(className, 'dropdown-menu')}
               onClick={() => this.toggleDropdown()}>
               { children }

@@ -13,9 +13,9 @@ export default class RegisterModal extends React.Component {
     return (
       <Modal
         onClose={() => dispatch(closeModal(ModalTypes.REGISTER))}
-        title="Sign Up"
-        subtitle="Create a blog account"
-        modalClasses="register-modal"
+        title='Sign Up'
+        subtitle='Create a blog account'
+        modalClasses='register-modal'
       >
         <RegisterForm />
       </Modal>

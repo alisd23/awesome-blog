@@ -17,30 +17,30 @@ export default class NavbarUserComponent extends React.Component {
     const { user, linkClass, dispatch } = this.props;
 
     return (
-        <div className="nav-user flex row-center dropdown">
+        <div className='nav-user flex row-center dropdown'>
           <div
             className={classnames(
               user.avatar ? '' : 'no-avatar',
-              "avatar img-cover img-circle flex-static"
+              'avatar img-cover img-circle flex-static'
             )}
             style={{backgroundImage: `url(${getAvatarURL(user)})`}}>
           </div>
 
           <a
-            ref="trigger"
+            ref='trigger'
             className={classnames('text-truncate flex-expand dropdown-toggle', linkClass)}>
-            <span className="flex row-center">
+            <span className='flex row-center'>
               {getFullname(user)}
-              <i className="icon material-icons m-l-sm">keyboard_arrow_down</i>
+              <i className='icon material-icons m-l-sm'>keyboard_arrow_down</i>
             </span>
           </a>
 
           <Dropdown
             getTrigger={() => this.refs.trigger}
-            className="dropdown-menu-right">
+            className='dropdown-menu-right'>
             {/* Dropdown content */}
-            <a className="dropdown-item" onClick={() => dispatch(push('/account/profile'))}>Profile</a>
-            <a className="dropdown-item" onClick={() => dispatch(logout())}>Logout</a>
+            <a className='dropdown-item' onClick={() => dispatch(push('/account/profile'))}>Profile</a>
+            <a className='dropdown-item' onClick={() => dispatch(logout())}>Logout</a>
           </Dropdown>
         </div>
     );

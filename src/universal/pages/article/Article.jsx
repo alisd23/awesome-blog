@@ -23,11 +23,11 @@ export default class ArticleContainer extends React.Component {
     const { article, author, user, isLiked, dispatch } = this.props;
 
     return (
-      <div id="article">
+      <div id='article'>
         <Helmet {...config}
           title={article.title} />
 
-        <div className="article-banner">
+        <div className='article-banner'>
           <HeadlineArticleComponent author={author} article={article} />
         </div>
 

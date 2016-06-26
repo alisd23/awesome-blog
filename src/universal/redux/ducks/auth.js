@@ -68,17 +68,16 @@ export default function reducer(state = initialState, { type, payload }) {
 //           Actions          //
 //----------------------------//
 
-const loginSuccess = (user) =>
-  action(LOGIN_SUCCESS, { user });
+const loginAttempt = () => action(LOGIN_ATTEMPT);
+const loginSuccess = user => action(LOGIN_SUCCESS, { user });
+const loginFailure = user => action(LOGIN_FAILURE, { user });
 
-const registerSuccess = (user) =>
-  action(REGISTER_SUCCESS, { user });
+const registerAttempt = () => action(REGISTER_ATTEMPT);
+const registerSuccess = user => action(REGISTER_SUCCESS, { user });
+const registerFailure = user => action(REGISTER_FAILURE, { user });
 
-const logoutSuccess = () =>
-  action(LOGOUT_SUCCESS);
-
-export const logout = () =>
-  action(LOGOUT_ATTEMPT);
+const logoutSuccess = () => action(LOGOUT_SUCCESS);
+export const logout = () => action(LOGOUT_ATTEMPT);
 
 //------------------------------//
 //         Coordinators         //
@@ -107,7 +106,7 @@ export const getCurrentUser = state => state.auth.user;
 
 export const login = (data, dispatch) => (
   new Promise((resolve, reject) => {
-    dispatch({ type: LOGIN_ATTEMPT });
+    dispatch(loginAttempt());
 
     apiLogin(data)
       .then(res => {
@@ -116,7 +115,7 @@ export const login = (data, dispatch) => (
         resolve();
       })
       .catch(err => {
-        dispatch({ type: LOGIN_FAILURE });
+        dispatch(loginFailure());
         reject({
           _error: 'Invalid username or password'
         });
@@ -134,10 +133,28 @@ export const register = (data, dispatch) => (
         resolve();
       })
       .catch(err => {
-        dispatch({ type: REGISTER_FAILURE });
+        dispatch(registerFailure());
         reject({
           _error: 'Invalid details'
         });
       });
+  })
+);
+
+// Update profile handler for redux-forms
+export const updateProfile = (data, dispatch) => (
+  new Promise((resolve, reject) => {
+    // apiRegister(data)
+    //   .then(res => {
+    //     dispatch(registerSuccess(res.user));
+    //     resolve();
+    //   })
+    //   .catch(err => {
+    //     dispatch({ type: REGISTER_FAILURE });
+    //     reject({
+    //       _error: 'Invalid details'
+    //     });
+    //   });
+    return Promise.resolve();
   })
 );

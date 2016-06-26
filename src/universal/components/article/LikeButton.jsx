@@ -22,10 +22,10 @@ export default class LikeButtonComponent extends React.Component {
           'unliked': article.meta.likes.length === 0
         }
       )}>
-        <div className="count m-r-sm" ref="count">{article.meta.likes.length || 1}</div>
-        <div className="icon" ref="iconWrapper">
-          <i className="material-icons md-36"
-            ref="icon"
+        <div className='count m-r-sm' ref='count'>{article.meta.likes.length || 1}</div>
+        <div className='icon' ref='iconWrapper'>
+          <i className='material-icons md-36'
+            ref='icon'
             onClick={::this.onLikeClicked}>thumb_up</i>
         </div>
       </div>

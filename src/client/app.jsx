@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import "babel-polyfill";
+import 'babel-polyfill';
 
 import { Store } from 'redux';
 import { Provider } from 'react-redux';
@@ -20,11 +20,11 @@ let DevTools;
 if (__DEVELOPMENT__) {
   const DevToolsComponent =
     <DockMonitor
-        toggleVisibilityKey="ctrl-h"
-        changePositionKey="ctrl-q"
-        defaultPosition="bottom"
+        toggleVisibilityKey='ctrl-h'
+        changePositionKey='ctrl-q'
+        defaultPosition='bottom'
         defaultIsVisible={false} >
-      <LogMonitor theme="tomorrow" />
+      <LogMonitor theme='tomorrow' />
     </DockMonitor>
   DevTools = createDevTools(DevToolsComponent);
 }
@@ -50,7 +50,7 @@ match(matchParams, (error, redirectLocation, renderProps) => {
 
   // RENDER APP
   render(
-    <Provider store={store} key="provider">
+    <Provider store={store} key='provider'>
       <div>
         <Router {...renderProps} />
       </div>

@@ -9,8 +9,8 @@ const HamburgerMenuComponent = ({ toggleMenu, mobileNavOpen }) => {
 
   return (
     <div className={classes} onClick={toggleMenu}>
-      <span className="hamburger-box">
-        <span className="hamburger-inner"></span>
+      <span className='hamburger-box'>
+        <span className='hamburger-inner'></span>
       </span>
     </div>
   );

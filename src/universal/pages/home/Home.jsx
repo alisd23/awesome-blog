@@ -4,12 +4,12 @@ import ArticleGrid from '../../components/article/ArticleGrid';
 
 const HomeComponent = ({ headlineArticle, otherArticles }) => {
   return (
-    <div id="home-page">
+    <div id='home-page'>
       {
         headlineArticle &&
           <Headline article={headlineArticle} />
       }
-      <section className="articles-section">
+      <section className='articles-section'>
         <ArticleGrid articles={otherArticles} />
       </section>
     </div>

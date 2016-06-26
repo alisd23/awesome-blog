@@ -1,6 +1,6 @@
 
 @import '../variables';
-@import "node_modules/bootstrap/scss/mixins";
+@import 'node_modules/bootstrap/scss/mixins';
 
 .btn-caps {
   text-transform: uppercase;
@@ -218,9 +218,9 @@ fieldset[disabled] a.btn {
 }
 
 // Specificity overrides
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
   &.btn-block {
     width: 100%;
   }

@@ -13,9 +13,9 @@ export default class LoginModal extends React.Component {
     return (
       <Modal
         onClose={() => dispatch(closeModal(ModalTypes.LOGIN))}
-        title="Login"
-        subtitle="Login with your blog account"
-        modalClasses="login-modal"
+        title='Login'
+        subtitle='Login with your blog account'
+        modalClasses='login-modal'
       >
         <LoginForm />
       </Modal>

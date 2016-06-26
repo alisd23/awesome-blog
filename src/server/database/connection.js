@@ -20,7 +20,7 @@ export function connectMongoDB() {
 
   mongoConnection.on('error', (err) => console.error('MongoDB connection error :(  --  ', err));
   mongoConnection.once('open', function() {
-    console.log("MongoDB connected at url - ", DB_URL);
+    console.log('MongoDB connected at url - ', DB_URL);
   });
 
   return mongoConnection;

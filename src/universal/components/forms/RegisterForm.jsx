@@ -42,7 +42,7 @@ export default class RegisterForm extends React.Component {
 
     const buttonClasses = classnames(
       { 'loading': submitting },
-      "btn btn-caps btn-block btn-lg btn-primary-outline m-t-lg m-b-md"
+      'btn btn-caps btn-block btn-lg btn-primary-outline m-t-lg m-b-md'
     );
 
     return (
@@ -63,12 +63,12 @@ export default class RegisterForm extends React.Component {
 
         {
           error &&
-            <div className="alert alert-danger">{error}</div>
+            <div className='alert alert-danger'>{error}</div>
         }
 
         <button
           className={buttonClasses}
-          type="submit">
+          type='submit'>
           Sign up
         </button>
 
@@ -76,7 +76,7 @@ export default class RegisterForm extends React.Component {
           <span>Already have an Awesome Blog account?</span>
           <a
             onClick={() => dispatch(openModal(Modals.LOGIN))}
-            className="link-accent strong m-l-d">Login here</a>
+            className='link-accent strong m-l-d'>Login here</a>
         </span>
 
       </form>

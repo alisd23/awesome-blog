@@ -20,7 +20,7 @@ export default class NavbarRightContainer extends React.Component {
   render() {
     const { user, type, mobileNavOpen, dispatch } = this.props;
     return (
-      <div className="nav-right">
+      <div className='nav-right'>
 
         <NavActions
           user={user}

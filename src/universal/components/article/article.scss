@@ -133,7 +133,7 @@ $article-height: 500px;
     overflow: hidden;
 
     &:after {
-      content: "";
+      content: '';
       display: block;
       height: $line-height * $font-size-base * 3;
       position: absolute;

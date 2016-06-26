@@ -14,7 +14,7 @@ export function getAuthors(req, res) {
       });
     })
     .catch((err) => {
-      console.log("GetAuthors ERROR - ", err);
+      console.log('GetAuthors ERROR - ', err);
       res.status(400).send({
         success: 0,
         error: `Could not get authors - ${err}`

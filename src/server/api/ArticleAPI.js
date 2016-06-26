@@ -19,7 +19,7 @@ export function getArticles(req, res) {
       });
     })
     .catch((err) => {
-      console.log("GetArticles ERROR - ", err);
+      console.log('GetArticles ERROR - ', err);
       res.status(400).send({
         success: 0,
         error: `Could not get articles - ${err}`

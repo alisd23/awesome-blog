@@ -3,7 +3,7 @@ import HeadlineAuthor from './HeadlineAuthor';
 import HeadlineArticle from './HeadlineArticle';
 
 const HeadlineComponent = ({ article, author, onReadArticle, onLikeClicked }) => (
-  <div className="headline-banner article-banner">
+  <div className='headline-banner article-banner'>
 
     {/* Headline Article (bit with the large image) */}
     <HeadlineArticle
