@@ -3,8 +3,12 @@ import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 
 export default (Component) => {
+  const mapStateToProps = (state) => ({
+    isAuthenticated: !!state.auth.user
+  });
+  const mapDispatchToProps = { replace };
 
-  @connect(mapStateToProps)
+  @connect(mapStateToProps, mapDispatchToProps)
   class AuthenticatedComponent extends React.Component {
     componentWillMount() {
       this.checkAuth(this.props.isAuthenticated);
@@ -16,7 +20,7 @@ export default (Component) => {
 
     checkAuth(isAuthenticated) {
       if (!isAuthenticated) {
-        this.props.dispatch(replace(`/`));
+        this.props.replace(`/`);
       }
     }
 
@@ -25,12 +29,6 @@ export default (Component) => {
         ? <Component {...this.props}/>
         : null;
     }
-  }
-
-  function mapStateToProps(state) {
-    return {
-      isAuthenticated: !!state.auth.user
-    };
   }
 
   return AuthenticatedComponent;

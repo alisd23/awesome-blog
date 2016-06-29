@@ -6,11 +6,16 @@ import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import Modals from './ModalTypes';
 
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+  openModal: state.global.openModal
+});
+
 @connect(mapStateToProps)
 export default class ModalsContainer extends React.Component {
   static propTypes = {
     user: React.PropTypes.object,
-    openModal: React.PropTypes.string
+    openModal: React.PropTypes.string,
   }
 
   render() {
@@ -37,12 +42,5 @@ export default class ModalsContainer extends React.Component {
         </ReactCSSTransitionGroup>
       </div>
     );
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    user: state.auth.user,
-    openModal: state.global.openModal
   }
 }

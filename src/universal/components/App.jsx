@@ -12,7 +12,12 @@ import { scrolled } from '../redux/ducks/global';
 // Use babel resolveDirs
 import 'universal/sass/app.scss';
 
-@connect(mapStateToProps)
+const mapStateToProps = (state) => ({
+  loading: state.global.loading
+});
+const mapDispatchToProps = { scrolled };
+
+@connect(mapStateToProps, mapDispatchToProps)
 @withRouter
 export default class App extends React.Component {
   static propTypes = {
@@ -21,10 +26,10 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    const { router, dispatch } = this.props;
+    const { router, scrolled } = this.props;
 
     const onScroll = (e) => {
-      dispatch(scrolled(e.currentTarget.scrollTop));
+      scrolled(e.currentTarget.scrollTop);
     }
     const onPageChange = (e) => {
       this.refs.scrollbar.refs['scroll-view'].scrollTop = 0;
@@ -51,11 +56,5 @@ export default class App extends React.Component {
         </GeminiScrollbar>
       </div>
     )
-  }
-}
-
-function mapStateToProps(state) {
-  return {
-    loading: state.global.loading
   }
 }

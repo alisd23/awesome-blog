@@ -4,7 +4,10 @@ import { SOLID, TRANSPARENT} from '../../components/navbar/NavbarTypes';
 import action from '../action';
 import combineCoordinators from '../combineCoordinators';
 
-// Action constants
+//----------------------------//
+//        ACTION TYPES        //
+//----------------------------//
+
 const CHANGE_NAVBAR = 'CHANGE_NAVBAR';
 const STICK_NAVBAR = 'STICK_NAVBAR';
 const UNSTICK_NAVBAR = 'UNSTICK_NAVBAR';
@@ -32,12 +35,10 @@ const initialState = {
   pageLoading: false
 }
 
-/**
- * Global reducer. Handles the 'global/general'  state.
- * @param  {Object} state   - Current global state
- * @param  {Object} action  - Next action to process
- * @return {Object}         - Next global state
- */
+//-------------------------//
+//         REDUCER         //
+//-------------------------//
+
 export default function reducer(state = initialState, { type, payload }) {
   switch (type) {
     case PAGE_LOADING_START:
@@ -61,12 +62,12 @@ export default function reducer(state = initialState, { type, payload }) {
       return { ...state, openModal: null };
     default:
       // If any state field doesn't exist, use initial state
-      return { ...initialState, ...state };
+      return state;
   };
 }
 
 //----------------------------//
-//           Actions          //
+//           ACTIONS          //
 //----------------------------//
 
 export const changeNavbarType = (navbarType) =>
@@ -114,7 +115,7 @@ export const closeModal = (modal) => (
 );
 
 //------------------------------//
-//         Coordinators         //
+//         COORDINATORS         //
 //------------------------------//
 
 // Throttle for 200ms so loader doesn't show for quick loads

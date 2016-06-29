@@ -7,16 +7,21 @@ import { getAvatarURL, getFullname } from '../../helpers/user';
 import ModalTypes from '../modals/ModalTypes';
 import { logout } from '../../redux/ducks/auth';
 
-@connect(mapStateToProps)
+const mapStateToProps = (state, ownProps) => ({
+  user: state.auth.user
+});
+const mapDispatchToProps = { toggleMobileNav, logout, openModal };
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class MobileMenuContainer extends React.Component {
 
   render() {
-    const { closeMenu, user, dispatch } = this.props;
+    const { closeMenu, user, logout, toggleMobileNav } = this.props;
 
     return (
       <div className='mobile-menu'>
         <div className='backdrop'
-          onClick={() => dispatch(toggleMobileNav(false))}></div>
+          onClick={() => toggleMobileNav(false)}></div>
         <div className='menu'>
           {
             user
@@ -27,7 +32,7 @@ export default class MobileMenuContainer extends React.Component {
                   </div>
                   <h5>{getFullname(user)}</h5>
                   <div className='link-accent p-a-md'
-                    onClick={() => dispatch(logout())}>Logout</div>
+                    onClick={logout}>Logout</div>
                 </div>
               :
                 <div className='menu-content cover column center-a'>
@@ -41,15 +46,7 @@ export default class MobileMenuContainer extends React.Component {
   }
 
   loginClicked() {
-    this.props.dispatch(toggleMobileNav(false));
-    this.props.dispatch(openModal(ModalTypes.LOGIN));
-  }
-
-}
-
-
-function mapStateToProps(state: AppState, ownProps) {
-  return {
-    user: state.auth.user
+    this.props.toggleMobileNav(false);
+    this.props.openModal(ModalTypes.LOGIN);
   }
 }

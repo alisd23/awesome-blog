@@ -9,28 +9,36 @@ import MobileMenu from '../mobile-menu/MobileMenu';
 import { toggleMobileNav, openModal } from '../../redux/ducks/global';
 import Modals from '../modals/ModalTypes';
 
-@connect(mapStateToProps)
+const mapStateToProps = (state, ownProps) => ({
+  user: state.auth.user,
+  mobileNavOpen: state.global.mobileNavOpen
+});
+const mapDispatchToProps = { openModal, toggleMobileNav };
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class NavbarRightContainer extends React.Component {
   static propTypes = {
     type: React.PropTypes.string,
     user: React.PropTypes.object,
-    mobileNavOpen: React.PropTypes.bool
+    mobileNavOpen: React.PropTypes.bool,
+    openModal: React.PropTypes.func,
+    toggleMobileNav: React.PropTypes.func,
   }
 
   render() {
-    const { user, type, mobileNavOpen, dispatch } = this.props;
+    const { user, type, mobileNavOpen, openModal, toggleMobileNav } = this.props;
     return (
       <div className='nav-right'>
 
         <NavActions
           user={user}
           type={type}
-          onLoginClicked={() => dispatch(openModal(Modals.LOGIN))}
-          onRegisterClicked={() => dispatch(openModal(Modals.REGISTER))} />
+          onLoginClicked={() => openModal(Modals.LOGIN)}
+          onRegisterClicked={() => openModal(Modals.REGISTER)} />
 
         <HamburgerMenu
           mobileNavOpen={mobileNavOpen}
-          toggleMenu={() => dispatch(toggleMobileNav())} />
+          toggleMenu={() => toggleMobileNav()} />
 
         <ReactCSSTransitionGroup
           transitionName='menu-slide'
@@ -44,12 +52,5 @@ export default class NavbarRightContainer extends React.Component {
         </ReactCSSTransitionGroup>
       </div>
     )
-  }
-}
-
-function mapStateToProps(state: AppState, ownProps) {
-  return {
-    user: state.auth.user,
-    mobileNavOpen: state.global.mobileNavOpen
   }
 }

@@ -2,25 +2,44 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { mixin } from 'core-decorators';
-import { NavbarTransparent } from '../../components/navbar/navbarMixins';
+import { TRANSPARENT } from '../../components/navbar/NavbarTypes';
+import navbarType from '../../components/navbar/navbarTypeHOC';
 import HeadlineArticleComponent from '../../components/headline/HeadlineArticle';
 import ArticleBodyComponent from '../../components/article/ArticleBody';
 import config from '../../head.config';
-import { toggleArticleLike } from '../../redux/ducks/articles';
+import { toggleArticleLike, hasUserLikedArticle, getSelectedArticle }
+  from '../../redux/ducks/articles';
 import { openModal } from '../../redux/ducks/global';
 import ModalTypes from '../../components/modals/ModalTypes';
 
-@connect(mapStateToProps)
-@mixin(NavbarTransparent)
+const mapStateToProps = (state, ownProps) => {
+  const selectorParams = { articleId: ownProps.params.id };
+  const article = getSelectedArticle(state, selectorParams);
+  return {
+    article,
+    author: state.authors[article.author],
+    user: state.auth.user,
+    isLiked: state.auth.user && hasUserLikedArticle(state, selectorParams)
+  }
+};
+const mapDispatchToProps = { toggleArticleLike, openModal };
+
+@navbarType(TRANSPARENT)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class ArticleContainer extends React.Component {
   static propTypes = {
-    params: React.PropTypes.object, // React router gives this to us
+    params: React.PropTypes.object,
     article: React.PropTypes.object,
-    author: React.PropTypes.object
+    author: React.PropTypes.object,
+    user: React.PropTypes.object,
+    isLiked: React.PropTypes.bool,
+    toggleArticleLike: React.PropTypes.func,
+    openModal: React.PropTypes.func,
   }
 
   render() {
-    const { article, author, user, isLiked, dispatch } = this.props;
+    const { article, author, user, isLiked, toggleArticleLike, openModal }
+      = this.props;
 
     return (
       <div id='article'>
@@ -37,21 +56,10 @@ export default class ArticleContainer extends React.Component {
           user={user}
           isLiked={isLiked}
           handleLike={user
-            ? (() => dispatch(toggleArticleLike(article.id)))
-            : (() => dispatch(openModal(ModalTypes.LOGIN)))} />
+            ? (() => toggleArticleLike(article.id))
+            : (() => openModal(ModalTypes.LOGIN))} />
 
       </div>
     )
-  }
-}
-
-function mapStateToProps(state: AppState, ownProps) {
-  const article = state.articles[ownProps.params.id]
-  return {
-    article,
-    author: state.authors[article.author],
-    user: state.auth.user,
-    isLiked: state.auth.user &&
-             article.meta.likes.indexOf(state.auth.user.id) !== -1
   }
 }

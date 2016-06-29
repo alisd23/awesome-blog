@@ -5,14 +5,16 @@ import RegisterForm from '../forms/RegisterForm';
 import ModalTypes from './ModalTypes';
 import { closeModal } from '../../redux/ducks/global';
 
-@connect(mapStateToProps)
+const mapDispatchToProps = { closeModal };
+
+@connect(null, mapDispatchToProps)
 export default class RegisterModal extends React.Component {
 
   render() {
-    const { dispatch } = this.props;
+    const { closeModal } = this.props;
     return (
       <Modal
-        onClose={() => dispatch(closeModal(ModalTypes.REGISTER))}
+        onClose={() => closeModal(ModalTypes.REGISTER)}
         title='Sign Up'
         subtitle='Create a blog account'
         modalClasses='register-modal'
@@ -21,8 +23,4 @@ export default class RegisterModal extends React.Component {
       </Modal>
     );
   }
-}
-
-function mapStateToProps(state: AppState) {
-  return {}
 }

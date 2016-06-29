@@ -6,11 +6,13 @@ import { UPDATE_LOCATION } from 'react-router-redux';
  */
 const initialState = {};
 
-/**
- * Reducer for authors
- * NOTE - all authors are retrieved SERVER-SIDE so no receive authors
- * action is required
- */
+
+//--------------------------//
+//         REDUCERS         //
+//--------------------------//
+
+// NOTE - all authors are retrieved SERVER-SIDE so no receive authors
+// action is required
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     default:
@@ -19,7 +21,7 @@ export default function reducer(state = initialState, action) {
 }
 
 //----------------------------//
-//           Helpers          //
+//           HELPERS          //
 //----------------------------//
 
 // Transforms an array of authors into the state equivalent (id => User)

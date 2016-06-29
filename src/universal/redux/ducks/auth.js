@@ -9,7 +9,10 @@ import ModalTypes from '../../components/modals/ModalTypes';
 import action from '../action';
 import combineCoordinators from '../combineCoordinators';
 
-// Action constants
+//----------------------------//
+//        ACTION TYPES        //
+//----------------------------//
+
 const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -32,7 +35,12 @@ const initialState = {
   loggingIn: false
 }
 
-// Reducer to handle auth state - Authenticated user and logging in state
+
+//--------------------------//
+//          REDUCER         //
+//--------------------------//
+// Handles auth state - Authenticated user and logging in state
+
 export default function reducer(state = initialState, { type, payload }) {
   switch (type) {
     case LOGIN_ATTEMPT:
@@ -65,7 +73,7 @@ export default function reducer(state = initialState, { type, payload }) {
 }
 
 //----------------------------//
-//           Actions          //
+//           ACTIONS          //
 //----------------------------//
 
 const loginAttempt = () => action(LOGIN_ATTEMPT);
@@ -80,7 +88,7 @@ const logoutSuccess = () => action(LOGOUT_SUCCESS);
 export const logout = () => action(LOGOUT_ATTEMPT);
 
 //------------------------------//
-//         Coordinators         //
+//         COORDINATORS         //
 //------------------------------//
 
 const logoutCoordinator = (action$, { getState }) =>
@@ -95,13 +103,13 @@ export const coordinator = combineCoordinators(
 );
 
 //------------------------------//
-//           Selectors          //
+//           SELECTORS          //
 //------------------------------//
 
 export const getCurrentUser = state => state.auth.user;
 
 //----------------------------//
-//      Form Submissions      //
+//      FORM SUBMISSIONS      //
 //----------------------------//
 
 export const login = (data, dispatch) => (

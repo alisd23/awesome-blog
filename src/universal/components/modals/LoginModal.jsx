@@ -5,14 +5,16 @@ import LoginForm from '../forms/LoginForm';
 import ModalTypes from './ModalTypes';
 import { closeModal } from '../../redux/ducks/global';
 
-@connect(mapStateToProps)
+const mapDispatchToProps = { closeModal };
+
+@connect(null, mapDispatchToProps)
 export default class LoginModal extends React.Component {
 
   render() {
-    const { dispatch } = this.props;
+    const { closeModal } = this.props;
     return (
       <Modal
-        onClose={() => dispatch(closeModal(ModalTypes.LOGIN))}
+        onClose={() => closeModal(ModalTypes.LOGIN)}
         title='Login'
         subtitle='Login with your blog account'
         modalClasses='login-modal'
@@ -21,8 +23,4 @@ export default class LoginModal extends React.Component {
       </Modal>
     );
   }
-}
-
-function mapStateToProps(state: AppState) {
-  return {}
 }

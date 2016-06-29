@@ -12,7 +12,10 @@ import action from '../action';
 import combineCoordinators from '../combineCoordinators';
 import { getCurrentUser } from './auth';
 
-// Action constants
+//----------------------------//
+//        ACTION TYPES        //
+//----------------------------//
+
 const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 const TOGGLE_ARTICLE_LIKE = 'TOGGLE_ARTICLE_LIKE';
 
@@ -21,14 +24,11 @@ const ARTICLE_LIKE_FAILURE = 'ARTICLE_LIKE_FAILURE';
 const ARTICLE_UNLIKE_REQUEST = 'ARTICLE_UNLIKE_REQUEST';
 const ARTICLE_UNLIKE_FAILURE = 'ARTICLE_UNLIKE_FAILURE';
 
-/**
- * Initial articles state
- * @type {Object} - A map of id -> Article object
- */
-const initialState = {}
+//--------------------------//
+//         REDUCERS         //
+//--------------------------//
 
-// Reducer for articles
-export default function reducer(state = initialState, action) {
+export default function reducer(state = {}, action) {
   const { type, payload, error } = action;
 
   switch (type) {
@@ -80,7 +80,7 @@ const reduceArticle = (state = {}, { type, payload, error }) => {
 
 
 //----------------------------//
-//           Actions          //
+//           ACTIONS          //
 //----------------------------//
 
 // Liking/Unliking of article actions
@@ -101,7 +101,7 @@ export const toggleArticleLike = (articleId) =>
   action(TOGGLE_ARTICLE_LIKE, { articleId });
 
 //------------------------------//
-//         Coordinators         //
+//         COORDINATORS         //
 //------------------------------//
 
 const articleLikeCoordinator = (action$, { getState }) =>
@@ -130,7 +130,7 @@ export const coordinator = combineCoordinators(
 );
 
 //------------------------------//
-//           Selectors          //
+//           SELECTORS          //
 //------------------------------//
 
 export const getArticles = state => state.articles;
@@ -165,7 +165,7 @@ export const hasUserLikedArticle = createSelector(
 );
 
 //----------------------------//
-//           Helpers          //
+//           HELPERS          //
 //----------------------------//
 
 // Transforms an array of articles into the state equivalent (id => Article)

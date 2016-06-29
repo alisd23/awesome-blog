@@ -14,8 +14,8 @@ const validate = (values) => {
 };
 
 const formData = {
-  form: 'register',
-  fields: ['name', 'username', 'password'],
+  form: 'update-profile',
+  fields: ['name', 'username'],
   validate
 }
 
@@ -32,8 +32,7 @@ export default class RegisterForm extends React.Component {
       fields: { name, username, password },
       handleSubmit,
       error,
-      submitting,
-      dispatch
+      submitting
     } = this.props;
 
     const buttonClasses = classnames(
@@ -43,7 +42,6 @@ export default class RegisterForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit(updateProfile)}>
-
         <ValidationInput
           name='Name'
           inputData={name} />
@@ -51,11 +49,6 @@ export default class RegisterForm extends React.Component {
         <ValidationInput
           name='Username'
           inputData={username} />
-
-        <ValidationInput
-          name='Password'
-          type='password'
-          inputData={password} />
 
         {
           error &&
@@ -65,16 +58,8 @@ export default class RegisterForm extends React.Component {
         <button
           className={buttonClasses}
           type='submit'>
-          Sign up
+          Update Profile
         </button>
-
-        <span>
-          <span>Already have an Awesome Blog account?</span>
-          <a
-            onClick={() => dispatch(openModal(Modals.LOGIN))}
-            className='link-accent strong m-l-d'>Login here</a>
-        </span>
-
       </form>
     );
   }

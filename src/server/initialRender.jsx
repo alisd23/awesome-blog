@@ -58,7 +58,11 @@ export default function getInitialHtml(renderProps, reducerRegistry, isoTools, u
           component={component}
           store={store} />;
 
-      return `<!doctype html>\n${renderToString(html)}`;
+      try {
+        return `<!doctype html>\n${renderToString(html)}`;
+      } catch(e) {
+        console.log('RENDER ERROR', e)
+      }
     });
 }
 

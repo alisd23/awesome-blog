@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { reduxForm } from 'redux-form';
 import ValidationInput from './ValidationInput';
@@ -25,11 +26,15 @@ const formData = {
   validate
 }
 
+const mapDispatchToProps = { openModal };
+
+@connect(null, mapDispatchToProps)
 @reduxForm(formData)
 export default class LoginForm extends React.Component {
   static propTypes = {
     fields: React.PropTypes.object,
     handleSubmit: React.PropTypes.func,
+    openModal: React.PropTypes.func,
     submitting: React.PropTypes.bool
   };
 
@@ -39,7 +44,7 @@ export default class LoginForm extends React.Component {
       handleSubmit,
       error,
       submitting,
-      dispatch
+      openModal
     } = this.props;
 
     const buttonClasses = classnames(
@@ -73,7 +78,7 @@ export default class LoginForm extends React.Component {
         <span>
           <span>Don't have an Awesome Blog account?</span>
           <a
-            onClick={() => dispatch(openModal(Modals.REGISTER))}
+            onClick={() => openModal(Modals.REGISTER)}
             className='link-accent strong m-l-d'>Sign up here</a>
         </span>
 

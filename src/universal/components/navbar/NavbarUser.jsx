@@ -7,14 +7,16 @@ import { getAvatarURL, getFullname } from '../../helpers/user';
 import config from '../../../server/app.config';
 import Dropdown from '../dropdown/Dropdown';
 
-@connect()
+const mapDispatchToProps = { push, logout };
+
+@connect(null, mapDispatchToProps)
 export default class NavbarUserComponent extends React.Component {
   state = {
     open: false
   }
 
   render() {
-    const { user, linkClass, dispatch } = this.props;
+    const { user, linkClass, push, logout } = this.props;
 
     return (
         <div className='nav-user flex row-center dropdown'>
@@ -39,8 +41,16 @@ export default class NavbarUserComponent extends React.Component {
             getTrigger={() => this.refs.trigger}
             className='dropdown-menu-right'>
             {/* Dropdown content */}
-            <a className='dropdown-item' onClick={() => dispatch(push('/account/profile'))}>Profile</a>
-            <a className='dropdown-item' onClick={() => dispatch(logout())}>Logout</a>
+            <a
+              className='dropdown-item'
+              onClick={() => push('/account/profile')}>
+              Profile
+            </a>
+            <a
+              className='dropdown-item'
+              onClick={logout}>
+              Logout
+            </a>
           </Dropdown>
         </div>
     );

@@ -12,9 +12,13 @@ const ValidationInputComponent = ({ name, type, inputData, inputClass }) => {
     'small-caps small text-muted',
     { 'text-danger': hasError }
   );
+  const wrapperClasses = classnames(
+    'field-group m-b-md',
+    { 'is-active': inputData.active }
+  );
 
   return (
-    <div className='field-group m-b-md'>
+    <div className={wrapperClasses}>
       <label className={labelClasses}>{name}</label>
       <input
         type={type}
