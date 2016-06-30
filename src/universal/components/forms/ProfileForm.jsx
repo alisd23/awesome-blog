@@ -2,10 +2,17 @@ import React from 'react';
 import classnames from 'classnames';
 import { reduxForm } from 'redux-form';
 import ValidationInput from './ValidationInput';
-import { updateProfile } from '../../redux/ducks/auth';
+import LoadingButton from './LoadingButton';
+import { updateProfile, getCurrentUser } from '../../redux/ducks/auth';
+import { getFullname } from '../../helpers/user';
 
-const validate = (values) => {
+const validate = (values, props) => {
   const errors = {};
+
+  // HACK - Workaround for redux-form SSR issue
+  if (!props.form._initialized)
+    return {};
+
   if (!values.name)
     errors.name = 'Name required';
   if (!values.username)
@@ -16,11 +23,21 @@ const validate = (values) => {
 const formData = {
   form: 'update-profile',
   fields: ['name', 'username'],
-  validate
+  validate,
 }
 
-@reduxForm(formData)
-export default class RegisterForm extends React.Component {
+const mapStateToProps = (state) => {
+  const user = getCurrentUser(state);
+  return {
+    initialValues: {
+      username: user.username,
+      name: getFullname(user)
+    }
+  };
+};
+
+@reduxForm(formData, mapStateToProps)
+export default class ProfileForm extends React.Component {
   static propTypes = {
     fields: React.PropTypes.object,
     handleSubmit: React.PropTypes.func,
@@ -29,14 +46,13 @@ export default class RegisterForm extends React.Component {
 
   render() {
     const {
-      fields: { name, username, password },
+      fields: { name, username },
       handleSubmit,
       error,
       submitting
     } = this.props;
 
     const buttonClasses = classnames(
-      { 'loading': submitting },
       'btn btn-caps btn-block btn-lg btn-primary-outline m-t-lg m-b-md'
     );
 
@@ -55,11 +71,11 @@ export default class RegisterForm extends React.Component {
             <div className='alert alert-danger'>{error}</div>
         }
 
-        <button
-          className={buttonClasses}
-          type='submit'>
-          Update Profile
-        </button>
+        <LoadingButton
+          buttonClassName={buttonClasses}
+          isLoading={submitting}
+          text='Update Profile'
+        />
       </form>
     );
   }

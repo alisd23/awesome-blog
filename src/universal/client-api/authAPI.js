@@ -1,5 +1,6 @@
 import 'isomorphic-fetch';
 import { GET_CONFIG, POST_CONFIG } from './config';
+const GENERIC_ERROR = 'An error occurred';
 
 export function logout() {
   return fetch(`/api/logout`, POST_CONFIG)
@@ -14,7 +15,7 @@ export function login({ username, password }) {
     })
     .then(response => response.json())
     .then(data =>{
-      if (data.error) throw data.error;
+      if (data.error) throw data.error || GENERIC_ERROR;
       return data;
     });
 }
@@ -26,7 +27,19 @@ export function register({ username, password, name }) {
     })
     .then(response => response.json())
     .then(data =>{
-      if (data.error) throw data.error;
+      if (data.error) throw data.error || GENERIC_ERROR;
+      return data;
+    });
+}
+
+export function updateProfile({ username, name }) {
+  return fetch(`/api/update-profile`, {
+      ...POST_CONFIG,
+      body: JSON.stringify({ username, name })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) throw data.error || GENERIC_ERROR;
       return data;
     });
 }

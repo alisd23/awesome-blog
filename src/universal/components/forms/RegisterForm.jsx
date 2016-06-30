@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { reduxForm } from 'redux-form';
 import ValidationInput from './ValidationInput';
@@ -26,8 +25,7 @@ const formData = {
 
 const mapDispatchToProps = { openModal };
 
-@connect(null, mapDispatchToProps)
-@reduxForm(formData)
+@reduxForm(formData, null, mapDispatchToProps)
 export default class RegisterForm extends React.Component {
   static propTypes = {
     fields: React.PropTypes.object,

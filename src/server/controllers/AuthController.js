@@ -23,6 +23,22 @@ export function register({ name, username, password }) {
   return newUser.save();
 }
 
+export function updateProfile({ username, name, id }) {
+  const [firstname, lastname] = name.split(' ');
+
+  return UserModel
+    .findOneAndUpdate(
+      { _id: id },
+      { $set: { firstname, lastname, username }},
+      { new: true }
+    )
+    .exec()
+    .then(user => {
+      if (!user) throw err;
+      return user;
+    });
+}
+
 export function findUser(_id: string) {
   return UserModel
     .findOne({ _id })

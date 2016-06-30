@@ -62,6 +62,7 @@ export default (isoTools, __DEVELOPMENT__) => {
   // AUTHENTICATED ROUTES
   app.use('/api', authMiddleware.checkSession);
 
+  app.post('/api/update-profile', authApi.updateProfile);
   app.post('/api/logout', authApi.logout);
 
   app.get('/api/articles', articleApi.getArticles);

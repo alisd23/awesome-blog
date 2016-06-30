@@ -2,4 +2,46 @@
   &.is-active label {
     color: $teal;
   }
+
+  .input-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    height: 1.5rem;
+  }
+
+  label {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 1rem;
+  }
+}
+
+.validation-input {
+  $input-width: 3rem;
+  position: relative;
+
+  &.has-error .validation-input-success {
+    opacity: 0;
+  }
+
+  input {
+    padding-right: $input-width
+  }
+
+  .validation-input-success {
+    position: absolute;
+    right:  0;
+    top:    0;  bottom: 0;
+    width: $input-width;
+    display: flex;
+    opacity: 1;
+    color: $green;
+    transition: all 0.25s ease-out;
+
+    > i {
+      margin: auto;
+    }
+  }
 }
