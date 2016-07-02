@@ -3,6 +3,7 @@ import {
   register as registerCtrl,
   updateProfile as updateProfileCtrl
 } from '../controllers/AuthController';
+import { successResponse, errorResponse } from './responses';
 
 /**
  * Login given username and password
@@ -14,21 +15,9 @@ export function login(req, res) {
   loginCtrl({ username, password })
     .then(user => {
       req.session.user = user;
-      res
-        .status(200)
-        .send({
-          success: true,
-          user
-        });
+      successResponse(res, { user });
     })
-    .catch(err =>
-      res
-        .status(400)
-        .send({
-          success: false,
-          error: err
-        })
-    );
+    .catch(err => errorResponse(res, err));
 }
 
 /**
@@ -41,21 +30,9 @@ export function register(req, res) {
   registerCtrl({ username, password, name })
     .then(user => {
       req.session.user = user;
-      res
-        .status(200)
-        .send({
-          success: true,
-          user
-        });
+      successResponse(res, { user });
     })
-    .catch(err =>
-      res
-        .status(400)
-        .send({
-          success: false,
-          error: err
-        })
-    );
+    .catch(err => errorResponse(res, err));
 }
 
 /**
@@ -69,28 +46,14 @@ export function updateProfile(req, res) {
   updateProfileCtrl({ username, name, id })
     .then(user => {
       req.session.user = user;
-      res
-        .status(200)
-        .send({
-          success: true,
-          user
-        });
+      successResponse(res, { user });
     })
-    .catch(err =>
-      res
-        .status(400)
-        .send({
-          success: false,
-          error: err
-        })
-    );
+    .catch(err => errorResponse(res, err));
 }
 
 export function logout(req, res) {
   req.session.user = null;
-  res.status(200).send({
-    success: true
-  });
+  successResponse(res);
 }
 
 export default {

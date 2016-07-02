@@ -1,5 +1,5 @@
-
 import { getAuthors as getAuthorsCtrl } from '../controllers/ArticleController';
+import { successResponse, errorResponse } from './responses';
 
 /**
  * Retrieve all articles and send result back to client
@@ -7,19 +7,8 @@ import { getAuthors as getAuthorsCtrl } from '../controllers/ArticleController';
  */
 export function getAuthors(req, res) {
   getAuthorsCtrl()
-    .then((authors: User[]) => {
-      res.status(200).send({
-        success: 1,
-        authors: authors
-      });
-    })
-    .catch((err) => {
-      console.log('GetAuthors ERROR - ', err);
-      res.status(400).send({
-        success: 0,
-        error: `Could not get authors - ${err}`
-      });
-    });
+    .then(authors => successResponse(res, { authors }))
+    .catch(err => errorResponse(res, 'Could not get authors'));
 }
 
 

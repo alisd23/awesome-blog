@@ -1,29 +1,27 @@
 import React from 'react';
 import classnames from 'classnames';
+import validate from './validate';
 import { reduxForm } from 'redux-form';
 import ValidationInput from './ValidationInput';
 import LoadingButton from './LoadingButton';
+import FormErrors from './FormErrors';
 import { updateProfile, getCurrentUser } from '../../redux/ducks/auth';
 import { getFullname } from '../../helpers/user';
+import { profileConstraints } from '../../validation/auth';
 
-const validate = (values, props) => {
-  const errors = {};
-
+const validateForm = (values, props) => {
   // HACK - Workaround for redux-form SSR issue
   if (!props.form._initialized)
     return {};
 
-  if (!values.name)
-    errors.name = 'Name required';
-  if (!values.username)
-    errors.username = 'Username Required';
-  return errors;
+  const [firstname] = values.name.split(' ');
+  return validate({ ...values, firstname }, profileConstraints.client);
 };
 
 const formData = {
   form: 'update-profile',
   fields: ['name', 'username'],
-  validate,
+  validate: validateForm,
 }
 
 const mapStateToProps = (state) => {
@@ -66,13 +64,10 @@ export default class ProfileForm extends React.Component {
           name='Username'
           inputData={username} />
 
-        {
-          error &&
-            <div className='alert alert-danger'>{error}</div>
-        }
+        <FormErrors errors={error} />
 
         <LoadingButton
-          buttonClassName={buttonClasses}
+          className={buttonClasses}
           isLoading={submitting}
           text='Update Profile'
         />

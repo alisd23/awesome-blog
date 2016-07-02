@@ -14,8 +14,8 @@ export function login({ username, password }) {
       body: JSON.stringify({ username, password })
     })
     .then(response => response.json())
-    .then(data =>{
-      if (data.error) throw data.error || GENERIC_ERROR;
+    .then(data => {
+      if (data.errors) throw data.errors || [GENERIC_ERROR];
       return data;
     });
 }
@@ -25,9 +25,9 @@ export function register({ username, password, name }) {
       ...POST_CONFIG,
       body: JSON.stringify({ username, password, name })
     })
-    .then(response => response.json())
-    .then(data =>{
-      if (data.error) throw data.error || GENERIC_ERROR;
+    .then(res => res.json())
+    .then(data => {
+      if (data.errors) throw data.errors || [GENERIC_ERROR];
       return data;
     });
 }
@@ -37,9 +37,9 @@ export function updateProfile({ username, name }) {
       ...POST_CONFIG,
       body: JSON.stringify({ username, name })
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
-      if (data.error) throw data.error || GENERIC_ERROR;
+      if (data.errors) throw data.errors;
       return data;
     });
 }

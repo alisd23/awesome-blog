@@ -132,11 +132,9 @@ export const login = (data, dispatch) => (
         dispatch(closeModal(ModalTypes.LOGIN));
         resolve();
       })
-      .catch(err => {
+      .catch(errors => {
         dispatch(loginFailure());
-        reject({
-          _error: 'Invalid username or password'
-        });
+        reject({ _error: errors });
       });
   })
 );
@@ -149,11 +147,9 @@ export const register = (data, dispatch) => (
         dispatch(closeModal(ModalTypes.REGISTER));
         resolve();
       })
-      .catch(err => {
+      .catch(errors => {
         dispatch(registerFailure());
-        reject({
-          _error: 'Invalid details'
-        });
+        reject({ _error: errors });
       });
   })
 );
@@ -165,11 +161,7 @@ export const updateProfile = (data, dispatch) => (
         dispatch(profileUpdateSuccess(res.user));
         resolve();
       })
-      .catch(err => {
-        reject({
-          _error: 'Profile Update Failed'
-        });
-      });
+      .catch(errors => reject({ _error: errors }));
     return Promise.resolve();
   })
 );

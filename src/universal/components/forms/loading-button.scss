@@ -1,0 +1,32 @@
+.loading-button {
+  position: relative;
+
+  &[disabled] {
+    pointer-events: none;
+  }
+
+  > .loader {
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top:  0; bottom:  0;
+    left: 0; right:   0;
+    transition: all ease-out 0.15;
+    background-color: rgba($gray-lighter, 0.2);
+  }
+  > .text {
+    opacity: 1;
+    transition: all ease-out 0.15;
+  }
+
+  &.is-loading {
+    > .loader {
+      opacity: 1;
+    }
+    > .text {
+      opacity: 0;
+    }
+  }
+}

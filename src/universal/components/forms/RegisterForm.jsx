@@ -3,24 +3,22 @@ import classnames from 'classnames';
 import { reduxForm } from 'redux-form';
 import ValidationInput from './ValidationInput';
 import Modals from '../modals/ModalTypes';
+import validate from './validate';
 import { openModal } from '../../redux/ducks/global';
 import { register } from '../../redux/ducks/auth';
+import LoadingButton from './LoadingButton';
+import FormErrors from './FormErrors';
+import { registerConstraints } from '../../validation/auth';
 
-const validate = (values) => {
-  const errors = {};
-  if (!values.name)
-    errors.name = 'Name required';
-  if (!values.username)
-    errors.username = 'Username Required';
-  if (!values.password)
-    errors.password = 'Password required';
-  return errors;
+const validateForm = (values) => {
+  const [firstname] = values.name.split(' ');
+  return validate({ ...values, firstname }, registerConstraints.client);
 };
 
 const formData = {
   form: 'register',
   fields: ['name', 'username', 'password'],
-  validate
+  validate: validateForm
 }
 
 const mapDispatchToProps = { openModal };
@@ -64,16 +62,13 @@ export default class RegisterForm extends React.Component {
           type='password'
           inputData={password} />
 
-        {
-          error &&
-            <div className='alert alert-danger'>{error}</div>
-        }
+        <FormErrors errors={error} />
 
-        <button
+        <LoadingButton
           className={buttonClasses}
-          type='submit'>
-          Sign up
-        </button>
+          isLoading={submitting}
+          text='Sign up'
+        />
 
         <span>
           <span>Already have an Awesome Blog account?</span>

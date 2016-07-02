@@ -1,30 +1,18 @@
-
 import {
   getArticles as getArticlesCtrl,
   likeArticle as likeArticleCtrl,
   unlikeArticle as unlikeArticleCtrl
 } from '../controllers/ArticleController';
+import { successResponse, errorResponse } from './responses';
 
 /**
  * Retrieve all articles and send result back to client
  * @return {void}
  */
 export function getArticles(req, res) {
-
   getArticlesCtrl()
-    .then((articles: Article[]) => {
-      res.status(200).send({
-        success: 1,
-        articles: articles
-      });
-    })
-    .catch((err) => {
-      console.log('GetArticles ERROR - ', err);
-      res.status(400).send({
-        success: 0,
-        error: `Could not get articles - ${err}`
-      });
-    });
+    .then(articles => successResponse(res, { articles }))
+    .catch(err => errorResponse(res, 'Could not get articles'));
 }
 
 /**
@@ -59,12 +47,7 @@ function articleLikeHelper(req, res, action) {
   const articleID = req.params.id;
 
   if (!articleID) {
-    return res
-      .status(400)
-      .send({
-        success: 0,
-        message: 'Invalid article'
-      });
+    return errorResponse(res, 'Invalid article');
   }
 
   action(articleID, userID)

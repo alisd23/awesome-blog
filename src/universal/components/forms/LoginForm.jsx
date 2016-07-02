@@ -1,28 +1,23 @@
 import React from 'react';
 import classnames from 'classnames';
 import { reduxForm } from 'redux-form';
+import validate from './validate';
 import ValidationInput from './ValidationInput';
 import Modals from '../modals/ModalTypes';
 import { openModal } from '../../redux/ducks/global';
 import { login } from '../../redux/ducks/auth';
+import LoadingButton from './LoadingButton';
+import FormErrors from './FormErrors';
+import { loginConstraints } from '../../validation/auth';
 
-const validate = (values) => {
-  const errors = {};
-
-  if (!values.username) {
-    errors.username = 'username Required';
-  }
-
-  if (!values.password) {
-    errors.password = 'Password required';
-  }
-  return errors;
+const validateForm = (values) => {
+  return validate(values, loginConstraints.client);
 };
 
 const formData = {
   form: 'login',
   fields: ['username', 'password'],
-  validate
+  validate: validateForm
 }
 
 const mapDispatchToProps = { openModal };
@@ -62,16 +57,13 @@ export default class LoginForm extends React.Component {
           type='password'
           inputData={password} />
 
-        {
-          error &&
-            <div className='alert alert-danger'>{error}</div>
-        }
+        <FormErrors errors={error} />
 
-        <button
+        <LoadingButton
           className={buttonClasses}
-          type='submit'>
-          LOGIN
-        </button>
+          isLoading={submitting}
+          text='Login'
+        />
 
         <span>
           <span>Don't have an Awesome Blog account?</span>

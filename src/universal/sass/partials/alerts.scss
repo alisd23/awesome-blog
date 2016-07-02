@@ -27,6 +27,10 @@
     &.error { border-color: rgba($red, 0.6); }
     &.success { border-color: rgba($green, 0.6); }
     &.info { border-color: rgba($blue, 0.6); }
+
+    > p:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
