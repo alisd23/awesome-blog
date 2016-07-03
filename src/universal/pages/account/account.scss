@@ -1,11 +1,11 @@
 @import './profile/profile';
 
 #account-page {
-  padding-top: $navbar-height;
 
   .account-header {
+    padding-top: $navbar-height + 3rem;
+    padding-bottom: 3rem;
     background-color: $gray-lightest;
-    padding: 3rem 0;
     margin-bottom: 4rem;
   }
 }
