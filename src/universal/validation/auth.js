@@ -15,7 +15,7 @@ const password = {
   }
 };
 
-export const registerConstraints  = {
+export const registerConstraints = {
   server: {
     firstname,
     username,
@@ -28,7 +28,7 @@ export const registerConstraints  = {
   }
 };
 
-export const loginConstraints  = {
+export const loginConstraints = {
   client: {
     username,
     password

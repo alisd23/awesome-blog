@@ -47,8 +47,6 @@ export default function reducer(state = initialState, { type, payload }) {
       return { ...state, pageLoading: false };
     case CHANGE_NAVBAR:
       return { ...state, navbarType: payload.navbarType };
-    case CHANGE_NAVBAR:
-      return { ...state, navbarType: payload.navbarType };
     case STICK_NAVBAR:
       return { ...state, offTop: false };
     case UNSTICK_NAVBAR:

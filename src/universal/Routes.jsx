@@ -3,6 +3,7 @@ import { IndexRoute, Route } from 'react-router';
 import { Store } from 'redux';
 
 import App from './components/App';
+import NotFound from './pages/not-found/NotFound';
 import ReducerRegistry from './redux/registry';
 import { coordinators } from './redux/core';
 import { startPageChange, pageLoadingEnd } from './redux/ducks/global';
@@ -18,6 +19,24 @@ export default function(registry) {
   const reducerRegistry = registry;
   let store;
   let hasUserSession;
+
+  function configure() {
+    return (
+      <Route path='/' component={App}>
+        <IndexRoute getComponent={getHomePage} />
+        <Route
+          path='/article/:id'
+          getComponent={getArticlePage}/>
+        <Route
+          path='/account/profile'
+          getComponent={getProfilePage}
+          onEnter={requireAuth} />
+        <Route
+          path='*'
+          component={NotFound} />
+      </Route>
+    );
+  }
 
   /**
    * ROUTE HANDLERS
@@ -106,21 +125,6 @@ export default function(registry) {
   }
   function injectUserSession(user) {
     hasUserSession = !!user;
-  }
-
-  function configure() {
-    return (
-      <Route path='/' component={App}>
-        <IndexRoute getComponent={getHomePage} />
-        <Route
-          path='/article/:id'
-          getComponent={getArticlePage}/>
-        <Route
-          path='/account/profile'
-          getComponent={getProfilePage}
-          onEnter={requireAuth} />
-      </Route>
-    );
   }
 
   return {

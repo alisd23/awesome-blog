@@ -59,6 +59,9 @@ export default function getInitialHtml(renderProps, reducerRegistry, isoTools, u
           store={store} />;
 
       try {
+        // HACK - Force redux to update store from any actions dispatched
+        // by components (e.g. setting navbar type on mount)
+        renderToString(component);
         return `<!doctype html>\n${renderToString(html)}`;
       } catch(e) {
         console.log('RENDER ERROR', e)
@@ -104,12 +107,7 @@ function getHomePageState(sharedState, renderProps) {
 }
 
 function getArticlePageState(sharedState, renderProps) {
-  return Promise.resolve({
-    ...sharedState,
-    global: {
-      navbarType: TRANSPARENT
-    }
-  });
+  return Promise.resolve(sharedState);
 }
 
 function matchRoute(url) {

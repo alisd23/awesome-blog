@@ -1,0 +1,21 @@
+@import './cool-svg';
+
+#not-found {
+  height: 100vh;
+  padding-top: $navbar-height;
+  background-color: $gray;
+
+  .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button {
+    width: 200px;
+    margin-top: 3rem;
+    max-width: 100%;
+  }
+}

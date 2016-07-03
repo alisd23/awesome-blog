@@ -6,6 +6,7 @@ import { TRANSPARENT } from '../../components/navbar/NavbarTypes';
 import navbarType from '../../components/navbar/navbarTypeHOC';
 import HeadlineArticleComponent from '../../components/headline/HeadlineArticle';
 import ArticleBodyComponent from '../../components/article/ArticleBody';
+import NotFound from '../not-found/NotFound';
 import config from '../../head.config';
 import { toggleArticleLike, hasUserLikedArticle, getSelectedArticle }
   from '../../redux/ducks/articles';
@@ -17,7 +18,7 @@ const mapStateToProps = (state, ownProps) => {
   const article = getSelectedArticle(state, selectorParams);
   return {
     article,
-    author: state.authors[article.author],
+    author: article && state.authors[article.author],
     user: state.auth.user,
     isLiked: state.auth.user && hasUserLikedArticle(state, selectorParams)
   }
@@ -40,6 +41,9 @@ export default class ArticleContainer extends React.Component {
   render() {
     const { article, author, user, isLiked, toggleArticleLike, openModal }
       = this.props;
+
+    if (!article)
+      return <NotFound />;
 
     return (
       <div id='article'>
