@@ -13,4 +13,4 @@ RUN npm run build
 EXPOSE 9999
 ENV NODE_ENV=production PORT=9999 CONFIG=server
 
-ENTRYPOINT node ./compiled/server/database/seeds/run.js && node compiled/server/boot.js
+ENTRYPOINT node compiled/server/boot.js
