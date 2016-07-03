@@ -126,6 +126,38 @@
   transition: height 0.25s ease-out;
 }
 
+/**
+ * Page transition LEFT animation
+ */
+
+@mixin page-transition($name, $start, $end) {
+  .#{$name}-enter {
+    left: #{$start};
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+  .#{$name}-enter.#{$name}-enter-active {
+    left: 0;
+    opacity: 1;
+    transition: left 0.4s ease-out, opacity 0.5s ease-out;
+  }
+  .#{$name}-leave {
+    left: 0;
+    opacity: 1;
+    position: relative;
+  }
+  .#{$name}-leave.#{$name}-leave-active {
+    left: #{$end};
+    opacity: 0;
+    transition: left 0.4s ease-out, opacity 0.3s ease-out;
+  }
+}
+
+@include page-transition('page-left', 50%, -50%);
+@include page-transition('page-right', -50%, 50%);
+
 
 /****************************/
 /**  KEYFRAME TRANSITIONS  **/
