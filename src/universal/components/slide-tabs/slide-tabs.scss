@@ -1,0 +1,36 @@
+.slide-tabs {
+  display: flex;
+  justify-content: center;
+
+  .slide-tabs-content {
+    display: flex;
+    align-items: stretch;
+    position: relative;
+    margin: 0 -1.5rem;
+  }
+
+  .slide-tab {
+    min-width: 6rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+
+    &:hover {
+      color: $teal;
+    }
+    &.is-active {
+      color: $teal;
+    }
+  }
+
+  .slider {
+    position: absolute;
+    height: 4px;
+    border-radius: 2px;
+    background-color: $teal;
+    bottom: 0;
+    transition: all 0.35s $bounce-in-transition;
+  }
+
+}

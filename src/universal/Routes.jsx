@@ -25,12 +25,25 @@ export default function(registry) {
       <Route path='/' component={App}>
         <IndexRoute getComponent={getHomePage} />
         <Route
-          path='/article/:id'
+          path='article/:id'
           getComponent={getArticlePage}/>
         <Route
-          path='/account/profile'
-          getComponent={getProfilePage}
-          onEnter={requireAuth} />
+          path='account'
+          getComponent={getAccountPage}
+          onEnter={requireAuth}>
+          <Route
+            path='profile'
+            getComponent={getProfilePage}
+          />
+          <Route
+            path='change-password'
+            getComponent={getChangePasswordPage}
+          />
+          <Route
+            path='my-blogs'
+            getComponent={getMyBlogsPage}
+          />
+        </Route>
         <Route
           path='*'
           component={NotFound} />
@@ -47,11 +60,11 @@ export default function(registry) {
 
     if (ENV === 'client') {
       System.import('./pages/home/HomeContainer')
-        .then(container => changeScreen(location, cb, container.default));
+        .then(container => changeScreen(location, cb, container.default, true));
     } else {
       require.ensure(['./pages/home/HomeContainer'], (require) => {
         const container = require('./pages/home/HomeContainer').default;
-        changeScreen(location, cb, container);
+        changeScreen(location, cb, container, true);
       });
     }
   }
@@ -62,11 +75,23 @@ export default function(registry) {
 
     if (ENV === 'client') {
       System.import('./pages/article/Article')
-        .then(container => changeScreen(location, cb, container.default));
+        .then(container => changeScreen(location, cb, container.default, true));
     } else {
       require.ensure(['./pages/article/Article'], (require) => {
         const container = require('./pages/article/Article').default;
-        changeScreen(location, cb, container);
+        changeScreen(location, cb, container, true);
+      });
+    }
+  }
+
+  function getAccountPage(location, cb) {
+    if (ENV === 'client') {
+      System.import('./pages/account/AccountContainer')
+        .then(container => changeScreen(location, cb, container.default, false));
+    } else {
+      require.ensure(['./pages/account/AccountContainer'], (require) => {
+        const container = require('./pages/account/AccountContainer').default;
+        changeScreen(location, cb, container, false);
       });
     }
   }
@@ -76,19 +101,48 @@ export default function(registry) {
       store.dispatch(startPageChange);
 
     if (ENV === 'client') {
-      System.import('./pages/profile/ProfileContainer')
-        .then(container => changeScreen(location, cb, container.default));
-        // .catch(err => console.log('Epic fail: Article Page -- ', err));
+      System.import('./pages/account/profile/ProfileContainer')
+        .then(container => changeScreen(location, cb, container.default, true));
     } else {
-      require.ensure(['./pages/profile/ProfileContainer'], (require) => {
-        const container = require('./pages/profile/ProfileContainer').default;
-        changeScreen(location, cb, container);
+      require.ensure(['./pages/account/profile/ProfileContainer'], (require) => {
+        const container = require('./pages/account/profile/ProfileContainer').default;
+        changeScreen(location, cb, container, true);
       });
     }
   }
 
-  function changeScreen(location, cb, component, reducer) {
+  function getChangePasswordPage(location, cb) {
     if (store)
+      store.dispatch(startPageChange);
+
+    if (ENV === 'client') {
+      System.import('./pages/account/change-password/ChangePasswordContainer')
+        .then(container => changeScreen(location, cb, container.default, true));
+    } else {
+      require.ensure(['./pages/account/change-password/ChangePasswordContainer'], (require) => {
+        const container = require('./pages/account/change-password/ChangePasswordContainer').default;
+        changeScreen(location, cb, container, true);
+      });
+    }
+  }
+
+  function getMyBlogsPage(location, cb) {
+    if (store)
+      store.dispatch(startPageChange);
+
+    if (ENV === 'client') {
+      System.import('./pages/account/my-blogs/MyBlogsContainer')
+        .then(container => changeScreen(location, cb, container.default, true));
+    } else {
+      require.ensure(['./pages/account/my-blogs/MyBlogsContainer'], (require) => {
+        const container = require('./pages/account/my-blogs/MyBlogsContainer').default;
+        changeScreen(location, cb, container, true);
+      });
+    }
+  }
+
+  function changeScreen(location, cb, component, isBottomPage, reducer) {
+    if (store && isBottomPage)
       store.dispatch(pageLoadingEnd());
 
     if (reducer) {
