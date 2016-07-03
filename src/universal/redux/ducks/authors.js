@@ -1,5 +1,3 @@
-import { UPDATE_LOCATION } from 'react-router-redux';
-
 /**
  * Initial authors state
  * @type {Object} - A map of id -> User object

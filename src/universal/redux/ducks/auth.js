@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs/Rx';
 import {
   logout as apiLogout,
   login as apiLogin,
@@ -6,7 +5,9 @@ import {
   updateProfile as apiUpdateProfile
 } from '../../client-api/authAPI';
 import { closeModal } from './global';
+import { addAlert } from './alerts';
 import ModalTypes from '../../components/modals/ModalTypes';
+import AlertTypes from '../../components/alerts/AlertTypes';
 import action from '../action';
 import combineCoordinators from '../combineCoordinators';
 
@@ -159,6 +160,11 @@ export const updateProfile = (data, dispatch) => (
     apiUpdateProfile(data)
       .then(res => {
         dispatch(profileUpdateSuccess(res.user));
+        dispatch(addAlert({
+          title: 'Profile updated',
+          content: 'Your profile details were updated successfully',
+          type: AlertTypes.SUCCESS
+        }));
         resolve();
       })
       .catch(errors => reject({ _error: errors }));

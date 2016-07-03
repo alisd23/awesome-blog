@@ -1,6 +1,5 @@
-import { UPDATE_LOCATION } from 'react-router-redux';
 import { Observable } from 'rxjs/Observable';
-import { SOLID, TRANSPARENT} from '../../components/navbar/NavbarTypes';
+import { SOLID } from '../../components/navbar/NavbarTypes';
 import action from '../action';
 import combineCoordinators from '../combineCoordinators';
 

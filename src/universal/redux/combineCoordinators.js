@@ -1,4 +1,6 @@
 import { Subject } from 'rxjs/Subject';
+// Weird issue, needed to use observable operators on a subject
+import { Observable } from 'rxjs/Rx';
 
 /**
  * merges all delegators into a single delegator.

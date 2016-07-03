@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Navbar from './navbar/NavbarContainer';
 import Footer from './footer/Footer';
 import Modals from './modals/AllModals';
+import AlertsContainer from './alerts/AlertsContainer';
 import { scrolled } from '../redux/ducks/global';
 
 // Use babel resolveDirs
@@ -49,6 +50,7 @@ export default class App extends React.Component {
         <GeminiScrollbar ref='scrollbar' autoshow={true}>
           <Navbar location={location} />
           <Modals />
+          <AlertsContainer />
           <div id='main'>
             { children }
           </div>

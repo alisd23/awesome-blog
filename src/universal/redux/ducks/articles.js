@@ -1,7 +1,4 @@
-import { UPDATE_LOCATION } from 'react-router-redux';
 import { Observable } from 'rxjs/Observable';
-import moment from 'moment';
-import vagueTime from 'vague-time';
 import { createSelector } from 'reselect';
 
 import {
