@@ -14,6 +14,10 @@ const password = {
     message: "must be at least 8 characters"
   }
 };
+const repeatPassword = {
+  equality: 'newPassword',
+  presence: true,
+}
 
 export const registerConstraints = {
   server: {
@@ -23,8 +27,7 @@ export const registerConstraints = {
   },
   client: {
     name,
-    username,
-    password
+    username
   }
 };
 
@@ -33,6 +36,11 @@ export const loginConstraints = {
     username,
     password
   }
+};
+
+export const changePasswordConstraints = {
+  newPassword: password,
+  repeatPassword
 };
 
 export const profileConstraints = {

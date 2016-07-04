@@ -1,11 +1,11 @@
 import React from 'react';
-import ProfileForm from '../../../components/forms/ProfileForm';
+import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 
 const ProfileComponent = ({ user }) => {
   return (
     <div className='container'>
-      <div className='profile-form'>
-        <ProfileForm />
+      <div className='change-password-form'>
+        <ChangePasswordForm />
       </div>
     </div>
   );

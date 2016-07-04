@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import ProfileComponent from './Profile';
-import AuthenticatedComponent from '../../../higher-order-components/AuthenticatedHOC';
+import Profile from './Profile';
 import config from '../../../head.config';
 import Helmet from 'react-helmet';
 
@@ -9,7 +8,6 @@ const mapStateToProps = (state) => ({
   user: state.auth.user
 });
 
-@AuthenticatedComponent
 @connect(mapStateToProps)
 export default class ProfileContainer extends React.Component {
   static propTypes = {
@@ -20,9 +18,9 @@ export default class ProfileContainer extends React.Component {
     const { user } = this.props;
 
     return (
-      <div>
+      <div id='profile-page'>
         <Helmet {...config} title='Awesome Blog - Profile'/>
-        <ProfileComponent user={user} />
+        <Profile user={user} />
       </div>
     )
   }

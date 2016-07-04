@@ -31,7 +31,7 @@ const mapDispatchToProps = { push };
 @connect(null, mapDispatchToProps)
 export default class AccountContainer extends React.Component {
   state = {
-    transition: null
+    transition: ''
   };
 
   getTabIndex(path) {

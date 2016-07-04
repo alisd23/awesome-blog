@@ -10,7 +10,7 @@ import { getFullname } from '../../helpers/user';
 import { profileConstraints } from '../../validation/auth';
 
 const validateForm = (values, props) => {
-  // HACK - Workaround for redux-form SSR issue
+  // HACK - Workaround for redux-form SSR issue, when form has initial values
   if (!props.form._initialized)
     return {};
 

@@ -1,14 +1,27 @@
-import React from 'react';
-import { withRouter } from 'react-router';
-import AuthenticatedComponent from '../../../higher-order-components/AuthenticatedHOC';
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import ChangePassword from './ChangePassword';
+import config from '../../../head.config';
+import Helmet from 'react-helmet';
 
-@AuthenticatedComponent
-export default class ChangePasswordContainer extends React.Component {
+const mapStateToProps = (state) => ({
+  user: state.auth.user
+});
+
+@connect(mapStateToProps)
+export default class ProfileContainer extends Component {
+  static propTypes = {
+    user: React.PropTypes.object
+  }
+
   render() {
+    const { user } = this.props;
+
     return (
-      <section id='change-password-page'>
-        <h3 className='m-b-lg text-xs-center'>Change Password</h3>
-      </section>
+      <div id='change-password-page'>
+        <Helmet {...config} title='Awesome Blog - Change Password' />
+        <ChangePassword user={user} />
+      </div>
     )
   }
 }

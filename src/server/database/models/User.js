@@ -46,7 +46,7 @@ userSchema.pre('save', function(next) {
 userSchema.methods.comparePassword = function(candidatePassword, cb) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-      if (err) return reject(err);
+      if (err || !isMatch) return reject('Invalid login details');
       resolve(this);
     });
   });

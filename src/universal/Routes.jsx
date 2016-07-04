@@ -1,5 +1,5 @@
 import React from 'react';
-import { IndexRoute, Route } from 'react-router';
+import { IndexRoute, Route, IndexRedirect } from 'react-router';
 import { Store } from 'redux';
 
 import App from './components/App';
@@ -31,6 +31,7 @@ export default function(registry) {
           path='account'
           getComponent={getAccountPage}
           onEnter={requireAuth}>
+          <IndexRedirect to='/account/profile' />
           <Route
             path='profile'
             getComponent={getProfilePage}

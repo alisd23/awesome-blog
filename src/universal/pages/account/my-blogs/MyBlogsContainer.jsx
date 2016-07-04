@@ -1,8 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import AuthenticatedComponent from '../../../higher-order-components/AuthenticatedHOC';
 
-@AuthenticatedComponent
 export default class MyBlogsContainer extends React.Component {
   render() {
     return (

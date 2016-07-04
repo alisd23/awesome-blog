@@ -1,7 +1,10 @@
 import React from 'react';
 import classnames from 'classnames';
+import pickFormFields from './pickFormFields';
 
-const ValidationInputComponent = ({ name, type, inputData, inputClass }) => {
+const ValidationInputComponent = ({
+  name, type, inputData, inputClass, hideFeedback
+}) => {
   const hasError = inputData.error;
   const showErrorMessage = hasError && inputData.visited && !inputData.active;
 
@@ -21,7 +24,6 @@ const ValidationInputComponent = ({ name, type, inputData, inputClass }) => {
     'field-group m-b-md',
     { 'is-active': inputData.active }
   );
-
   return (
     <div className={wrapperClasses}>
       <div className='input-header'>
@@ -35,11 +37,14 @@ const ValidationInputComponent = ({ name, type, inputData, inputClass }) => {
         <input
           type={type}
           className={inputClasses}
-          {...inputData}
+          {...pickFormFields(inputData)}
         />
-        <div className='validation-input-success'>
-          <i className="material-icons">check</i>
-        </div>
+        {
+          !hideFeedback &&
+            <div className='validation-input-success'>
+              <i className="material-icons">check</i>
+            </div>
+        }
       </div>
     </div>
   );

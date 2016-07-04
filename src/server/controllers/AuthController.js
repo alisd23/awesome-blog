@@ -1,13 +1,14 @@
 import UserModel from '../database/models/User';
 import validate from './validate';
-import { registerConstraints, profileConstraints } from '../../universal/validation/auth';
+import { registerConstraints, profileConstraints, changePasswordConstraints }
+  from '../../universal/validation/auth';
 
 export function login({ username, password }) {
   return UserModel
     .findOne({ username })
     .exec()
     .then(user => {
-      if (!user) throw err;
+      if (!user) throw 'Invalid login details';
       return user.comparePassword(password);
     });
 }
@@ -39,6 +40,22 @@ export function updateProfile({ username, name, id }) {
       { new: true }
     )
     .exec();
+}
+
+export function changePassword(values) {
+  const errors = validate(values, changePasswordConstraints);
+
+  if (errors)
+    return Promise.reject(errors);
+
+  return UserModel
+    .findOne({ _id: values.id })
+    .exec()
+    .then(user => user.comparePassword(values.currentPassword))
+    .then(user => {
+      user.password = values.newPassword;
+      return user.save();
+    });
 }
 
 export function findUser(_id: string) {

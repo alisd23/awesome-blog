@@ -1,4 +1,4 @@
-export const DEFAULT_ERROR = 'An error occurred';
+export const DEFAULT_ERROR = 'Woops, something went wrong';
 
 export const errorResponse = (res, errors = [], code = 400) => {
   const errorsArray = Array.isArray(errors) ? errors : [errors];

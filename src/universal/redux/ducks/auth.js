@@ -2,7 +2,8 @@ import {
   logout as apiLogout,
   login as apiLogin,
   register as apiRegister,
-  updateProfile as apiUpdateProfile
+  updateProfile as apiUpdateProfile,
+  changePassword as apiChangePassword
 } from '../../client-api/authAPI';
 import { closeModal } from './global';
 import { addAlert } from './alerts';
@@ -163,6 +164,22 @@ export const updateProfile = (data, dispatch) => (
         dispatch(addAlert({
           title: 'Profile updated',
           content: 'Your profile details were updated successfully',
+          type: AlertTypes.SUCCESS
+        }));
+        resolve();
+      })
+      .catch(errors => reject({ _error: errors }));
+    return Promise.resolve();
+  })
+);
+
+export const changePassword = (data, dispatch) => (
+  new Promise((resolve, reject) => {
+    apiChangePassword(data)
+      .then(res => {
+        dispatch(addAlert({
+          title: 'Password Changed',
+          content: 'Your was changed successfully',
           type: AlertTypes.SUCCESS
         }));
         resolve();
