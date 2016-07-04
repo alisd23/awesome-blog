@@ -51,6 +51,6 @@ function articleLikeHelper(req, res, action) {
   }
 
   action(articleID, userID)
-    .then(() => res.sendStatus(200))
-    .catch(err => res.sendStatus(500))
+    .then(() => successResponse(res))
+    .catch(err => errorResponse(res, err, 500))
 }

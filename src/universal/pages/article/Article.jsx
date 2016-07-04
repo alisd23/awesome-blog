@@ -44,6 +44,7 @@ export default class ArticleContainer extends React.Component {
 
     if (!article)
       return <NotFound />;
+      console.log(isLiked);
 
     return (
       <div id='article'>

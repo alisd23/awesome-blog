@@ -1,6 +1,6 @@
 import 'isomorphic-fetch';
 import { GET_CONFIG, POST_CONFIG } from './config';
-const GENERIC_ERROR = 'Woops, something went wrong';
+import { handleResponse } from './response';
 
 const checkForErrors = (data) => {
   if (data.errors) throw data.errors || [GENERIC_ERROR];
@@ -9,8 +9,7 @@ const checkForErrors = (data) => {
 
 export function logout() {
   return fetch(`/api/logout`, POST_CONFIG)
-    .then(response => response.json());
-    // Don't care about errors here
+    .then(handleResponse);
 }
 
 export function login({ username, password }) {
@@ -18,8 +17,7 @@ export function login({ username, password }) {
       ...POST_CONFIG,
       body: JSON.stringify({ username, password })
     })
-    .then(response => response.json())
-    .then(checkForErrors);
+    .then(handleResponse);
 }
 
 export function register({ username, password, name }) {
@@ -27,8 +25,7 @@ export function register({ username, password, name }) {
       ...POST_CONFIG,
       body: JSON.stringify({ username, password, name })
     })
-    .then(res => res.json())
-    .then(checkForErrors);
+    .then(handleResponse);
 }
 
 export function updateProfile({ username, name }) {
@@ -36,8 +33,7 @@ export function updateProfile({ username, name }) {
       ...POST_CONFIG,
       body: JSON.stringify({ username, name })
     })
-    .then(res => res.json())
-    .then(checkForErrors);
+    .then(handleResponse);
 }
 
 export function changePassword({ currentPassword, newPassword, repeatPassword }) {
@@ -45,6 +41,5 @@ export function changePassword({ currentPassword, newPassword, repeatPassword })
       ...POST_CONFIG,
       body: JSON.stringify({ currentPassword, newPassword, repeatPassword })
     })
-    .then(res => res.json())
-    .then(checkForErrors);
+    .then(handleResponse);
 }

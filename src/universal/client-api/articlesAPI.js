@@ -1,5 +1,6 @@
 import 'isomorphic-fetch';
 import { GET_CONFIG, POST_CONFIG } from './config';
+import { handleResponse } from './response';
 
 /**
  * Send like article request to blog server
@@ -10,11 +11,7 @@ export function likeArticle(articleId: String) {
   return fetch(`/api/like-article/${articleId}`, {
       ...POST_CONFIG
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Like article failed');
-      }
-    });
+    .then(handleResponse);
 }
 
 /**
@@ -26,9 +23,5 @@ export function unlikeArticle(articleId: String) {
   return fetch(`/api/unlike-article/${articleId}`, {
       ...POST_CONFIG
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Unlike article failed');
-      }
-    });
+    .then(handleResponse);
 }

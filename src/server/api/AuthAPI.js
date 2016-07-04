@@ -7,8 +7,9 @@ import {
 import { successResponse, errorResponse } from './responses';
 
 const filterUser = user => {
+  const { id } = user;
   const { password, ...other } = user.toObject();
-  return other;
+  return { ...other, id };
 }
 
 export function login(req, res) {

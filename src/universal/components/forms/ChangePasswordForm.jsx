@@ -34,8 +34,6 @@ export default class ChangePasswordForm extends React.Component {
       submitting
     } = this.props;
 
-    console.log(error)
-
     const buttonClasses = classnames(
       'btn btn-caps btn-block btn-lg btn-primary-outline m-t-lg m-b-md'
     );
