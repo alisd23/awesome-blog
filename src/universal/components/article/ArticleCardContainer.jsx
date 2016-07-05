@@ -8,7 +8,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 const mapDispatchToProps = { push };
 
-@connect(mapStateToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class ArticleCard extends React.Component {
   static propTypes = {
     article: React.PropTypes.object,

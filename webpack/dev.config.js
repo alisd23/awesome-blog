@@ -50,7 +50,12 @@ module.exports = Object.assign({},
 					test: /\.scss$/,
 					include: path.join(projectRootPath, 'src'),
 					loaders: [
-						{ loader: 'style' },
+						{
+							loader: 'style',
+							query: {
+								singleton: true
+							}
+						},
 						{
 							loader: 'css',
 							query: {
