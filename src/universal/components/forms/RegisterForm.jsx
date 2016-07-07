@@ -11,7 +11,7 @@ import FormErrors from './FormErrors';
 import { registerConstraints } from '../../validation/auth';
 
 const validateForm = (values) => {
-  const [firstname] = values.name.split(' ');
+  const [firstname] = (values.name || '').split(' ');
   return validate({ ...values, firstname }, registerConstraints.client);
 };
 
