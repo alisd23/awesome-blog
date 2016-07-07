@@ -150,6 +150,7 @@ export const register = (data, dispatch) => (
         resolve();
       })
       .catch(errors => {
+        console.log(errors);
         dispatch(registerFailure());
         reject({ _error: errors });
       });

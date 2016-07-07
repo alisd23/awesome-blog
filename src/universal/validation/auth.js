@@ -27,7 +27,8 @@ export const registerConstraints = {
   },
   client: {
     name,
-    username
+    username,
+    password
   }
 };
 

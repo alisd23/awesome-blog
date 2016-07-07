@@ -3,6 +3,11 @@ import validate from './validate';
 import { registerConstraints, profileConstraints, changePasswordConstraints }
   from '../../universal/validation/auth';
 
+const errorMessages = {
+  11000: 'Username already exists'
+};
+
+
 export function login({ username, password }) {
   return UserModel
     .findOne({ username })
@@ -22,7 +27,9 @@ export function register({ name, username, password }) {
     return Promise.reject(errors);
 
   const newUser = new UserModel(values);
-  return newUser.save();
+  return newUser
+    .save()
+    .catch(e => { throw errorMessages[e.code] });
 }
 
 export function updateProfile({ username, name, id }) {
