@@ -14,7 +14,8 @@ const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('.
 
 const shared = require('./shared-config')(webpackIsomorphicToolsPlugin);
 
-const extractSASS = new ExtractTextPlugin('[name].css', {
+const extractSASS = new ExtractTextPlugin({
+	filename: '[name].css',
 	allChunks: true
 });
 
@@ -70,7 +71,10 @@ module.exports = Object.assign({},
 			loaders: shared.loaders.concat([
 	      {
 	        test: /\.scss$/,
-	        loader: extractSASS.extract('style', ['css?importLoaders=1&minimize', 'postcss', 'sass']),
+	        loader: extractSASS.extract({
+						fallbackLoader: 'style',
+						loader: ['css?importLoaders=1&minimize', 'postcss', 'sass']
+					}),
 					include: path.join(projectRootPath, 'src')
 	      }
 			])
