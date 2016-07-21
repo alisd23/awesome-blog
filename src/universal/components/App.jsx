@@ -30,7 +30,8 @@ export default class App extends React.Component {
     const { router, scrolled } = this.props;
 
     const onScroll = (e) => {
-      scrolled(e.currentTarget.scrollTop);
+      console.log('Scrolled', e.currentTarget.scrollTop || e.currentTarget.scrollY);
+      scrolled(e.currentTarget.scrollTop || e.currentTarget.scrollY);
     }
     const onPageChange = (e) => {
       this.refs.scrollbar.refs['scroll-view'].scrollTop = 0;
@@ -38,6 +39,7 @@ export default class App extends React.Component {
     }
     this.refs.scrollbar.refs['scroll-view'].addEventListener('scroll', onScroll);
     document.body.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll);
 
     // Listen for router change events and scroll to top
     router.listen(onPageChange);
