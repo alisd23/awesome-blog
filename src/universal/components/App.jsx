@@ -30,7 +30,6 @@ export default class App extends React.Component {
     const { router, scrolled } = this.props;
 
     const onScroll = (e) => {
-      console.log('Scrolled', e.currentTarget.scrollTop || e.currentTarget.scrollY);
       scrolled(e.currentTarget.scrollTop || e.currentTarget.scrollY);
     }
     const onPageChange = (e) => {

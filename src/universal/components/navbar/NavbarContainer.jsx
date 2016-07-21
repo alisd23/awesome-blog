@@ -39,7 +39,6 @@ export default class NavbarContainer extends React.Component {
     const { user, type, offTop, location, push, mobileNavOpen, pageLoading } = this.props;
     const notMobile = typeof window === 'undefined'
       || document.body.clientWidth > screenSizes.xs.max;
-      console.log(typeof window === 'undefined' || document.body.clientWidth, screenSizes.xs.max)
     return (
       <NavbarComponent
         clickNavLink={(route) => push(route)}
