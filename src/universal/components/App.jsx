@@ -30,7 +30,11 @@ export default class App extends React.Component {
     const { router, scrolled } = this.props;
 
     const onScroll = (e) => {
-      scrolled(e.currentTarget.scrollTop || e.currentTarget.scrollY);
+      scrolled(
+        !isNaN(e.currentTarget.scrollTop)
+          ? e.currentTarget.scrollTop
+          : e.currentTarget.scrollY
+      );
     }
     const onPageChange = (e) => {
       this.refs.scrollbar.refs['scroll-view'].scrollTop = 0;
