@@ -1,6 +1,8 @@
 
 # Awesome blog
 
+[See it running here!](https://blog.alisd.io/)
+
 ## Install dependencies
 
 `npm install`
