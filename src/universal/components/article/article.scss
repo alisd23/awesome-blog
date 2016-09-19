@@ -135,7 +135,7 @@ $article-height: 500px;
     &:after {
       content: '';
       display: block;
-      height: $line-height * $font-size-base * 3;
+      height: $line-height-base * $font-size-base * 3;
       position: absolute;
       bottom: 0;
       left: 0;  right: 0;

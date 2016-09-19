@@ -57,7 +57,7 @@
   padding: 0.5rem 2rem;
   clear: both;
   font-weight: normal;
-  line-height: $line-height;
+  line-height: $line-height-base;
   color: $dropdown-link-color;
   text-align: inherit; // For `<button>`s
   white-space: nowrap; // prevent links from randomly breaking onto new lines
@@ -123,7 +123,7 @@
   display: block;
   padding: 3px 20px;
   font-size: $font-size-sm;
-  line-height: $line-height;
+  line-height: $line-height-base;
   color: $dropdown-header-color;
   white-space: nowrap; // as with > li > a
 }

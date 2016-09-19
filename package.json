@@ -18,7 +18,7 @@
     "babel-preset-stage-1": "^6.5.0",
     "bcrypt": "^0.8.6",
     "body-parser": "^1.15.0",
-    "bootstrap": "^4.0.0-alpha.2",
+    "bootstrap": "4.0.0-alpha.4",
     "classnames": "^2.2.3",
     "connect-mongo": "^1.1.0",
     "core-decorators": "^0.12.3",
