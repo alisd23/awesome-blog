@@ -14,7 +14,7 @@ const ArticleCardComponent = ({ article, author, onReadArticle }) => (
           </h2>
           {
             article.meta.likes.length > 0 &&
-              <div className='likes-display animate'>
+              <div className='likes-display'>
                 <i className='icon material-icons md-36'>thumb_up</i>
                 <div className='count m-l-sm'>{article.meta.likes.length}</div>
               </div>

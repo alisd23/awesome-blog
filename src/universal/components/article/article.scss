@@ -161,21 +161,23 @@ $article-height: 500px;
 }
 
 // Like showing on
-.likes-display {
+.likes-button, .likes-display {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  &.animate .icon {
-    animation: Heartbeat infinite 2.8s $sharp-ease-in-out;
+  .icon {
+    color: $orange;
   }
+}
+
+.likes-button {
   &.clickable {
     .icon {
       cursor: pointer;
     }
   }
-
   .icon, .count {
     color: $gray-light;
     transition: all 0.3s ease-out;
@@ -188,7 +190,7 @@ $article-height: 500px;
     opacity: 0;
   }
 
-  &:not(.active):hover .icon {
+  &:not(.active) .icon:hover {
     color: lighten($orange, 25%);
   }
 

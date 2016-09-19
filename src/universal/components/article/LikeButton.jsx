@@ -15,7 +15,7 @@ export default class LikeButtonComponent extends React.Component {
     const { article, user, isLiked } = this.props;
     return (
       <div className={classnames(
-        'likes-display flex-static m-y-md',
+        'likes-button flex-static m-y-md',
         {
           'clickable': user,
           'active': isLiked,
@@ -23,8 +23,8 @@ export default class LikeButtonComponent extends React.Component {
         }
       )}>
         <div className='count m-r-sm' ref='count'>{article.meta.likes.length || 1}</div>
-        <div className='icon' ref='iconWrapper'>
-          <i className='material-icons md-36'
+        <div ref='iconWrapper'>
+          <i className='material-icons md-36 icon'
             ref='icon'
             onClick={::this.onLikeClicked}>thumb_up</i>
         </div>

@@ -35,7 +35,7 @@ const HeadlineArticleComponent = ({ article, author, onReadArticle, showLikes })
         </div>
         {
           article.meta.likes.length > 0 && showLikes &&
-            <div className='likes-display animate'>
+            <div className='likes-display'>
               <i className='icon material-icons md-36'>thumb_up</i>
               <div className='count m-l-sm'>{article.meta.likes.length}</div>
             </div>
