@@ -58,7 +58,9 @@ export default (el, elIcon, elCount) => {
 
   const timeline = new mojs.Timeline();
 
+  console.log(timeline);
+
   tweens.forEach((tween) => timeline.add(tween));
 
-  return () => timeline.start();
+  return () => timeline.play();
 }
